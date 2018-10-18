@@ -13,6 +13,7 @@ class Volunteer < ApplicationRecord
 
     scope :newest_first, lambda { order("created_at DESC") }
     scope :sorted, lambda { order("first_name ASC") }
+    scope :last_name_first, lambda { order("last_name ASC") }
     scope :search, lambda { |query| where(["first_name LIKE ? OR last_name LIKE ?", "%#{query}%", "%#{query}%"]) if query.present? }
     scope :of_member_type, lambda { |member_type_id| where(["member_type_id = ?", "#{member_type_id}"]) if member_type_id.present? }
 
