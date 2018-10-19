@@ -3,7 +3,7 @@
 <h1>Member Types</h1>
 
 <p>
-    <%= link_to "Add Member Type", new_member_type_path(@member_type), :class => 'btn btn-primary' %>
+    <%= link_to "Add Member Type", new_member_type_path, :class => 'btn btn-primary' %>
 </p>
 
 
@@ -13,6 +13,7 @@
             <tr>
             <th scope="col">Name</th>
             <th scope="col">Quota Hours</th>
+            <th scope="col">Members</th>
             <th scope="col">More Info</th>
             </tr>
         </thead>
@@ -20,7 +21,8 @@
             <% @member_types.each do |member_type| %>
                 <tr>
                     <td><%= link_to member_type.name, member_type_path(member_type) %></td>
-                    <td><%= link_to member_type.quota_hours, member_type_path(member_type) %></td>
+                    <td><%= link_to (member_type.quota_hours.to_s + " hours"), member_type_path(member_type) %></td>
+                    <td><%= link_to (member_type.volunteers_with_this_member_type.count.to_s + " members"), member_type_path(member_type) %></td>
                     <td><%= link_to "Details", member_type_path(member_type), :class => 'btn btn-secondary' %></td>
                 </tr>
             <% end %>

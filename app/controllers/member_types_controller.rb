@@ -8,9 +8,6 @@ class MemberTypesController < ApplicationController
     def show
         # Get the member_type object that was selected:
         @member_type = MemberType.find(params[:id]);
-
-        # Get a list of all volunteers with this member type:
-        @volunteers_with_member_type = Volunteer.find_by_member_type_id(params[:id]);
     end
 
     # Called when rendering the New MemberType page:
