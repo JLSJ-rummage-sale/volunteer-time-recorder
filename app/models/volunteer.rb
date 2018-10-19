@@ -3,7 +3,7 @@ class Volunteer < ApplicationRecord
     has_many :time_records, :dependent => :delete_all
     has_one :member_type
 
-    # Attributes: first_name, last_name, email_address, notes
+    # Attributes: first_name, last_name, email_address, notes, phone, member_type_id
 
     validates :first_name, presence: true
     validates :last_name, presence: true
@@ -25,6 +25,17 @@ class Volunteer < ApplicationRecord
 
     def full_name_with_email
         return (self.first_name.to_s + " " + self.last_name.to_s + " <" + self.email_address + ">");
+    end
+
+    def to_string
+        return "VOLUNTEER:{id: " + self.id.to_s + ", " +
+                "first_name: " + self.first_name.to_s + ", " +
+                "last_name: " + self.last_name.to_s + ", " +
+                "email_address: " + self.email_address.to_s + ", " +
+                "phone: " + self.phone.to_s + ", " +
+                "notes: " + self.notes.to_s + ", " +
+                "member_type_id: " + self.member_type_id.to_s +
+                " }";
     end
 
 end
