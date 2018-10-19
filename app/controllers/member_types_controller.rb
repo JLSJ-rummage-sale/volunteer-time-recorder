@@ -2,7 +2,7 @@ class MemberTypesController < ApplicationController
 
     def index
         # Get all member_type records from the database to display:
-        @member_types = MemberType.all;
+        @member_types = MemberType.sorted;
     end
 
     def show
