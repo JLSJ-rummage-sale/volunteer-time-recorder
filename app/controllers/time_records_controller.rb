@@ -63,7 +63,7 @@ class TimeRecordsController < ApplicationController
         @time_record = TimeRecord.new;
 
         # Get all volunteer and event records for the form selection:
-        @volunteers = Volunteer.all;
+        @volunteers = Volunteer.sorted;
         @events = Event.all;
 
         # Get preselected Event or Volunteer:
