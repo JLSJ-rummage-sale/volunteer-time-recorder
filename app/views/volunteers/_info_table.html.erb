@@ -63,9 +63,16 @@
             <tr>
                 <th scope="row">Progress:</th>
                 <td>
-                    <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="<%= "width: " + @progress_percent + "%;" %>" aria-valuenow=<%= @progress_percent %> aria-valuemin="0" aria-valuemax="100"><%= @progress_percent %>%</div>
-                    </div>
+                    <% if @progress_percent < 100 %>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="<%= "width: " + @progress_percent.to_s + "%;" %>" aria-valuenow=<%= @progress_percent %> aria-valuemin="0" aria-valuemax="100"><%= @progress_percent %>%</div>
+                        </div>
+                    <% else %>
+                        <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow=100 aria-valuemin="0" aria-valuemax="100">COMPLETE</div>
+                        </div>
+                    <% end %>
+
                 </td>
             </tr>
         </tbody>
