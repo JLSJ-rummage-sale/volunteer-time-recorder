@@ -54,11 +54,11 @@
         <tbody>
             <tr>
                 <th scope="row">Total Hours:</th>
-                <td><%= link_to(number_with_precision(@total_hours, precision: 2,  strip_insignificant_zeros: true) + " hours", time_records_path(:volunteer_id => @volunteer.id)) %></td>
+                <td><%= link_to(number_with_precision(@total_hours, precision: 2,  strip_insignificant_zeros: true) + " hours completed", time_records_path(:volunteer_id => @volunteer.id)) %></td>
             </tr>
             <tr>
                 <th scope="row">Member Quota:</th>
-                <td><%= link_to(@quota_hours.to_s + " hours", member_type_path(@member_type)) %></td>
+                <td><%= link_to(@quota_hours.to_s + " hours needed", member_type_path(@member_type)) %></td>
             </tr>
             <tr>
                 <th scope="row">Progress:</th>
