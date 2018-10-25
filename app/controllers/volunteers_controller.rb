@@ -56,6 +56,9 @@ class VolunteersController < ApplicationController
         # Create a new volunteer instance that will be used in the form:
         @volunteer = Volunteer.new(volunteer_params);
 
+        # Get all member type records for the form selection:
+        @member_types = MemberType.all;
+
         if(@volunteer.save)
             # Present a 1-time flash message to the user after redirect:
             flash[:notice] = "Volunteer created successfully.";
