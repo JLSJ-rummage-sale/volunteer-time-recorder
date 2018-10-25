@@ -4,7 +4,7 @@
   <h1 class="display-4">Welcome!</h1>
   <p class="lead">This is a simple web application for tracking volunteer hours for events.</p>
   <hr class="my-4">
-  <p>Start by adding a volunteer or time record:</p>
-  <%= link_to "Add Volunteer", new_volunteer_path, :class => 'btn btn-info btn-lg m-2' %>
-  <%= link_to "Add Time Record", new_time_record_path, :class => 'btn btn-info btn-lg m-2' %>
+  <p>View or add new records:</p>
+  <%= link_to "View Volunteers", volunteers_path, :class => 'btn btn-info btn-lg m-2' %>
+  <%= link_to "View Events", events_path, :class => 'btn btn-info btn-lg m-2' %>
 </div>
