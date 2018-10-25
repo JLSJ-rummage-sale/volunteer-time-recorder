@@ -5,6 +5,7 @@ class Volunteer < ApplicationRecord
 
     # Attributes: first_name, last_name, email_address, notes, phone, member_type_id
 
+    # Required fields:
     validates :first_name, presence: true
     validates :last_name, presence: true
     validates :email_address, presence: true

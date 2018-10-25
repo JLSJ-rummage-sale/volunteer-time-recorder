@@ -1,5 +1,6 @@
 class MemberType < ApplicationRecord
 
+    # Required fields:
     validates :name, presence: true
     validates :quota_hours, presence: true
 
