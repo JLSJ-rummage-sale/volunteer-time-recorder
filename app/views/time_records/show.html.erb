@@ -14,8 +14,13 @@
     <%= render(:partial => 'info_table') %>
   </div>
   <div style="padding: 8px" class="card-footer">
-    <%= link_to "Edit", edit_time_record_path(@time_record), :class => 'btn btn-primary' %>
-
-    <%= link_to("Delete", delete_time_record_path(@time_record), :class => 'btn btn-danger') %>
+    <div class="row">
+      <div class="col-6">
+        <%= link_to "Edit", edit_time_record_path(@time_record), :class => 'btn btn-primary btn-block' %>
+      </div>
+      <div class="col-6">
+        <%= link_to("Delete", delete_time_record_path(@time_record), :class => 'btn btn-danger btn-block') %>
+      </div>
+    </div>
   </div>
 </div>
