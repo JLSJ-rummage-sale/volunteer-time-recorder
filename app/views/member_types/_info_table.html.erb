@@ -13,7 +13,22 @@
             </tr>
             <tr>
                 <th scope="row">Quota Hours:</th>
-                <td><%= @member_type.quota_hours %></td>
+                <td><%= @member_type.quota_hours %> hours</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <table class="table table-sm">
+        <thead class="thead-light">
+            <tr>
+            <th scope="col">Volunteers with this Member Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><%= link_to (@member_type.volunteers_with_this_member_type.count.to_s + " members"), volunteers_path(:member_type => @member_type.id) %></td>
             </tr>
         </tbody>
     </table>

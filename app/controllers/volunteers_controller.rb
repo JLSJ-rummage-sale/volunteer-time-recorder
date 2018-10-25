@@ -33,7 +33,7 @@ class VolunteersController < ApplicationController
         @quota_hours = @member_type.quota_hours;
 
         percent = (@total_hours / @quota_hours) * 100;
-        @progress_percent = percent.round(1).to_s;
+        @progress_percent = percent.round(1);
     end
 
     # Called when rendering the New Volunteer page:

@@ -26,18 +26,18 @@
 </p>
 
 <p>
-    <%=form.label :name %><br>
+    <%=form.label :name, "Name (Optional)" %><br>
     <%= form.text_field(:name, {:class => 'form-control'}) %>
 </p>
 
 <p>
     <%=form.label :start_time %><br>
-    <%= form.datetime_select(:start_time, :ampm => true, :minute_step => 15, :class => 'form-control') %>
+    <%= form.datetime_select(:start_time, :use_short_month => true, :ampm => true, :default => Time.now, :datetime_separator => " at ", :minute_step => 15, :class => 'form-control') %>
 </p>
 
 <p>
     <%=form.label :end_time %><br>
-    <%= form.datetime_select(:end_time, :ampm => true, :minute_step => 15, :class => 'form-control') %>
+    <%= form.datetime_select(:end_time, :use_short_month => true, :ampm => true, :default => (Time.now + 1.hours), :datetime_separator => " at ", :minute_step => 15, :class => 'form-control') %>
 </p>
 
 <p>

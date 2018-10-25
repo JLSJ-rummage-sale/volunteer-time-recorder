@@ -19,18 +19,18 @@
 
 <p>
     <%=form.label :email_address %><br>
-    <%= form.text_field(:email_address, {:class => 'form-control'}) %>
+    <%= form.email_field(:email_address, {:class => 'form-control'}) %>
 </p>
 
 <p>
     <%=form.label :phone %><br>
-    <%= form.text_field(:phone, {:class => 'form-control'}) %>
+    <%= form.telephone_field(:phone, {:class => 'form-control'}) %>
 </p>
 
 <p>
     <%=form.label :member_type_id %><br>
     <% if (@member_types.first) # Check if there are any Member Type records: %>
-      <%= form.collection_select(:member_type_id, @member_types, :id, :name) %>
+      <%= form.collection_select(:member_type_id, @member_types, :id, :name, {:class => 'custom-select'}) %>
     <% end %>
     <%= link_to "Add Member Type", new_member_type_path, :class => 'btn btn-light btn-sm' %>
 </p>

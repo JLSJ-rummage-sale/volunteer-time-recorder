@@ -1,9 +1,9 @@
 <% @page_title = "All Events" %>
 
-<h1>Events</h1>
+<h2>Events</h2>
 
 <p>
-    <%= link_to "Add Event", new_event_path(@event), :class => 'btn btn-primary' %>
+    <%= link_to "Add Event", new_event_path(@event), :class => 'btn btn-success' %>
 </p>
 
 <div class="table-responsive">
@@ -20,7 +20,7 @@
                 <tr>
                     <th scope="row"><%= link_to event.name, event_path(event) %></th>
                     <td><%= event.year %></td>
-                    <td><%= link_to "View Event Details", event_path(event), :class => 'btn btn-secondary' %></td>
+                    <td><%= link_to "Details", event_path(event), :class => 'btn btn-secondary' %></td>
                 </tr>
             <% end %>
         </tbody>
