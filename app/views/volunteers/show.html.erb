@@ -14,13 +14,22 @@
     <%= render(:partial => 'info_table') %>
   </div>
   <div style="padding: 8px" class="card-footer">
-    <%= link_to "Edit", edit_volunteer_path(@volunteer), :class => 'btn btn-primary' %>
-
-    <%= link_to("Delete", delete_volunteer_path(@volunteer), :class => 'btn btn-danger') %>
+    <div class="row">
+      <div class="col-6">
+        <%= link_to "Edit", edit_volunteer_path(@volunteer), :class => 'btn btn-primary btn-block' %>
+      </div>
+      <div class="col-6">
+        <%= link_to("Delete", delete_volunteer_path(@volunteer), :class => 'btn btn-danger btn-block') %>
+      </div>
+    </div>
   </div>
 </div>
 
 <br>
-<%= link_to "Add Time Record", new_time_record_path(:volunteer_id => @volunteer.id), :class => 'btn btn-primary' %>
 
-<%= link_to "View Volunteer Time Records", time_records_path(:volunteer_id => @volunteer.id), :class => 'btn btn-info' %>
+<p>
+  <%= link_to "Add Time Record", new_time_record_path(:volunteer_id => @volunteer.id), :class => 'btn btn-success btn-block' %>
+</p>
+<p>
+  <%= link_to "View Volunteer Time Records", time_records_path(:volunteer_id => @volunteer.id), :class => 'btn btn-info btn-block' %>
+</p>
