@@ -11,13 +11,13 @@ class TimeRecordsController < ApplicationController
         # Check if a parent event was passed in (from "find_event" method below):
         if (@parent_volunteer) # Check if variable exists and is not nil.
             puts("Filtering by volunteer passed in.");
-            @time_records = @parent_volunteer.time_records.all;
+            @time_records = @parent_volunteer.time_records.sorted;
         elsif (@parent_event) # Check if variable exists and is not nil.
             puts("Filtering by event passed in.");
-            @time_records = @parent_event.time_records.all;
+            @time_records = @parent_event.time_records.sorted;
         else
             puts("NOT Filtering by event passed in.");
-            @time_records = TimeRecord.all;
+            @time_records = TimeRecord.sorted;
         end
     end
 
