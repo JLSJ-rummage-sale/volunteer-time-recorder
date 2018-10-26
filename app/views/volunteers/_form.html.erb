@@ -23,7 +23,7 @@
 </p>
 
 <p>
-    <%=form.label :phone %><br>
+    <%=form.label :phone, "Phone Number (Optional)" %><br>
     <%= form.telephone_field(:phone, {:class => 'form-control'}) %>
 </p>
 
@@ -36,6 +36,6 @@
 </p>
 
 <p>
-    <%=form.label :notes %><br>
+    <%=form.label :notes, "Notes (Optional)" %><br>
     <%= form.text_area(:notes, {:class => 'form-control'}) %>
 </p>

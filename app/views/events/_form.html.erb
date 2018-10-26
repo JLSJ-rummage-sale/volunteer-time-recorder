@@ -8,21 +8,21 @@
 <%# Display the form fields: %>
 
 <p>
-    <%=form.label :name %><br>
+    <%= form.label :name %><br>
     <%= form.text_field(:name, {:class => 'form-control'}) %>
 </p>
 
 <p>
-    <%=form.label :year %><br>
+    <%= form.label :year %><br>
     <%= form.number_field(:year, {:class => 'form-control'}) %>
 </p>
 
 <p>
-    <%=form.label :website %><br>
+    <%= form.label :website, "Website (Optional)" %><br>
     <%= form.text_field(:website, {:class => 'form-control'}) %>
 </p>
 
 <p>
-    <%=form.label :description %><br>
+    <%= form.label :description, "Description (Optional)" %><br>
     <%= form.text_area(:description, {:class => 'form-control'}) %>
 </p>
