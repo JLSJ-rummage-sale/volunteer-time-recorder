@@ -25,10 +25,10 @@
     <%= link_to "Add Volunteer", new_volunteer_path, :class => 'btn btn-light btn-sm' %>
 </p>
 
-<p>
+<!-- <p>
     <%=form.label :name, "Name (Optional)" %><br>
     <%= form.text_field(:name, {:class => 'form-control'}) %>
-</p>
+</p> -->
 
 <p>
     <%=form.label :start_time %><br>
@@ -41,11 +41,11 @@
 </p>
 
 <p>
-    <%=form.label :category %><br>
+    <%=form.label :category, "Category (Optional)" %><br>
     <%= form.text_field(:category, {:class => 'form-control'}) %>
 </p>
 
 <p>
-    <%=form.label :notes %><br>
+    <%=form.label :notes, "Notes (Optional)" %><br>
     <%= form.text_area(:notes, {:class => 'form-control'}) %>
 </p>

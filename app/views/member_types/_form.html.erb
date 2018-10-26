@@ -14,10 +14,10 @@
 
 <p>
     <%=form.label :quota_hours %><br>
-    <%= form.number_field(:quota_hours, {:class => 'form-control'}) %>
+    <%= form.number_field(:quota_hours, {:min => 0, :class => 'form-control'}) %>
 </p>
 
 <p>
-    <%=form.label :details %><br>
+    <%=form.label :details, "Details (Optional)" %><br>
     <%= form.text_area(:details, {:class => 'form-control'}) %>
 </p>
