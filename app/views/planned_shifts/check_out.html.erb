@@ -1,0 +1,32 @@
+<% @page_title = "Check Out" %>
+
+<h1>Check Out</h1>
+
+<%= form_for :planned_shift, :url => {:action => "checked_out"}, method: :patch  do |form| %>
+
+    <%# Display any form errors at the top of the form: %>
+    <% if @planned_shift.errors.any? %>
+        <% @planned_shift.errors.full_messages.each do |error_message| %>
+            <div class="alert alert-danger"><%= error_message %></div>
+        <% end %>
+    <% end %>
+
+    <p>
+        <%=form.label :sign_out_time %><br>
+        <%= form.datetime_select(:sign_out_time, :use_short_month => true, :ampm => true, :default => Time.current, :datetime_separator => " at ", :class => 'form-control') %>
+    </p>
+
+    <p>
+        <%=form.label :category, "Category (Optional)" %><br>
+        <%= form.text_field(:category, {:class => 'form-control'}) %>
+    </p>
+
+    <p>
+        <%=form.label :notes, "Notes (Optional)" %><br>
+        <%= form.text_area(:notes, {:class => 'form-control'}) %>
+    </p>
+
+    <p>
+        <%= form.submit("Check Out", {:class => 'btn btn-success btn-block'}) %>
+    </p>
+<% end %>

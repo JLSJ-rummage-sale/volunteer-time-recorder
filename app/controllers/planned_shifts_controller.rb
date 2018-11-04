@@ -79,8 +79,6 @@ class PlannedShiftsController < ApplicationController
       else
           @selected_event = Event.first;
       end
-
-
   end
 
   # Called when the New PlannedShift form is submitted:
@@ -147,12 +145,69 @@ class PlannedShiftsController < ApplicationController
       redirect_to(planned_shifts_path);
   end
 
+
+  # Other actions:
+
+  def check_in
+    # Get the planned_shift object that was selected:
+    @planned_shift = PlannedShift.find(params[:id]);
+
+    # @planned_shift.sign_in_time = Time.now;
+  end
+
+  def checked_in
+    # Get the planned_shift object that was selected:
+    @planned_shift = PlannedShift.find(params[:id]);
+
+    if(@planned_shift.update(check_in_params))
+        # Present a 1-time flash message to the user after redirect:
+        flash[:notice] = "Checked In successfully.";
+
+        # If saved to DB successfully, go to show page:
+        redirect_to @planned_shift;
+    else
+        # If validations prplanned_shifted save, reload form (with error message):
+        render 'check_in';
+    end
+  end
+
+  def check_out
+    # Get the planned_shift object that was selected:
+    @planned_shift = PlannedShift.find(params[:id]);
+  end
+
+  def checked_out
+    # Get the planned_shift object that was selected:
+    @planned_shift = PlannedShift.find(params[:id]);
+
+    if(@planned_shift.update(check_out_params))
+        # Present a 1-time flash message to the user after redirect:
+        flash[:notice] = "Checked Out successfully.";
+
+        # If saved to DB successfully, go to show page:
+        redirect_to @planned_shift;
+
+        # TODO: create a Time Record and save it....
+    else
+        # If validations prplanned_shifted save, reload form (with error message):
+        render 'check_out';
+    end
+  end
+
   private
 
   # Defines the acceptable fields for planned_shift:
   def planned_shift_params
       params.require(:planned_shift).permit(:start_time,
           :end_time, :name, :category, :notes, :event_id, :volunteer_id);
+  end
+
+  def check_in_params
+      params.require(:planned_shift).permit(:sign_in_time, :category, :notes);
+  end
+
+  def check_out_params
+      params.require(:planned_shift).permit(:sign_out_time, :category, :notes);
   end
 
 

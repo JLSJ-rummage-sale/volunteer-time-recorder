@@ -46,6 +46,11 @@ Rails.application.routes.draw do
     member do
       get :delete # Add delete action; not added by default in Rails.
           # This lets us use "delete_planned_shift_path".
+      get :check_in
+      patch :checked_in
+
+      get :check_out
+      patch :checked_out
     end
   end
 

@@ -81,7 +81,6 @@ class TimeRecordsController < ApplicationController
             @selected_event = Event.first;
         end
 
-
     end
 
     # Called when the New TimeRecord form is submitted:
