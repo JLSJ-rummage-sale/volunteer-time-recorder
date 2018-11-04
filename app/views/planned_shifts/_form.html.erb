@@ -1,0 +1,51 @@
+<%# Display any form errors at the top of the form: %>
+<% if @planned_shift.errors.any? %>
+    <% @planned_shift.errors.full_messages.each do |error_message| %>
+        <div class="alert alert-danger"><%= error_message %></div>
+    <% end %>
+<% end %>
+
+<%# Display the form fields: %>
+
+<p>
+    <%=form.label :event_id %><br>
+    <% if (@events.first) # Check if there are any Event records: %>
+      <%= form.collection_select(:event_id, @events, :id, :event_title,
+            {:selected => @selected_event.id }) %>
+    <% end %>
+    <%= link_to "Add Event", new_event_path, :class => 'btn btn-light btn-sm' %>
+</p>
+
+<p>
+    <%=form.label :volunteer_id %><br>
+    <% if (@volunteers.first) # Check if there are any Volunteer records: %>
+      <%= form.collection_select(:volunteer_id, @volunteers, :id, :full_name,
+            {:selected => @selected_volunteer.id}) %>
+    <% end %>
+    <%= link_to "Add Volunteer", new_volunteer_path, :class => 'btn btn-light btn-sm' %>
+</p>
+
+<p>
+    <%=form.label :name, "Name (Optional)" %><br>
+    <%= form.text_field(:name, {:class => 'form-control'}) %>
+</p>
+
+<p>
+    <%=form.label :start_time %><br>
+    <%= form.datetime_select(:start_time, :use_short_month => true, :ampm => true, :default => Time.current, :datetime_separator => " at ", :minute_step => 15, :class => 'form-control') %>
+</p>
+
+<p>
+    <%=form.label :end_time %><br>
+    <%= form.datetime_select(:end_time, :use_short_month => true, :ampm => true, :default => (Time.current + 1.hours), :datetime_separator => " at ", :minute_step => 15, :class => 'form-control') %>
+</p>
+
+<p>
+    <%=form.label :category, "Category (Optional)" %><br>
+    <%= form.text_field(:category, {:class => 'form-control'}) %>
+</p>
+
+<p>
+    <%=form.label :notes, "Notes (Optional)" %><br>
+    <%= form.text_area(:notes, {:class => 'form-control'}) %>
+</p>

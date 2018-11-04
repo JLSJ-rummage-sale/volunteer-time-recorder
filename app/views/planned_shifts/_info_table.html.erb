@@ -1,0 +1,89 @@
+<div>
+    <table class="table table-sm">
+        <thead class="thead-light">
+            <tr>
+            <th scope="col">Total Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><%= @total_time_text %></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <table class="table table-sm">
+        <thead class="thead-light">
+            <tr>
+            <th scope="col"></th>
+            <th scope="col">Time</th>
+            <th scope="col">Day</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">Start:</th>
+                <td><%= @planned_shift.start_time.strftime("%I:%M %p") %></td>
+                <td><%= @planned_shift.start_time.strftime("%a, %b %d") %></td>
+            </tr>
+            <tr>
+                <th scope="row">End:</th>
+                <td><%= @planned_shift.end_time.strftime("%I:%M %p") %></td>
+                <td><%= @planned_shift.end_time.strftime("%a, %b %d") %></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <table class="table table-sm">
+        <thead class="thead-light">
+            <tr>
+            <th scope="col">Details</th>
+            <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">Volunteer:</th>
+                <td><%= link_to(full_name_with_email(@volunteer), volunteer_path(@volunteer)) %></td>
+            </tr>
+            <tr>
+                <th scope="row">Event:</th>
+                <td><%= link_to(event_title(@event), event_path(@event)) %></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <table class="table table-sm">
+        <thead class="thead-light">
+            <tr>
+            <th scope="col">Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><%= @category_name  %></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <table class="table table-sm">
+        <thead class="thead-light">
+            <tr>
+            <th scope="col">Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><%= @planned_shift.notes %></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

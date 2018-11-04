@@ -1,0 +1,19 @@
+<% @page_title = "Add Planned Shift" %>
+
+<div>
+    <h3>Warning: Cannot add a Planned Shift yet</h3>
+
+    <p>
+      Before adding a Planned Shift, there must be at least one
+       Event and Volunteer created.
+    </p>
+</div>
+
+<div>
+    <p>
+      <%= link_to "Add Event", new_event_path, :class => 'btn btn-info' %>
+    </p>
+    <p>
+      <%= link_to "Add Volunteer", new_member_type_path, :class => 'btn btn-info' %>
+    </p>
+</div>

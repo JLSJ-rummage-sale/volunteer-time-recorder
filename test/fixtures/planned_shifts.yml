@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  start_time: 2018-11-03 17:14:51
+  end_time: 2018-11-03 17:14:51
+  name: MyString
+  category: MyString
+  notes: MyText
+  event: one
+  volunteer: one
+  time_record: one
+
+two:
+  start_time: 2018-11-03 17:14:51
+  end_time: 2018-11-03 17:14:51
+  name: MyString
+  category: MyString
+  notes: MyText
+  event: two
+  volunteer: two
+  time_record: two
