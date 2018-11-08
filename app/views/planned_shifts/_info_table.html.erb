@@ -111,6 +111,23 @@
     </table>
 </div>
 
+<% if(@time_record.present?) %>
+  <div>
+      <table class="table table-sm">
+          <thead class="thead-light">
+              <tr>
+              <th scope="col">Associated Time Record</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td><%= link_to("#{@time_record.total_hours} hours", time_record_path(@event)) %></td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+<% end %>
+
 <div>
     <table class="table table-sm">
         <thead class="thead-light">

@@ -15,6 +15,9 @@ class TimeRecordsController < ApplicationController
         elsif (@parent_event) # Check if variable exists and is not nil.
             puts("Filtering by event passed in.");
             @time_records = @parent_event.time_records.sorted;
+        elsif (@parent_planned_shift) # Check if variable exists and is not nil.
+            puts("Filtering by event passed in.");
+            @time_records = @parent_planned_shift.time_records.sorted;
         else
             puts("NOT Filtering by event passed in.");
             @time_records = TimeRecord.sorted;

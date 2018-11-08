@@ -40,7 +40,7 @@ class PlannedShiftsController < ApplicationController
 
       puts("Event OBJECT found in planned_shift: " + @event.name);
 
-      # Get the associated event:
+      # Get the associated volunteer:
       volunteer_id = @planned_shift.volunteer_id;
 
       puts("Volunteer ID found in planned_shift: " + volunteer_id.to_s);
@@ -48,6 +48,18 @@ class PlannedShiftsController < ApplicationController
       @volunteer = Volunteer.find(volunteer_id);
 
       puts("Volunteer OBJECT found in planned_shift: " + @volunteer.email_address);
+
+      # Get the associated time_record:
+      time_record_id = @planned_shift.time_record_id;
+
+      if (time_record_id)
+        puts("TimeRecord ID found in planned_shift: " + time_record_id.to_s);
+
+        @time_record = TimeRecord.find(time_record_id);
+
+        puts("TimeRecord OBJECT found in planned_shift: time_record.id: " + @time_record.id.to_s);
+      end
+
   end
 
   # Called when rendering the New PlannedShift page:
@@ -181,15 +193,28 @@ class PlannedShiftsController < ApplicationController
     @planned_shift = PlannedShift.find(params[:id]);
 
     if(@planned_shift.update(check_out_params))
-        # Present a 1-time flash message to the user after redirect:
-        flash[:notice] = "Checked Out successfully.";
+        # Create a Time Record with the same details as the check-in/out times:
+        time_record = create_associated_time_record(@planned_shift)
 
-        # If saved to DB successfully, go to show page:
-        redirect_to @planned_shift;
+        # Update with newly associated Time Record:
+        @planned_shift.time_record_id = time_record.id
 
-        # TODO: create a Time Record and save it....
+        if (@planned_shift.save)
+          # Present a 1-time flash message to the user after redirect:
+          flash[:notice] = "Checked Out successfully.";
+
+          # If saved to DB successfully, go to show page:
+          redirect_to @planned_shift;
+        else
+          # Present a 1-time flash message to the user after redirect:
+          flash[:notice] = "Failed to Check Out (failed to create a Time Record). Contact the site admin.";
+
+          # If validations prevented save, reload form (with error message):
+          render 'check_out';
+        end
+
     else
-        # If validations prplanned_shifted save, reload form (with error message):
+        # If validations prevented save, reload form (with error message):
         render 'check_out';
     end
   end
@@ -210,7 +235,15 @@ class PlannedShiftsController < ApplicationController
       params.require(:planned_shift).permit(:sign_out_time, :category, :notes);
   end
 
+  def create_associated_time_record(planned_shift)
+    time_record = TimeRecord.create(start_time: planned_shift.sign_in_time,
+        end_time: planned_shift.sign_out_time,
+        category: planned_shift.category,
+        event_id: planned_shift.event_id,
+        volunteer_id:planned_shift.volunteer_id);
 
+    return time_record
+  end
 
   # A Before-Action method to get the event passed from a different controller:
   # Sets a variable 'parent_event' if an event object was passed in:
