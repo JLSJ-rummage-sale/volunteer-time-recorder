@@ -1,18 +1,3 @@
-<div>
-    <table class="table table-sm">
-        <thead class="thead-light">
-            <tr>
-            <th scope="col">Total Time</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><%= @total_time_text %></td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
 
 <div>
     <table class="table table-sm">
@@ -24,6 +9,11 @@
             </tr>
         </thead>
         <tbody>
+            <tr>
+                <th scope="row"></th>
+                <td><%= @total_planned_time_text %></td>
+                <td></td>
+            </tr>
             <tr>
                 <th scope="row">Shift Start Time:</th>
                 <td><%= @planned_shift.start_time.strftime("%I:%M %p") %></td>
@@ -49,6 +39,13 @@
         </thead>
         <tbody>
             <tr>
+                <% if(@total_actual_time_text) %>
+                  <tr>
+                      <th scope="row"></th>
+                      <td><%= link_to(@total_actual_time_text, time_record_path(@time_record)) %></td>
+                      <td></td>
+                  </tr>
+                <% end %>
                 <th scope="row">Check-In Time:</th>
                 <% if(@planned_shift.sign_in_time) %>
                   <td><%= @planned_shift.sign_in_time.strftime("%I:%M %p") %></td>
@@ -121,7 +118,7 @@
           </thead>
           <tbody>
               <tr>
-                  <td><%= link_to("#{@time_record.total_hours} hours", time_record_path(@event)) %></td>
+                  <td><%= link_to("#{@time_record.total_hours} hours", time_record_path(@time_record)) %></td>
               </tr>
           </tbody>
       </table>

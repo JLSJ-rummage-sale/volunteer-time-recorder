@@ -24,7 +24,11 @@ class PlannedShiftsController < ApplicationController
       # Get the planned_shift object that was selected:
       @planned_shift = PlannedShift.find(params[:id]);
 
-      @total_time_text = TimeDifference.between(@planned_shift.start_time, @planned_shift.end_time).humanize;
+      @total_planned_time_text = TimeDifference.between(@planned_shift.start_time, @planned_shift.end_time).humanize;
+
+      if (@planned_shift.sign_in_time && @planned_shift.sign_out_time)
+        @total_actual_time_text = TimeDifference.between(@planned_shift.sign_in_time, @planned_shift.sign_out_time).humanize;
+      end
 
       @category_name = @planned_shift.category;
       if @category_name.empty?
