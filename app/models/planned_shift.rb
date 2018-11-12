@@ -6,6 +6,7 @@ class PlannedShift < ApplicationRecord
   # Scopes:
 
   scope :sorted, lambda { order("start_time DESC") }
+  scope :chronologically, lambda { order("start_time ASC") }
 
   # Other methods:
 

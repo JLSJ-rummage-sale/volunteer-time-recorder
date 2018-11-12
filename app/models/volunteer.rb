@@ -1,6 +1,7 @@
 class Volunteer < ApplicationRecord
 
     has_many :time_records, :dependent => :delete_all
+    has_many :planned_shifts, :dependent => :delete_all
     has_one :member_type
 
     # Attributes: first_name, last_name, email_address, notes, phone, member_type_id

@@ -72,12 +72,43 @@
                             <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow=100 aria-valuemin="0" aria-valuemax="100">COMPLETE</div>
                         </div>
                     <% end %>
-
                 </td>
             </tr>
         </tbody>
     </table>
 </div>
+
+<!-- Planned Shifts: -->
+<div>
+    <table class="table table-sm">
+        <thead class="thead-light">
+            <tr>
+            <th scope="col">Planned Shifts</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+          <% @planned_shifts.each do |shift| %>
+            <tr>
+                <% if (shift.name.to_s.empty?) %>
+                  <td><%= link_to("[Shift]", planned_shift_path(shift)) %></td>
+                <% else %>
+                  <td><%= link_to(shift.name, planned_shift_path(shift)) %></td>
+                <% end %>
+                <td><%= shift.start_time.strftime("%I:%M %p") %> - <%= shift.end_time.strftime("%I:%M %p") %></td>
+                <td><%= shift.start_time.strftime("%a, %b %d") %></td>
+            </tr>
+          <% end %>
+          <tr>
+            <td><%= link_to "Add Shift", new_planned_shift_path, :class => 'btn btn-secondary btn-block btn-sm' %></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+    </table>
+</div>
+
 
 <div>
     <table class="table table-sm">

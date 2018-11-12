@@ -34,6 +34,8 @@ class VolunteersController < ApplicationController
 
         percent = (@total_hours / @quota_hours) * 100;
         @progress_percent = percent.round(1);
+
+        @planned_shifts = @volunteer.planned_shifts.chronologically
     end
 
     # Called when rendering the New Volunteer page:
