@@ -54,15 +54,18 @@ class PlannedShiftsController < ApplicationController
       puts("Volunteer OBJECT found in planned_shift: " + @volunteer.email_address);
 
       # Get the associated time_record:
-      time_record_id = @planned_shift.time_record_id;
+      # time_record_id = @planned_shift.time_record_id;
+      #
+      # if (time_record_id)
+      #   puts("TimeRecord ID found in planned_shift: " + time_record_id.to_s);
+      #
+      #   @time_record = TimeRecord.find(time_record_id);
+      #
+      #   puts("TimeRecord OBJECT found in planned_shift: time_record.id: " + @time_record.id.to_s);
+      # end
 
-      if (time_record_id)
-        puts("TimeRecord ID found in planned_shift: " + time_record_id.to_s);
-
-        @time_record = TimeRecord.find(time_record_id);
-
-        puts("TimeRecord OBJECT found in planned_shift: time_record.id: " + @time_record.id.to_s);
-      end
+      @time_record = @planned_shift.associcated_time_record
+      puts ("Assoiciated Time Record Found = #{@planned_shift.associcated_time_record}")
 
   end
 
@@ -165,6 +168,10 @@ class PlannedShiftsController < ApplicationController
   # Other actions:
 
   def check_in
+    # TODO:
+    # Check if already checked-in:
+    #  TODO....rediect to different page.
+
     # Get the planned_shift object that was selected:
     @planned_shift = PlannedShift.find(params[:id]);
 
@@ -188,6 +195,10 @@ class PlannedShiftsController < ApplicationController
   end
 
   def check_out
+    # TODO:
+    # Check if already checked-out:
+    #  TODO....rediect to different page.
+
     # Get the planned_shift object that was selected:
     @planned_shift = PlannedShift.find(params[:id]);
   end

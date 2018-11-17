@@ -13,4 +13,24 @@ class PlannedShift < ApplicationRecord
   def total_hours
     return TimeDifference.between(self.start_time, self.end_time).in_hours;
   end
+
+  def associcated_time_record
+    # Get the associated time_record:
+    time_record_id = self.time_record_id;
+
+    if (time_record_id)
+      puts("TimeRecord ID found in planned_shift: " + time_record_id.to_s);
+
+      time_record = TimeRecord.find(time_record_id);
+
+      puts("TimeRecord OBJECT found in planned_shift: time_record: " + time_record.to_string);
+
+      return time_record
+    else
+      return nil
+    end
+
+  end
+
+
 end

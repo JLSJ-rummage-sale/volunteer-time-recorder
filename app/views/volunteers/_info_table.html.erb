@@ -86,6 +86,7 @@
             <th scope="col">Planned Shifts</th>
             <th scope="col"></th>
             <th scope="col"></th>
+            <th scope="col">Actual Time</th>
             </tr>
         </thead>
         <tbody>
@@ -98,15 +99,30 @@
                 <% end %>
                 <td><%= shift.start_time.strftime("%I:%M %p") %> - <%= shift.end_time.strftime("%I:%M %p") %></td>
                 <td><%= shift.start_time.strftime("%a, %b %d") %></td>
+                <td>
+                  <% if (shift.associcated_time_record) %>
+                    <%= link_to(shift.associcated_time_record.total_time_text, time_record_path(shift.associcated_time_record)) %>
+                  <% elsif (shift.sign_in_time) %>
+                    <%= link_to "Check Out", check_out_planned_shift_path(shift), :class => 'btn btn-secondary btn-sm' %>
+                  <% else %>
+                    <%= link_to "Check In", check_in_planned_shift_path(shift), :class => 'btn btn-secondary btn-sm' %>
+                  <% end %>
+                </td>
             </tr>
           <% end %>
-          <tr>
-            <td><%= link_to "Add Shift", new_planned_shift_path, :class => 'btn btn-secondary btn-block btn-sm' %></td>
-            <td></td>
-            <td></td>
-          </tr>
+          <% if (@planned_shifts.empty?) %>
+            <tr>
+              <td> No Planned Shifts yet. </td>
+            </tr>
+          <% end %>
         </tbody>
     </table>
+</div>
+
+<div>
+  <p>
+    <%= link_to "Add Shift", new_planned_shift_path(:volunteer_id => @volunteer.id), :class => 'btn btn-secondary btn-block btn-sm mx-auto-2' %>
+  </p>
 </div>
 
 
