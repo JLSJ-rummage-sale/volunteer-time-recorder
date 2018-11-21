@@ -1,0 +1,141 @@
+
+<div>
+    <table class="table table-sm">
+        <thead class="thead-light">
+            <tr>
+            <th scope="col"></th>
+            <th scope="col">Planned Time</th>
+            <th scope="col">Day</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row"></th>
+                <td><%= @total_planned_time_text %></td>
+                <td></td>
+            </tr>
+            <tr>
+                <th scope="row">Shift Start Time:</th>
+                <td><%= @planned_shift.start_time.strftime("%I:%M %p") %></td>
+                <td><%= @planned_shift.start_time.strftime("%a, %b %d") %></td>
+            </tr>
+            <tr>
+                <th scope="row">Shift End Time:</th>
+                <td><%= @planned_shift.end_time.strftime("%I:%M %p") %></td>
+                <td><%= @planned_shift.end_time.strftime("%a, %b %d") %></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <table class="table table-sm">
+        <thead class="thead-light">
+            <tr>
+            <th scope="col"></th>
+            <th scope="col">Actual Time</th>
+            <th scope="col">Day</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <% if(@total_actual_time_text) %>
+                  <tr>
+                      <th scope="row"></th>
+                      <td><%= link_to(@total_actual_time_text, time_record_path(@time_record)) %></td>
+                      <td></td>
+                  </tr>
+                <% end %>
+                <th scope="row">Check-In Time:</th>
+                <% if(@planned_shift.sign_in_time) %>
+                  <td><%= @planned_shift.sign_in_time.strftime("%I:%M %p") %></td>
+                  <td><%= @planned_shift.sign_in_time.strftime("%a, %b %d") %></td>
+                <% else %>
+                  <td>Not Checked In yet</td>
+                  <td><%= link_to "Check In", check_in_planned_shift_path(@planned_shift), :class => 'btn btn-secondary' %></td>
+                <% end %>
+            </tr>
+            <tr>
+                <th scope="row">Check-Out Time:</th>
+                <% if(@planned_shift.sign_out_time) %>
+                  <td><%= @planned_shift.sign_out_time.strftime("%I:%M %p") %></td>
+                  <td><%= @planned_shift.sign_out_time.strftime("%a, %b %d") %></td>
+                <% elsif(@planned_shift.sign_in_time) %>
+                  <td>Not Checked Out yet</td>
+                  <td><%= link_to "Check Out", check_out_planned_shift_path(@planned_shift), :class => 'btn btn-secondary' %></td>
+                <% else %>
+                  <td>Not Checked Out yet</td>
+                  <td></td>
+                <% end %>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <table class="table table-sm">
+        <thead class="thead-light">
+            <tr>
+            <th scope="col">Details</th>
+            <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">Volunteer:</th>
+                <td><%= link_to(full_name_with_email(@volunteer), volunteer_path(@volunteer)) %></td>
+            </tr>
+            <tr>
+                <th scope="row">Event:</th>
+                <td><%= link_to(event_title(@event), event_path(@event)) %></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <table class="table table-sm">
+        <thead class="thead-light">
+            <tr>
+            <th scope="col">Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><%= @category_name  %></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<% if(@time_record.present?) %>
+  <div>
+      <table class="table table-sm">
+          <thead class="thead-light">
+              <tr>
+              <th scope="col">Associated Time Record</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td><%= link_to("#{@time_record.total_hours} hours", time_record_path(@time_record)) %></td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+<% end %>
+
+<div>
+    <table class="table table-sm">
+        <thead class="thead-light">
+            <tr>
+            <th scope="col">Notes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><%= @planned_shift.notes %></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

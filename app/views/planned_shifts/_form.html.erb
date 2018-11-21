@@ -1,6 +1,6 @@
 <%# Display any form errors at the top of the form: %>
-<% if @time_record.errors.any? %>
-    <% @time_record.errors.full_messages.each do |error_message| %>
+<% if @planned_shift.errors.any? %>
+    <% @planned_shift.errors.full_messages.each do |error_message| %>
         <div class="alert alert-danger"><%= error_message %></div>
     <% end %>
 <% end %>
@@ -25,19 +25,19 @@
     <%= link_to "Add Volunteer", new_volunteer_path, :class => 'btn btn-light btn-sm' %>
 </p>
 
-<!-- <p>
+<p>
     <%=form.label :name, "Name (Optional)" %><br>
     <%= form.text_field(:name, {:class => 'form-control'}) %>
-</p> -->
+</p>
 
 <p>
     <%=form.label :start_time %><br>
-    <%= form.datetime_select(:start_time, :use_short_month => true, :ampm => true, :default => Time.current, :datetime_separator => " at ", :class => 'form-control') %>
+    <%= form.datetime_select(:start_time, :use_short_month => true, :ampm => true, :default => Time.current, :datetime_separator => " at ", :minute_step => 15, :class => 'form-control') %>
 </p>
 
 <p>
     <%=form.label :end_time %><br>
-    <%= form.datetime_select(:end_time, :use_short_month => true, :ampm => true, :default => (Time.current + 1.hours), :datetime_separator => " at ", :class => 'form-control') %>
+    <%= form.datetime_select(:end_time, :use_short_month => true, :ampm => true, :default => (Time.current + 1.hours), :datetime_separator => " at ", :minute_step => 15, :class => 'form-control') %>
 </p>
 
 <p>

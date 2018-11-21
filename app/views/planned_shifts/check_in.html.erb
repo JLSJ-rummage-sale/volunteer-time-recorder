@@ -1,0 +1,32 @@
+<% @page_title = "Check In" %>
+
+<h1>Check In</h1>
+
+<%= form_for :planned_shift, :url => {:action => "checked_in"}, method: :patch  do |form| %>
+
+    <%# Display any form errors at the top of the form: %>
+    <% if @planned_shift.errors.any? %>
+        <% @planned_shift.errors.full_messages.each do |error_message| %>
+            <div class="alert alert-danger"><%= error_message %></div>
+        <% end %>
+    <% end %>
+
+    <p>
+        <%=form.label :sign_in_time %><br>
+        <%= form.datetime_select(:sign_in_time, :use_short_month => true, :ampm => true, :default => Time.current, :datetime_separator => " at ", :class => 'form-control') %>
+    </p>
+
+    <p>
+        <%=form.label :category, "Category (Optional)" %><br>
+        <%= form.text_field(:category, {:class => 'form-control'}) %>
+    </p>
+
+    <p>
+        <%=form.label :notes, "Notes (Optional)" %><br>
+        <%= form.text_area(:notes, {:class => 'form-control'}) %>
+    </p>
+
+    <p>
+        <%= form.submit("Check In", {:class => 'btn btn-success btn-block'}) %>
+    </p>
+<% end %>

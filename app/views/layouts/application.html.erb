@@ -30,6 +30,12 @@
           </div>
         <% end %>
 
+        <% if !flash[:alert].blank? %>
+          <div class="alert alert-danger">
+              <%= flash[:alert] %>
+          </div>
+        <% end %>
+
         <%= yield %>
 
       </div>

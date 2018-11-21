@@ -1,0 +1,26 @@
+<% @page_title = "View Planned Shift" %>
+
+<h5>Planned Shift</h5>
+
+<p>
+    <%= link_to "View All Planned Shifts", planned_shifts_path, :class => 'btn btn-light' %>
+</p>
+
+<div class="card">
+  <div style="padding: 8px" class="card-header">
+    <h2><%= @planned_shift.name %></h2>
+  </div>
+  <div style="padding: 2px" class="card-body">
+    <%= render(:partial => 'info_table') %>
+  </div>
+  <div style="padding: 8px" class="card-footer">
+    <div class="row">
+      <div class="col-6">
+        <%= link_to "Edit", edit_planned_shift_path(@planned_shift), :class => 'btn btn-primary btn-block' %>
+      </div>
+      <div class="col-6">
+        <%= link_to("Delete", delete_planned_shift_path(@planned_shift), :class => 'btn btn-danger btn-block') %>
+      </div>
+    </div>
+  </div>
+</div>

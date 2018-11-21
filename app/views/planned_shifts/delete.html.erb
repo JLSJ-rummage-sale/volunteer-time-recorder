@@ -1,0 +1,17 @@
+<% @page_title = "Delete Planned Shift" %>
+
+<div class="planned_shifts delete">
+    <h1>Delete Planned Shift?</h1>
+
+    <%= form_for(@planned_shift, :method => 'delete') do |form| %>
+
+        <p>Are you sure you want to permanently delete this Planned Shift?</p>
+
+        <p class="reference-name"><%= @planned_shift.name %></p>
+
+        <div class="form-buttons">
+            <%= form.submit("Delete Planned Shift", {:class => 'btn btn-danger'}) %>
+        </div>
+
+    <% end %>
+</div>

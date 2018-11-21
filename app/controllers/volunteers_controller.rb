@@ -8,11 +8,11 @@ class VolunteersController < ApplicationController
         end
 
         if params[:search]
-          @search_filter = params[:search].to_s;
+          @search_filter = params[:search].to_s.downcase;
         end
 
         # Check if a 'search' parameter was passed in:
-        @volunteers = Volunteer.search(params[:search]).of_member_type(params[:member_type]).sorted.page(params[:page]).per(10);
+        @volunteers = Volunteer.search(@search_filter).of_member_type(params[:member_type]).sorted.page(params[:page]).per(10);
         # if params[:search]
         #     @volunteers = Volunteer.search(params[:search]).sorted.page(params[:page]).per(10); #paginate(:page => params[:page], :per_page => 10);
         # else
@@ -34,6 +34,8 @@ class VolunteersController < ApplicationController
 
         percent = (@total_hours / @quota_hours) * 100;
         @progress_percent = percent.round(1);
+
+        @planned_shifts = @volunteer.planned_shifts.chronologically
     end
 
     # Called when rendering the New Volunteer page:

@@ -1,0 +1,12 @@
+<% @page_title = "Add Planned Shift" %>
+
+<h1>Add Planned Shift</h1>
+
+<%= form_for :planned_shift, url: planned_shifts_path do |form| %>
+
+    <%= render(:partial => 'form', :locals => {:form => form}) %>
+
+    <p>
+        <%= form.submit("Add Planned Shift", {:class => 'btn btn-success btn-block'}) %>
+    </p>
+<% end %>

@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   resources :events do
     # Make time_records a nested resource (ex: volunteers/1/time_records/1):
     resources :time_records;
-    
+
     member do
       get :delete # Add delete action; not added by default in Rails.
           # This lets us use "delete_volunteer_path".
@@ -39,6 +39,18 @@ Rails.application.routes.draw do
     member do
       get :delete # Add delete action; not added by default in Rails.
           # This lets us use "delete_volunteer_path".
+    end
+  end
+
+  resources :planned_shifts do
+    member do
+      get :delete # Add delete action; not added by default in Rails.
+          # This lets us use "delete_planned_shift_path".
+      get :check_in
+      patch :checked_in
+
+      get :check_out
+      patch :checked_out
     end
   end
 
