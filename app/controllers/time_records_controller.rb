@@ -3,6 +3,8 @@ class TimeRecordsController < ApplicationController
     # Before-Actions: (These will be executed before any public action below)
     before_action :find_parent_event, :only => [:index, :new];
     before_action :find_parent_volunteer, :only => [:index, :new];
+    before_action :set_event_list, :only => [:new, :create]
+    before_action :set_volunteer_list, :only => [:new, :create]
 
     # CRUD Actions:
 
@@ -64,26 +66,6 @@ class TimeRecordsController < ApplicationController
 
         # Create a new time_record instance that will be used in the form:
         @time_record = TimeRecord.new;
-
-        # Get all volunteer and event records for the form selection:
-        @volunteers = Volunteer.sorted;
-        @events = Event.all;
-
-        # Get preselected Event or Volunteer:
-        if (@parent_volunteer) # Check if variable exists and is not nil.
-            @selected_volunteer = @parent_volunteer;
-            puts("Set SELECTED_VOLUNTEER to " + @selected_volunteer.email_address);
-        else
-            @selected_volunteer = Volunteer.first;
-        end
-
-        if (@parent_event) # Check if variable exists and is not nil.
-            @selected_event = @parent_event;
-            puts("Set SELECTED_EVENT to " + @selected_event.name);
-        else
-            @selected_event = Event.first;
-        end
-
     end
 
     # Called when the New TimeRecord form is submitted:
@@ -99,7 +81,13 @@ class TimeRecordsController < ApplicationController
             redirect_to @time_record;
         else
             # If validations prtime_recorded save, reload form (with error message):
-            render 'new';
+
+            redirect_to new_time_record_path(@time_record,
+              :event_id => @time_record.event_id,
+              :volunteer_id => @time_record.volunteer_id)
+
+            # Need to get errors indirectly because redirecting won't automatically show erors:
+            flash[:alert] = @time_record.errors.full_messages.join("\n");
         end
     end
 
@@ -190,6 +178,32 @@ class TimeRecordsController < ApplicationController
         else
             puts("didn't find volunteer.")
         end
+    end
+
+    def set_event_list
+      # Get all event records for the form selection:
+      @events = Event.all;
+
+      # Get preselected Event:
+      if (@parent_event) # Check if variable exists and is not nil.
+          @selected_event = @parent_event;
+          puts("Set SELECTED_EVENT to " + @selected_event.name);
+      else
+          @selected_event = Event.first;
+      end
+    end
+
+    def set_volunteer_list
+      # Get all volunteer records for the form selection:
+      @volunteers = Volunteer.sorted;
+
+      # Get preselected Volunteer:
+      if (@parent_volunteer) # Check if variable exists and is not nil.
+          @selected_volunteer = @parent_volunteer;
+          puts("Set SELECTED_VOLUNTEER to " + @selected_volunteer.email_address);
+      else
+          @selected_volunteer = Volunteer.first;
+      end
     end
 
 
