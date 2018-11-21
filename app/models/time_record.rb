@@ -8,7 +8,7 @@ class TimeRecord < ApplicationRecord
 
   def has_valid_time_range
     if (end_time <= start_time)
-      errors.add(:end_time, "must come after start time")
+      errors.add(:end_time, "must come after start time. Please enter a valid time range.")
     end
   end
 

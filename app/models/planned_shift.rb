@@ -3,6 +3,16 @@ class PlannedShift < ApplicationRecord
   belongs_to :volunteer
   has_one :time_record
 
+  # Validations:
+
+  validate :has_valid_time_range # Custom Validation.
+
+  def has_valid_time_range
+    if (end_time <= start_time)
+      errors.add(:end_time, "must come after start time. Please enter a valid time range.")
+    end
+  end
+
   # Scopes:
 
   scope :sorted, lambda { order("start_time DESC") }

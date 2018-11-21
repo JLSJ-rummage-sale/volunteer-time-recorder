@@ -80,11 +80,11 @@ class TimeRecordsController < ApplicationController
             # If saved to DB successfully, go to show page:
             redirect_to @time_record;
         else
-            # If validations prtime_recorded save, reload form (with error message):
+            # If validations prevented save, reload form (with error message):
 
             redirect_to new_time_record_path(@time_record,
               :event_id => @time_record.event_id,
-              :volunteer_id => @time_record.volunteer_id)
+              :volunteer_id => @time_record.volunteer_id);
 
             # Need to get errors indirectly because redirecting won't automatically show erors:
             flash[:alert] = @time_record.errors.full_messages.join("\n");

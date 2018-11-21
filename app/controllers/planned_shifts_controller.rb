@@ -111,10 +111,16 @@ class PlannedShiftsController < ApplicationController
 
           # If saved to DB successfully, go to show page:
           redirect_to @planned_shift;
-      else
-          # If validations prplanned_shifted save, reload form (with error message):
-          render 'new';
-      end
+        else
+            # If validations prevented save, reload form (with error message):
+
+            redirect_to new_planned_shift_path(@planned_shift,
+              :event_id => @planned_shift.event_id,
+              :volunteer_id => @planned_shift.volunteer_id);
+
+            # Need to get errors indirectly because redirecting won't automatically show erors:
+            flash[:alert] = @planned_shift.errors.full_messages.join("\n");
+        end
   end
 
   # Called when rendering the Edit PlannedShift page:
