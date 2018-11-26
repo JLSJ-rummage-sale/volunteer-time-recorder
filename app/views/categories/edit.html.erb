@@ -1,0 +1,12 @@
+<% @page_title = "Edit Category" %>
+
+<h1>Edit Event</h1>
+
+<%= form_for :category, url: category_path(@category), method: :patch do |form| %>
+
+    <%= render(:partial => 'form', :locals => {:form => form}) %>
+
+    <p>
+        <%= form.submit("Save Category", {:class => 'btn btn-success btn-block'}) %>
+    </p>
+<% end %>

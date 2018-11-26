@@ -1,0 +1,26 @@
+<% @page_title = "View Category" %>
+
+<h5>Category Record</h5>
+
+<p>
+    <%= link_to "View All Categories", categories_path, :class => 'btn btn-light' %>
+</p>
+
+<div class="card">
+  <div style="padding: 8px" class="card-header">
+    <h2><%= @category.name %></h2>
+  </div>
+  <div style="padding: 2px" class="card-body">
+    <%= render(:partial => 'info_table') %>
+  </div>
+  <div style="padding: 8px" class="card-footer">
+    <div class="row">
+      <div class="col-6">
+        <%= link_to "Edit", edit_category_path(@category), :class => 'btn btn-primary btn-block' %>
+      </div>
+      <div class="col-6">
+        <%= link_to("Delete", delete_category_path(@category), :class => 'btn btn-danger btn-block') %>
+      </div>
+    </div>
+  </div>
+</div>
