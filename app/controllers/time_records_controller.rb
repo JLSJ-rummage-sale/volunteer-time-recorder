@@ -32,9 +32,9 @@ class TimeRecordsController < ApplicationController
 
         @total_time_text = TimeDifference.between(@time_record.start_time, @time_record.end_time).humanize;
 
-        @category_name = @time_record.category;
-        if @category_name.empty?
-            @category_name = "[None]";
+        @category_name = "[None]";
+        if @time_record.category
+            @category_name = @time_record.category.name;
         end
 
         # Get the associated event:
@@ -66,6 +66,12 @@ class TimeRecordsController < ApplicationController
 
         # Create a new time_record instance that will be used in the form:
         @time_record = TimeRecord.new;
+
+        # Get all volunteer records for the form selection:
+        @categories = Category.all;
+
+        # Get preselected Category:
+        @selected_category = Category.first;
     end
 
     # Called when the New TimeRecord form is submitted:
@@ -103,6 +109,14 @@ class TimeRecordsController < ApplicationController
         # Set the default selected event & volunteer in the form:
         @selected_event = Event.find(@time_record.event_id);
         @selected_volunteer = Volunteer.find(@time_record.volunteer_id);
+
+        # Get all volunteer records for the form selection:
+        @categories = Category.all;
+        # Get preselected Category:
+        @selected_category = Category.first;
+        if (@time_record.category) # Check if variable exists and is not nil.
+            @selected_category = @time_record.category;
+        end
     end
 
     # Called when the Edit TimeRecord form is submitted:
@@ -143,7 +157,7 @@ class TimeRecordsController < ApplicationController
     # Defines the acceptable fields for time_record:
     def time_record_params
         params.require(:time_record).permit(:start_time,
-            :end_time, :name, :category, :notes, :event_id, :volunteer_id);
+            :end_time, :name, :notes, :event_id, :volunteer_id, :category_id);
     end
 
 

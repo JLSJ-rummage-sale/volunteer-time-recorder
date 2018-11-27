@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181126195934) do
+ActiveRecord::Schema.define(version: 20181127032756) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -57,12 +57,13 @@ ActiveRecord::Schema.define(version: 20181126195934) do
     t.datetime "start_time"
     t.datetime "end_time"
     t.string "name"
-    t.string "category"
     t.text "notes"
     t.integer "event_id"
     t.integer "volunteer_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "category_id"
+    t.index ["category_id"], name: "index_time_records_on_category_id"
     t.index ["event_id"], name: "index_time_records_on_event_id"
     t.index ["volunteer_id"], name: "index_time_records_on_volunteer_id"
   end
