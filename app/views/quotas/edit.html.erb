@@ -1,0 +1,12 @@
+<% @page_title = "Edit Quota" %>
+
+<h1>Edit Event</h1>
+
+<%= form_for :quota, url: quota_path(@quota), method: :patch do |form| %>
+
+    <%= render(:partial => 'form', :locals => {:form => form}) %>
+
+    <p>
+        <%= form.submit("Save Quota", {:class => 'btn btn-success btn-block'}) %>
+    </p>
+<% end %>

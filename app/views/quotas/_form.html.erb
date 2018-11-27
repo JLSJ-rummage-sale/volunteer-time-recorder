@@ -1,0 +1,18 @@
+<%# Display any form errors at the top of the form: %>
+<% if @quota.errors.any? %>
+    <% @quota.errors.full_messages.each do |error_message| %>
+        <div class="alert alert-danger"><%= error_message %></div>
+    <% end %>
+<% end %>
+
+<%# Display the form fields: %>
+
+<p>
+    <%= form.label :name %><br>
+    <%= form.text_field(:name, {:class => 'form-control'}) %>
+</p>
+
+<p>
+    <%=form.label :hours %><br>
+    <%= form.number_field(:hours, {:min => 0, :class => 'form-control'}) %>
+</p>

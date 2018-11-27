@@ -1,0 +1,26 @@
+<% @page_title = "View Quota" %>
+
+<h5>Quota Record</h5>
+
+<p>
+    <%= link_to "View All Quotas", quotas_path, :class => 'btn btn-light' %>
+</p>
+
+<div class="card">
+  <div style="padding: 8px" class="card-header">
+    <h2><%= @quota.name %></h2>
+  </div>
+  <div style="padding: 2px" class="card-body">
+    <%= render(:partial => 'info_table') %>
+  </div>
+  <div style="padding: 8px" class="card-footer">
+    <div class="row">
+      <div class="col-6">
+        <%= link_to "Edit", edit_quota_path(@quota), :class => 'btn btn-primary btn-block' %>
+      </div>
+      <div class="col-6">
+        <%= link_to("Delete", delete_quota_path(@quota), :class => 'btn btn-danger btn-block') %>
+      </div>
+    </div>
+  </div>
+</div>

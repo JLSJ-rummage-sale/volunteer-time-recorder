@@ -1,0 +1,17 @@
+<% @page_title = "Delete Quota" %>
+
+<div class="quotas delete">
+    <h1>Delete Quota?</h1>
+
+    <%= form_for(@quota, :method => 'delete') do |form| %>
+
+        <p>Are you sure you want to permanently delete this quota record?</p>
+
+        <p class="reference-name"><%= @quota.name %></p>
+
+        <div class="form-buttons">
+            <%= form.submit("Delete Quota", {:class => 'btn btn-danger'}) %>
+        </div>
+
+    <% end %>
+</div>

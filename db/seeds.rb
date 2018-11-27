@@ -11,13 +11,13 @@ include Faker
 
 # Member Types:
 
-MemberType.create(
-  name: "New",
-  quota_hours: 5,
-  details: "Fake Member Type"
-)
+# MemberType.create(
+#   name: "New",
+#   quota_hours: 5,
+#   details: "Fake Member Type"
+# )
 
-5.times do
+15.times do
     random_first_name = Faker::Name.first_name;
     random_last_name = Faker::Name.last_name;
 

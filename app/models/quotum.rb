@@ -1,2 +1,0 @@
-class Quotum < ApplicationRecord
-end
