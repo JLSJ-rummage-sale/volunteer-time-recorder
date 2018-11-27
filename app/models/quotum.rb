@@ -1,0 +1,2 @@
+class Quotum < ApplicationRecord
+end
