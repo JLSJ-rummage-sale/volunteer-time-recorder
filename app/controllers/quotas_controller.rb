@@ -13,6 +13,12 @@ class QuotasController < ApplicationController
   def new
       # Create a new quota instance that will be used in the form:
       @quota = Quota.new;
+
+      # Get all volunteer records for the form selection:
+      @categories = Category.all;
+
+      # Get preselected Category:
+      @selected_category = Category.first;
   end
 
   # Called when the New Quota form is submitted:
@@ -37,6 +43,14 @@ class QuotasController < ApplicationController
   def edit
       # Get the quota object that was selected:
       @quota = Quota.find(params[:id]);
+
+      # Get all volunteer records for the form selection:
+      @categories = Category.all;
+      # Get preselected Category:
+      @selected_category = Category.first;
+      if (@quota.category) # Check if variable exists and is not nil.
+          @selected_category = @quota.category;
+      end
   end
 
   # Called when the Edit Quota form is submitted:
@@ -84,6 +98,6 @@ class QuotasController < ApplicationController
 
   # Defines the acceptable fields for quota:
   def quota_params
-      params.require(:quota).permit(:name, :hours);
+      params.require(:quota).permit(:name, :hours, :category_id);
   end
 end

@@ -18,3 +18,24 @@
         </tbody>
     </table>
 </div>
+
+<div>
+    <table class="table table-sm">
+        <thead class="thead-light">
+            <tr>
+            <th scope="col">Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (@quota.category) %>
+              <tr>
+                  <td><%= link_to(@quota.category.name, category_path(@quota.category)) %></td>
+              </tr>
+            <% else %>
+              <tr>
+                  <td>[None]</td>
+              </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>

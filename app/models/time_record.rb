@@ -48,7 +48,6 @@ class TimeRecord < ApplicationRecord
     else
       return nil
     end
-
   end
 
   def to_string
