@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181127190533) do
+ActiveRecord::Schema.define(version: 20181127221030) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -30,7 +30,6 @@ ActiveRecord::Schema.define(version: 20181127190533) do
   create_table "member_types", force: :cascade do |t|
     t.string "name"
     t.text "details"
-    t.integer "quota_hours"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -59,7 +58,9 @@ ActiveRecord::Schema.define(version: 20181127190533) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "category_id"
+    t.integer "member_type_id"
     t.index ["category_id"], name: "index_quotas_on_category_id"
+    t.index ["member_type_id"], name: "index_quotas_on_member_type_id"
   end
 
   create_table "time_records", force: :cascade do |t|

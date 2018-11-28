@@ -85,7 +85,7 @@ class MemberTypesController < ApplicationController
     # Defines the acceptable fields for member_type:
     def member_type_params
         params.require(:member_type).permit(:name,
-            :details, :quota_hours);
+            :details);
     end
 
 

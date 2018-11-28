@@ -39,3 +39,24 @@
         </tbody>
     </table>
 </div>
+
+<div>
+    <table class="table table-sm">
+        <thead class="thead-light">
+            <tr>
+            <th scope="col">MemberType</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (@quota.member_type) %>
+              <tr>
+                  <td><%= link_to(@quota.member_type.name, member_type_path(@quota.member_type)) %></td>
+              </tr>
+            <% else %>
+              <tr>
+                  <td>[None]</td>
+              </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>

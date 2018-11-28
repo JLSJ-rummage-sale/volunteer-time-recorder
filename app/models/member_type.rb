@@ -1,12 +1,14 @@
 class MemberType < ApplicationRecord
 
+    # Relationships:
+    has_many :quotas, :dependent => :delete_all
+
     # Required fields:
     validates :name, presence: true
-    validates :quota_hours, presence: true
 
     # Scopes:
 
-    scope :sorted, lambda { order("quota_hours ASC") }
+    scope :sorted, lambda { order("name ASC") }
 
     # Other methods:
 

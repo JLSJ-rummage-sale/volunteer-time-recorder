@@ -27,14 +27,7 @@ class VolunteersController < ApplicationController
         # Get the associated member type:
         @member_type = MemberType.find_by_id(@volunteer.member_type_id);
 
-        @total_hours = total_time_for_all_time_records(@volunteer.time_records);
-        #@total_hours_text = total_hours.to_s + " hours";
-
-        @quota_hours = @member_type.quota_hours;
-
-        percent = (@total_hours / @quota_hours) * 100;
-        @progress_percent = percent.round(1);
-
+        # Get all associated PlannedShifts:
         @planned_shifts = @volunteer.planned_shifts.chronologically
     end
 
@@ -122,16 +115,6 @@ class VolunteersController < ApplicationController
     def volunteer_params
         params.require(:volunteer).permit(:first_name,
             :last_name,:email_address, :phone, :notes, :member_type_id);
-    end
-
-    def total_time_for_all_time_records(time_records)
-        sum = 0;
-
-        time_records.each do |time_record|
-            sum += time_record.total_hours;
-        end
-
-        return sum;
     end
 
 

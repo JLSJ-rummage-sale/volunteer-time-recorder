@@ -25,3 +25,12 @@
     <% end %>
     <%= link_to "Add Category", new_category_path, :class => 'btn btn-light btn-sm' %>
 </p>
+
+<p>
+    <%=form.label :member_type_id %><br>
+    <% if (@member_types.first) # Check if there are any MemberType records: %>
+      <%= form.collection_select(:member_type_id, @member_types, :id, :name,
+            {:selected => @selected_member_type.id }) %>
+    <% end %>
+    <%= link_to "Add MemberType", new_member_type_path, :class => 'btn btn-light btn-sm' %>
+</p>
