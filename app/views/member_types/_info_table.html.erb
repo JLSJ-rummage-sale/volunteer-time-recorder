@@ -15,6 +15,25 @@
     </table>
 </div>
 
+<% if (@member_type.quotas.blank?) %>
+  <div>
+      <table class="table table-sm">
+          <thead class="thead-light">
+              <tr>
+              <th scope="col">Quota Info</th>
+              <th scope="col"></th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <th scope="row">No Quotas yet.</th>
+                  <td></td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+<% end %>
+
 <% @member_type.quotas.each do |quota| %>
   <div>
       <table class="table table-sm">
@@ -27,7 +46,7 @@
           <tbody>
               <tr>
                   <th scope="row">Name:</th>
-                  <td><%= quota.name %></td>
+                  <td><%= link_to(quota.name, quota_path(quota)) %></td>
               </tr>
               <tr>
                   <th scope="row">Hours:</th>
@@ -48,6 +67,12 @@
       </table>
   </div>
 <% end %>
+
+<div>
+  <p>
+    <%= link_to "Add Quota", new_quota_path(:member_type_id => @member_type.id), :class => 'btn btn-secondary btn-block btn-sm mx-auto-2' %>
+  </p>
+</div>
 
 <div>
     <table class="table table-sm">

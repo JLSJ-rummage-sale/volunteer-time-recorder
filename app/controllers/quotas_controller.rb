@@ -1,4 +1,9 @@
 class QuotasController < ApplicationController
+
+  # Before-Actions: (These will be executed before any public action below)
+  before_action :find_parent_member_type, :only => [:index, :new];
+  before_action :set_member_type_list, :only => [:new, :create];
+
   def index
       # Get all quota records from the database to display:
       @quotas = Quota.all;
@@ -19,12 +24,6 @@ class QuotasController < ApplicationController
 
       # Get preselected Category:
       @selected_category = Category.first;
-
-      # Get all member type records for the form selection:
-      @member_types = MemberType.all;
-
-      # Get preselected MemberType:
-      @selected_member_type = MemberType.first;
   end
 
   # Called when the New Quota form is submitted:
@@ -114,4 +113,34 @@ class QuotasController < ApplicationController
   def quota_params
       params.require(:quota).permit(:name, :hours, :category_id, :member_type_id);
   end
+
+  # A Before-Action method to get the event passed from a different controller:
+  # Sets a variable 'parent_member_type' if a member_type object was passed in:
+  def find_parent_member_type
+      # Find event passed in from filter:
+      @parent_member_type = MemberType.find_by_id(params[:member_type_id]); # Will return an object or return nil.
+
+      # DEBUG ONLY:
+      puts("find_parent_member_type: member_type OBJECT passed in: " + @parent_member_type.to_s);
+
+      if (@parent_member_type)
+          puts("found member_type: " + @parent_member_type.name);
+      else
+          puts("didn't find member_type.")
+      end
+  end
+
+  def set_member_type_list
+    # Get all member_type records for the form selection:
+    @member_types = MemberType.all;
+
+    # Get preselected MemberType:
+    if (@parent_member_type) # Check if variable exists and is not nil.
+        @selected_member_type = @parent_member_type;
+        puts("Set SELECTED_member_type to " + @selected_member_type.name);
+    else
+        @selected_member_type = MemberType.first;
+    end
+  end
+
 end

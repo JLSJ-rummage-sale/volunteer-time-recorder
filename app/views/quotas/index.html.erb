@@ -7,10 +7,11 @@
 </p>
 
 <div class="table-responsive">
-    <table class="table table-bordered table-hover">
+    <table class="table table-striped table-bordered table-hover">
         <thead class="thead-dark">
             <tr>
             <th scope="col">Quota Name</th>
+            <th scope="col">Member Type</th>
             <th scope="col">Details</th>
             </tr>
         </thead>
@@ -18,6 +19,11 @@
             <% @quotas.each do |quota| %>
                 <tr>
                     <th scope="row"><%= link_to quota.name, quota_path(quota) %></th>
+                    <% if (quota.member_type) %>
+                      <th scope="row"><%= link_to quota.member_type.name, member_type_path(quota.member_type) %></th>
+                    <% else %>
+                      <th scope="row">[No Member Type]</th>
+                    <% end %>
                     <td><%= link_to "Details", quota_path(quota), :class => 'btn btn-secondary' %></td>
                 </tr>
             <% end %>

@@ -23,13 +23,13 @@
     <table class="table table-sm">
         <thead class="thead-light">
             <tr>
-            <th scope="col">Category</th>
+            <th scope="col">MemberType</th>
             </tr>
         </thead>
         <tbody>
-            <% if (@quota.category) %>
+            <% if (@quota.member_type) %>
               <tr>
-                  <td><%= link_to(@quota.category.name, category_path(@quota.category)) %></td>
+                  <td><%= link_to(@quota.member_type.name, member_type_path(@quota.member_type)) %></td>
               </tr>
             <% else %>
               <tr>
@@ -44,13 +44,14 @@
     <table class="table table-sm">
         <thead class="thead-light">
             <tr>
-            <th scope="col">MemberType</th>
+            <th scope="col">Category</th>
             </tr>
         </thead>
         <tbody>
-            <% if (@quota.member_type) %>
+            <% if (@quota.category) %>
               <tr>
-                  <td><%= link_to(@quota.member_type.name, member_type_path(@quota.member_type)) %></td>
+                  <td><%= link_to(@quota.category.name, category_path(@quota.category)) %> <br/>
+                    Note: Time Records with this Category will count towards this Quota.</td>
               </tr>
             <% else %>
               <tr>
