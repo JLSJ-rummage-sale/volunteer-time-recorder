@@ -42,41 +42,6 @@
     </table>
 </div>
 
-<%# TODO: For Events: %>
-<div>
-    <table class="table table-sm">
-        <thead class="thead-light">
-            <tr>
-            <th scope="col">Hours</th>
-            <th scope="col"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th scope="row">Total Hours:</th>
-                <td><%= link_to(number_with_precision(@total_hours, precision: 2,  strip_insignificant_zeros: true) + " hours completed", time_records_path(:volunteer_id => @volunteer.id)) %></td>
-            </tr>
-            <tr>
-                <th scope="row">Member Quota:</th>
-                <td><%= link_to(@quota_hours.to_s + " hours needed", member_type_path(@member_type)) %></td>
-            </tr>
-            <tr>
-                <th scope="row">Progress:</th>
-                <td>
-                    <% if @progress_percent < 100 %>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="<%= "width: " + @progress_percent.to_s + "%;" %>" aria-valuenow=<%= @progress_percent %> aria-valuemin="0" aria-valuemax="100"><%= @progress_percent %>%</div>
-                        </div>
-                    <% else %>
-                        <div class="progress">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow=100 aria-valuemin="0" aria-valuemax="100">COMPLETE</div>
-                        </div>
-                    <% end %>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
 
 <!-- Planned Shifts: -->
 <div>
