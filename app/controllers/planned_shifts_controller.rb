@@ -30,9 +30,9 @@ class PlannedShiftsController < ApplicationController
         @total_actual_time_text = TimeDifference.between(@planned_shift.sign_in_time, @planned_shift.sign_out_time).humanize;
       end
 
-      @category_name = @planned_shift.category;
-      if @category_name.empty?
-          @category_name = "[None]";
+      @category_name = "[None]";
+      if @planned_shift.category
+          @category_name = @planned_shift.category.name;
       end
 
       # Get the associated event:
@@ -98,6 +98,12 @@ class PlannedShiftsController < ApplicationController
       else
           @selected_event = Event.first;
       end
+
+      # Get all volunteer records for the form selection:
+      @categories = Category.all;
+
+      # Get preselected Category:
+      @selected_category = Category.first;
   end
 
   # Called when the New PlannedShift form is submitted:
@@ -135,6 +141,14 @@ class PlannedShiftsController < ApplicationController
       # Set the default selected event & volunteer in the form:
       @selected_event = Event.find(@planned_shift.event_id);
       @selected_volunteer = Volunteer.find(@planned_shift.volunteer_id);
+
+      # Get all category records for the form selection:
+      @categories = Category.all;
+      # Get preselected Category:
+      @selected_category = Category.first;
+      if (@planned_shift.category) # Check if variable exists and is not nil.
+          @selected_category = @planned_shift.category;
+      end
   end
 
   # Called when the Edit PlannedShift form is submitted:
@@ -245,21 +259,21 @@ class PlannedShiftsController < ApplicationController
   # Defines the acceptable fields for planned_shift:
   def planned_shift_params
       params.require(:planned_shift).permit(:start_time,
-          :end_time, :name, :category, :notes, :event_id, :volunteer_id);
+          :end_time, :name, :notes, :event_id, :volunteer_id, :category_id);
   end
 
   def check_in_params
-      params.require(:planned_shift).permit(:sign_in_time, :category, :notes);
+      params.require(:planned_shift).permit(:sign_in_time);
   end
 
   def check_out_params
-      params.require(:planned_shift).permit(:sign_out_time, :category, :notes);
+      params.require(:planned_shift).permit(:sign_out_time);
   end
 
   def create_associated_time_record(planned_shift)
     time_record = TimeRecord.create(start_time: planned_shift.sign_in_time,
         end_time: planned_shift.sign_out_time,
-        category: planned_shift.category,
+        category_id: planned_shift.category_id,
         event_id: planned_shift.event_id,
         volunteer_id:planned_shift.volunteer_id);
 

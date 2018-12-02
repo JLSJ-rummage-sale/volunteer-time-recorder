@@ -101,9 +101,15 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td><%= @category_name  %></td>
-            </tr>
+            <% if (@planned_shift.category) %>
+              <tr>
+                  <td><%= link_to(@planned_shift.category.name, category_path(@planned_shift.category)) %></td>
+              </tr>
+            <% else %>
+              <tr>
+                  <td>[None]</td>
+              </tr>
+            <% end %>
         </tbody>
     </table>
 </div>

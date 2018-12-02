@@ -110,7 +110,7 @@ class TimeRecordsController < ApplicationController
         @selected_event = Event.find(@time_record.event_id);
         @selected_volunteer = Volunteer.find(@time_record.volunteer_id);
 
-        # Get all volunteer records for the form selection:
+        # Get all category records for the form selection:
         @categories = Category.all;
         # Get preselected Category:
         @selected_category = Category.first;

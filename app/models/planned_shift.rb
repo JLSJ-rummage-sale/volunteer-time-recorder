@@ -1,7 +1,9 @@
 class PlannedShift < ApplicationRecord
   belongs_to :event
   belongs_to :volunteer
+
   has_one :time_record
+  has_one :category
 
   # Validations:
 
@@ -39,8 +41,27 @@ class PlannedShift < ApplicationRecord
     else
       return nil
     end
-
   end
 
+  def category
+    category_id = self.category_id;
+
+    if (category_id)
+      puts("Category ID found in planned_shift: " + category_id.to_s);
+
+      category = Category.find_by_id(category_id);
+
+      if (category)
+        puts("Category OBJECT found in planned_shift: category: " + category.name);
+        return category
+      else
+        puts("Category OBJECT NOT found in planned_shift: category_id: " + category_id.to_s);
+        return nil
+      end
+
+    else
+      return nil
+    end
+  end
 
 end

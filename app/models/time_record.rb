@@ -29,7 +29,6 @@ class TimeRecord < ApplicationRecord
   end
 
   def category
-    # Get the associated time_record:
     category_id = self.category_id;
 
     if (category_id)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181127221030) do
+ActiveRecord::Schema.define(version: 20181202042635) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -38,7 +38,6 @@ ActiveRecord::Schema.define(version: 20181127221030) do
     t.datetime "start_time"
     t.datetime "end_time"
     t.string "name"
-    t.string "category"
     t.text "notes"
     t.integer "event_id"
     t.integer "volunteer_id"
@@ -47,6 +46,8 @@ ActiveRecord::Schema.define(version: 20181127221030) do
     t.datetime "updated_at", null: false
     t.datetime "sign_in_time"
     t.datetime "sign_out_time"
+    t.integer "category_id"
+    t.index ["category_id"], name: "index_planned_shifts_on_category_id"
     t.index ["event_id"], name: "index_planned_shifts_on_event_id"
     t.index ["time_record_id"], name: "index_planned_shifts_on_time_record_id"
     t.index ["volunteer_id"], name: "index_planned_shifts_on_volunteer_id"
