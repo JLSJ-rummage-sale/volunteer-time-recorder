@@ -26,9 +26,11 @@
 </p>
 
 <p>
-    <%=form.label :name, "Name (Optional)" %><br>
+    <%=form.label :name, "Shift Name (Optional)" %><br>
     <%= form.text_field(:name, {:class => 'form-control'}) %>
 </p>
+
+<hr>
 
 <p>
     <%=form.label :start_time %><br>
@@ -39,6 +41,8 @@
     <%=form.label :end_time %><br>
     <%= form.datetime_select(:end_time, :use_short_month => true, :ampm => true, :default => (Time.current + 1.hours), :datetime_separator => " at ", :minute_step => 15, :class => 'form-control') %>
 </p>
+
+<hr>
 
 <p>
     <%=form.label :category_id %><br>
