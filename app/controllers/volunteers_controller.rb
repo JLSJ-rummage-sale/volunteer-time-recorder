@@ -118,4 +118,10 @@ class VolunteersController < ApplicationController
     end
 
 
+
+    def set_page_section
+      @page_section = "volunteer"
+    end
+
+
 end

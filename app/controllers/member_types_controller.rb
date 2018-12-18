@@ -89,4 +89,10 @@ class MemberTypesController < ApplicationController
     end
 
 
+
+    def set_page_section
+      @page_section = "member_type"
+    end
+
+
 end

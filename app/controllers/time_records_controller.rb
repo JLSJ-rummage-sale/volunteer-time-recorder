@@ -221,4 +221,7 @@ class TimeRecordsController < ApplicationController
     end
 
 
+    def set_page_section
+      @page_section = "time_record"
+    end
 end

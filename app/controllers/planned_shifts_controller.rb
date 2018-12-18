@@ -314,4 +314,9 @@ class PlannedShiftsController < ApplicationController
   end
 
 
+  def set_page_section
+    @page_section = "planned_shift"
+  end
+
+
 end

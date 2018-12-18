@@ -1,25 +1,26 @@
+<div id="page-section" class="<%= @page_section ||= "home" %>"></div>
+
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/">Volunteer Time Recorder</a>
+    <a class="navbar-brand" id="nav-home" href="/">Volunteer Time Recorder</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample02" aria-controls="navbarsExample02" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarsExample02">
     <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-        <li class="nav-item">
+        <li class="nav-item" id="nav-volunteers">
         <%= link_to "Volunteers", volunteers_path, {:class => "nav-link"} %>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" id="nav-events">
         <%= link_to "Events", events_path, {:class => "nav-link"} %>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" id="nav-time-records">
         <%= link_to "Time Records", time_records_path, {:class => "nav-link"} %>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" id="nav-shifts">
         <%= link_to "Shifts", planned_shifts_path, {:class => "nav-link"} %>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" id="nav-member-types">
         <%= link_to "Member Types", member_types_path, {:class => "nav-link"} %>
         </li>
     </ul>
@@ -35,3 +36,23 @@
     </div>
   </div>
 </nav>
+
+<script>
+    $(function() {
+
+      var dictionary = new Map();
+
+      dictionary.set("home", "nav-home");
+      dictionary.set("volunteer", "nav-volunteers");
+      dictionary.set("event", "nav-events");
+      dictionary.set("time_record", "nav-time-records");
+      dictionary.set("planned_shift", "nav-shifts");
+      dictionary.set("member_type", "nav-member-types");
+
+      for (var key of dictionary.keys()) {
+        if ($("#page-section").hasClass(key)) {
+            $(`li#${dictionary.get(key)}`).addClass("active");
+        }
+      }
+    });
+</script>

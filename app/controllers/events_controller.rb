@@ -77,8 +77,12 @@ class EventsController < ApplicationController
 
     # Defines the acceptable fields for event:
     def event_params
-        params.require(:event).permit(:name, 
+        params.require(:event).permit(:name,
             :year, :description, :website);
+    end
+
+    def set_page_section
+      @page_section = "event"
     end
 
 end
