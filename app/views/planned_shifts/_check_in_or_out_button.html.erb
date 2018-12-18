@@ -1,5 +1,5 @@
 <% if (shift.associcated_time_record) %>
-  <%= link_to(shift.associcated_time_record.total_time_text, time_record_path(shift.associcated_time_record)) %>
+  <%= link_to(shift.actual_time_range_text, time_record_path(shift.associcated_time_record)) %>
 <% elsif (shift.sign_in_time) %>
   <%= link_to "Check Out", check_out_planned_shift_path(shift), :class => 'btn btn-secondary btn-sm' %>
 <% else %>

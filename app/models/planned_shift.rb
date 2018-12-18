@@ -89,4 +89,8 @@ class PlannedShift < ApplicationRecord
     end
   end
 
+  def actual_time_range_text
+    return "#{self.sign_in_time.strftime("%I:%M %p")} - #{self.sign_out_time.strftime("%I:%M %p")}";
+  end
+
 end
