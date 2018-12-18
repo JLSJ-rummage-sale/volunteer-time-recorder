@@ -65,13 +65,7 @@
                 <td><%= shift.start_time.strftime("%I:%M %p") %> - <%= shift.end_time.strftime("%I:%M %p") %></td>
                 <td><%= shift.start_time.strftime("%a, %b %d") %></td>
                 <td>
-                  <% if (shift.associcated_time_record) %>
-                    <%= link_to(shift.associcated_time_record.total_time_text, time_record_path(shift.associcated_time_record)) %>
-                  <% elsif (shift.sign_in_time) %>
-                    <%= link_to "Check Out", check_out_planned_shift_path(shift), :class => 'btn btn-secondary btn-sm' %>
-                  <% else %>
-                    <%= link_to "Check In", check_in_planned_shift_path(shift), :class => 'btn btn-secondary btn-sm' %>
-                  <% end %>
+                  <%= render(:partial => 'planned_shifts/check_in_or_out_button', :locals => {:shift => shift}) %>
                 </td>
             </tr>
           <% end %>

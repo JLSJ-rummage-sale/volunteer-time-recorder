@@ -31,5 +31,9 @@
   <%= link_to "Add Time Record", new_time_record_path(:volunteer_id => @volunteer.id), :class => 'btn btn-success btn-block' %>
 </p>
 <p>
-  <%= link_to "View Volunteer Time Records", time_records_path(:volunteer_id => @volunteer.id), :class => 'btn btn-info btn-block' %>
+  <%= link_to "View all Planned Shifts for this Volunteer", planned_shifts_path(:volunteer_id => @volunteer.id), :class => 'btn btn-info btn-block' %>
+</p>
+
+<p>
+  <%= link_to "View all Time Records for this Volunteer", time_records_path(:volunteer_id => @volunteer.id), :class => 'btn btn-info btn-block' %>
 </p>

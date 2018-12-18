@@ -11,7 +11,7 @@
         <tbody>
             <tr>
                 <th scope="row"></th>
-                <td><%= @total_planned_time_text %></td>
+                <td><%= @planned_shift.total_planned_time_text %></td>
                 <td></td>
             </tr>
             <tr>
@@ -39,10 +39,10 @@
         </thead>
         <tbody>
             <tr>
-                <% if(@total_actual_time_text) %>
+                <% if(@planned_shift.total_actual_time_text) %>
                   <tr>
                       <th scope="row"></th>
-                      <td><%= link_to(@total_actual_time_text, time_record_path(@time_record)) %></td>
+                      <td><%= link_to(@planned_shift.total_actual_time_text, time_record_path(@time_record)) %></td>
                       <td></td>
                   </tr>
                 <% end %>

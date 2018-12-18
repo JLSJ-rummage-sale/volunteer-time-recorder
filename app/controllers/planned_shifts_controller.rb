@@ -10,12 +10,13 @@ class PlannedShiftsController < ApplicationController
       # Check if a parent event was passed in (from "find_event" method below):
       if (@parent_volunteer) # Check if variable exists and is not nil.
           puts("Filtering by volunteer passed in.");
-          @planned_shifts = @parent_volunteer.planned_shifts.sorted;
+          # Sort by date (oldest first) so can view like a list:
+          @planned_shifts = @parent_volunteer.planned_shifts.chronologically;
       elsif (@parent_event) # Check if variable exists and is not nil.
           puts("Filtering by event passed in.");
           @planned_shifts = @parent_event.planned_shifts.sorted;
       else
-          puts("NOT Filtering by event passed in.");
+          puts("NOT Filtering by anything.");
           @planned_shifts = PlannedShift.sorted;
       end
   end
@@ -24,16 +25,16 @@ class PlannedShiftsController < ApplicationController
       # Get the planned_shift object that was selected:
       @planned_shift = PlannedShift.find(params[:id]);
 
-      @total_planned_time_text = TimeDifference.between(@planned_shift.start_time, @planned_shift.end_time).humanize;
-
-      if (@planned_shift.sign_in_time && @planned_shift.sign_out_time)
-        @total_actual_time_text = TimeDifference.between(@planned_shift.sign_in_time, @planned_shift.sign_out_time).humanize;
-      end
-
-      @category_name = "[None]";
-      if @planned_shift.category
-          @category_name = @planned_shift.category.name;
-      end
+      # @total_planned_time_text = TimeDifference.between(@planned_shift.start_time, @planned_shift.end_time).humanize;
+      #
+      # if (@planned_shift.sign_in_time && @planned_shift.sign_out_time)
+      #   @total_actual_time_text = TimeDifference.between(@planned_shift.sign_in_time, @planned_shift.sign_out_time).humanize;
+      # end
+      #
+      # @category_name = "[None]";
+      # if @planned_shift.category
+      #     @category_name = @planned_shift.category.name;
+      # end
 
       # Get the associated event:
       event_id = @planned_shift.event_id;

@@ -26,6 +26,7 @@ class PlannedShift < ApplicationRecord
     return TimeDifference.between(self.start_time, self.end_time).in_hours;
   end
 
+
   def associcated_time_record
     # Get the associated time_record:
     time_record_id = self.time_record_id;
@@ -42,6 +43,7 @@ class PlannedShift < ApplicationRecord
       return nil
     end
   end
+
 
   def category
     category_id = self.category_id;
@@ -61,6 +63,29 @@ class PlannedShift < ApplicationRecord
 
     else
       return nil
+    end
+  end
+
+
+  def category_name
+    if self.category
+        return self.category.name;
+    else
+      return "[None]";
+    end
+  end
+
+
+  def total_planned_time_text
+    return TimeDifference.between(self.start_time, self.end_time).humanize;
+  end
+
+
+  def total_actual_time_text
+    if (self.sign_in_time && self.sign_out_time)
+      return TimeDifference.between(self.sign_in_time, self.sign_out_time).humanize;
+    else
+      return nil;
     end
   end
 
