@@ -1,0 +1,63 @@
+<div>
+    <table class="table table-sm">
+        <thead class="thead-light">
+            <tr>
+            <th scope="col">Quota Info</th>
+            <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">Name:</th>
+                <td><%= @quota.name %></td>
+            </tr>
+            <tr>
+                <th scope="row">Hours:</th>
+                <td><%= @quota.hours %> hours</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <table class="table table-sm">
+        <thead class="thead-light">
+            <tr>
+            <th scope="col">MemberType</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (@quota.member_type) %>
+              <tr>
+                  <td><%= link_to(@quota.member_type.name, member_type_path(@quota.member_type)) %></td>
+              </tr>
+            <% else %>
+              <tr>
+                  <td>[None]</td>
+              </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <table class="table table-sm">
+        <thead class="thead-light">
+            <tr>
+            <th scope="col">Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (@quota.category) %>
+              <tr>
+                  <td><%= link_to(@quota.category.name, category_path(@quota.category)) %> <br/>
+                    Note: Time Records with this Category will count towards this Quota.</td>
+              </tr>
+            <% else %>
+              <tr>
+                  <td>[None]</td>
+              </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>

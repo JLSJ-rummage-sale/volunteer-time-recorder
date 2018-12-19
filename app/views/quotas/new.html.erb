@@ -1,0 +1,12 @@
+<% @page_title = "Add Quota" %>
+
+<h1>Add Quota</h1>
+
+<%= form_for :quota, url: quotas_path do |form| %>
+
+    <%= render(:partial => 'form', :locals => {:form => form}) %>
+
+    <p>
+        <%= form.submit("Add Quota", {:class => 'btn btn-success btn-block'}) %>
+    </p>
+<% end %>

@@ -11,12 +11,67 @@
                 <th scope="row">Member Type Name:</th>
                 <td><%= @member_type.name %></td>
             </tr>
-            <tr>
-                <th scope="row">Quota Hours:</th>
-                <td><%= @member_type.quota_hours %> hours</td>
-            </tr>
         </tbody>
     </table>
+</div>
+
+<% if (@member_type.quotas.blank?) %>
+  <div>
+      <table class="table table-sm">
+          <thead class="thead-light">
+              <tr>
+              <th scope="col">Quota Info</th>
+              <th scope="col"></th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <th scope="row">No Quotas yet.</th>
+                  <td></td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+<% end %>
+
+<% @member_type.quotas.each do |quota| %>
+  <div>
+      <table class="table table-sm">
+          <thead class="thead-light">
+              <tr>
+              <th scope="col">Quota Info</th>
+              <th scope="col"></th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <th scope="row">Name:</th>
+                  <td><%= link_to(quota.name, quota_path(quota)) %></td>
+              </tr>
+              <tr>
+                  <th scope="row">Hours:</th>
+                  <td><%= quota.hours %> hours</td>
+              </tr>
+              <% if (quota.category) %>
+                <tr>
+                    <th scope="row">Category:</th>
+                    <td><%= link_to(quota.category.name, category_path(quota.category)) %></td>
+                </tr>
+              <% else %>
+                <tr>
+                    <th scope="row">Category:</th>
+                    <td>[None]</td>
+                </tr>
+              <% end %>
+          </tbody>
+      </table>
+  </div>
+<% end %>
+
+<div>
+  <p>
+    <%= link_to "Add Quota", new_quota_path(:member_type_id => @member_type.id), :class => 'btn btn-secondary btn-block btn-sm mx-auto-2' %>
+  </p>
 </div>
 
 <div>

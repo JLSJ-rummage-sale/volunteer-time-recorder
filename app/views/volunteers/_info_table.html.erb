@@ -42,41 +42,6 @@
     </table>
 </div>
 
-<%# TODO: For Events: %>
-<div>
-    <table class="table table-sm">
-        <thead class="thead-light">
-            <tr>
-            <th scope="col">Hours</th>
-            <th scope="col"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th scope="row">Total Hours:</th>
-                <td><%= link_to(number_with_precision(@total_hours, precision: 2,  strip_insignificant_zeros: true) + " hours completed", time_records_path(:volunteer_id => @volunteer.id)) %></td>
-            </tr>
-            <tr>
-                <th scope="row">Member Quota:</th>
-                <td><%= link_to(@quota_hours.to_s + " hours needed", member_type_path(@member_type)) %></td>
-            </tr>
-            <tr>
-                <th scope="row">Progress:</th>
-                <td>
-                    <% if @progress_percent < 100 %>
-                        <div class="progress">
-                            <div class="progress-bar" role="progressbar" style="<%= "width: " + @progress_percent.to_s + "%;" %>" aria-valuenow=<%= @progress_percent %> aria-valuemin="0" aria-valuemax="100"><%= @progress_percent %>%</div>
-                        </div>
-                    <% else %>
-                        <div class="progress">
-                            <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow=100 aria-valuemin="0" aria-valuemax="100">COMPLETE</div>
-                        </div>
-                    <% end %>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
 
 <!-- Planned Shifts: -->
 <div>
@@ -100,13 +65,7 @@
                 <td><%= shift.start_time.strftime("%I:%M %p") %> - <%= shift.end_time.strftime("%I:%M %p") %></td>
                 <td><%= shift.start_time.strftime("%a, %b %d") %></td>
                 <td>
-                  <% if (shift.associcated_time_record) %>
-                    <%= link_to(shift.associcated_time_record.total_time_text, time_record_path(shift.associcated_time_record)) %>
-                  <% elsif (shift.sign_in_time) %>
-                    <%= link_to "Check Out", check_out_planned_shift_path(shift), :class => 'btn btn-secondary btn-sm' %>
-                  <% else %>
-                    <%= link_to "Check In", check_in_planned_shift_path(shift), :class => 'btn btn-secondary btn-sm' %>
-                  <% end %>
+                  <%= render(:partial => 'planned_shifts/check_in_or_out_button', :locals => {:shift => shift}) %>
                 </td>
             </tr>
           <% end %>
@@ -124,6 +83,63 @@
     <%= link_to "Add Shift", new_planned_shift_path(:volunteer_id => @volunteer.id), :class => 'btn btn-secondary btn-block btn-sm mx-auto-2' %>
   </p>
 </div>
+
+<!-- Hours Completed By Quota: -->
+<div>
+    <table class="table table-sm">
+        <thead class="thead-light">
+            <tr>
+              <th scope="col">Hours Completed</th>
+              <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr>
+              <th scope="row">Total Hours Completed:</th>
+              <td><%= link_to(number_with_precision(total_hours_volunteered(@volunteer), precision: 2,  strip_insignificant_zeros: true) + " hours completed", time_records_path(:volunteer_id => @volunteer.id)) %></td>
+          </tr>
+        </tbody>
+    </table>
+</div>
+
+<% @member_type.quotas.each do |quota| %>
+  <div>
+      <table class="table table-sm">
+          <tbody>
+              <tr class="table-active">
+                  <th scope="row">Quota:</th>
+                  <td><%= link_to(quota.name, quota_path(quota)) %></td>
+              </tr>
+              <tr>
+                  <th scope="row">Hours Completed:</th>
+                  <td><%= link_to(number_with_precision(quota_hours_completed(@volunteer, quota), precision: 2,  strip_insignificant_zeros: true) + " hours completed", time_records_path(:volunteer_id => @volunteer.id)) %></td>
+              </tr>
+              <tr>
+                  <th scope="row">Member Quota:</th>
+                  <td><%= link_to(quota.hours.to_s + " hours needed", member_type_path(@member_type)) %></td>
+              </tr>
+              <tr>
+                  <th scope="row">Progress:</th>
+                  <td>
+                      <% progress_percent = quota_completion_percent(@volunteer, quota) %>
+                      <% if progress_percent < 100 %>
+                          <div class="progress">
+                              <div class="progress-bar" role="progressbar" style="<%= "width: " + progress_percent.to_s + "%;" %>" aria-valuenow=<%= progress_percent %> aria-valuemin="0" aria-valuemax="100"><%= progress_percent %>%</div>
+                          </div>
+                      <% else %>
+                          <div class="progress">
+                              <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow=100 aria-valuemin="0" aria-valuemax="100">COMPLETE</div>
+                          </div>
+                      <% end %>
+                  </td>
+              </tr>
+          </tbody>
+      </table>
+      <% if (@member_type.quotas.size > 1) %>
+        <hr/>
+      <% end %>
+  </div>
+<% end %>
 
 
 <div>

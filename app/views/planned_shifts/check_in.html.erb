@@ -17,16 +17,6 @@
     </p>
 
     <p>
-        <%=form.label :category, "Category (Optional)" %><br>
-        <%= form.text_field(:category, {:class => 'form-control'}) %>
-    </p>
-
-    <p>
-        <%=form.label :notes, "Notes (Optional)" %><br>
-        <%= form.text_area(:notes, {:class => 'form-control'}) %>
-    </p>
-
-    <p>
         <%= form.submit("Check In", {:class => 'btn btn-success btn-block'}) %>
     </p>
 <% end %>

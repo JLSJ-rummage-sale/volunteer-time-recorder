@@ -27,27 +27,23 @@
     <table class="table table-striped table-bordered table-hover table-sm">
         <thead class="thead-dark">
             <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Event</th>
+            <th scope="col">Shift Name</th>
             <th scope="col">Volunteer</th>
-            <th scope="col">Hours</th>
+            <th scope="col">Time</th>
             <th scope="col">Day</th>
-            <th scope="col">Start Time</th>
-            <th scope="col">End Time</th>
-            <th scope="col">More Info</th>
+            <th scope="col">Actual Time</th>
             </tr>
         </thead>
         <tbody>
-            <% @planned_shifts.each do |planned_shift| %>
+            <% @planned_shifts.each do |shift| %>
                 <tr>
-                    <td><%= link_to planned_shift.name, planned_shift_path(planned_shift) %></td>
-                    <td><%= link_to planned_shift.event.event_title, planned_shift_path(planned_shift) %></td>
-                    <td><%= link_to planned_shift.volunteer.full_name, planned_shift_path(planned_shift) %></td>
-                    <td><%= link_to number_with_precision(planned_shift.total_hours, precision: 2,  strip_insignificant_zeros: true) + " hours", planned_shift_path(planned_shift) %></td>
-                    <td><%= link_to planned_shift.start_time.strftime("%a, %b %d"), planned_shift_path(planned_shift) %></td>
-                    <td><%= link_to planned_shift.start_time.strftime("%I:%M %p"), planned_shift_path(planned_shift) %></td>
-                    <td><%= link_to planned_shift.end_time.strftime("%I:%M %p"), planned_shift_path(planned_shift) %></td>
-                    <td><%= link_to "Details", planned_shift_path(planned_shift), :class => 'btn btn-secondary' %></td>
+                    <td><%= link_to shift.name, planned_shift_path(shift) %></td>
+                    <td><%= link_to shift.volunteer.full_name, planned_shift_path(shift) %></td>
+                    <td><%= shift.start_time.strftime("%I:%M %p") %> - <%= shift.end_time.strftime("%I:%M %p") %></td>
+                    <td><%= shift.start_time.strftime("%a, %b %d") %></td>
+                    <td>
+                      <%= render(:partial => 'check_in_or_out_button', :locals => {:shift => shift}) %>
+                    </td>
                 </tr>
             <% end %>
         </tbody>

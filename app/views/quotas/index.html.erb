@@ -1,0 +1,36 @@
+<% @page_title = "All Quotas" %>
+
+<h2>Quotas</h2>
+
+<p>
+    <%= link_to "Add Quota", new_quota_path(@quota), :class => 'btn btn-success' %>
+</p>
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col">Quota Name</th>
+            <th scope="col">Member Type</th>
+            <th scope="col">Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @quotas.each do |quota| %>
+                <tr>
+                    <th scope="row"><%= link_to quota.name, quota_path(quota) %></th>
+                    <% if (quota.member_type) %>
+                      <th scope="row"><%= link_to quota.member_type.name, member_type_path(quota.member_type) %></th>
+                    <% else %>
+                      <th scope="row">[No Member Type]</th>
+                    <% end %>
+                    <td><%= link_to "Details", quota_path(quota), :class => 'btn btn-secondary' %></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>
+
+<% if @quotas.blank? %>
+  <h4>There are no quotas yet.</h4>
+<% end %>

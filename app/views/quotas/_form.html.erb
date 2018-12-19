@@ -1,0 +1,36 @@
+<%# Display any form errors at the top of the form: %>
+<% if @quota.errors.any? %>
+    <% @quota.errors.full_messages.each do |error_message| %>
+        <div class="alert alert-danger"><%= error_message %></div>
+    <% end %>
+<% end %>
+
+<%# Display the form fields: %>
+
+<p>
+    <%= form.label :name, "Quota Name"  %><br>
+    <%= form.text_field(:name, {:class => 'form-control'}) %>
+</p>
+
+<p>
+    <%=form.label :hours %><br>
+    <%= form.number_field(:hours, {:min => 0, :class => 'form-control'}) %>
+</p>
+
+<p>
+    <%=form.label :category_id %><br>
+    <% if (@categories.first) # Check if there are any Category records: %>
+      <%= form.collection_select(:category_id, @categories, :id, :name,
+            {:selected => @selected_category.id }) %>
+    <% end %>
+    <%= link_to "Add Category", new_category_path, :class => 'btn btn-light btn-sm' %>
+</p>
+
+<p>
+    <%=form.label :member_type_id %><br>
+    <% if (@member_types.first) # Check if there are any MemberType records: %>
+      <%= form.collection_select(:member_type_id, @member_types, :id, :name,
+            {:selected => @selected_member_type.id }) %>
+    <% end %>
+    <%= link_to "Add MemberType", new_member_type_path, :class => 'btn btn-light btn-sm' %>
+</p>

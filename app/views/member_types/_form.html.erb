@@ -8,13 +8,8 @@
 <%# Display the form fields: %>
 
 <p>
-    <%=form.label :name %><br>
+    <%=form.label :name, "Member Type Name"  %><br>
     <%= form.text_field(:name, {:class => 'form-control'}) %>
-</p>
-
-<p>
-    <%=form.label :quota_hours %><br>
-    <%= form.number_field(:quota_hours, {:min => 0, :class => 'form-control'}) %>
 </p>
 
 <p>

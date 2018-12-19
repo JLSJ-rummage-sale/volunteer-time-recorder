@@ -1,0 +1,30 @@
+<% @page_title = "All Categories" %>
+
+<h2>Categories</h2>
+
+<p>
+    <%= link_to "Add Category", new_category_path(@category), :class => 'btn btn-success' %>
+</p>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col">Category Name</th>
+            <th scope="col">Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @categories.each do |category| %>
+                <tr>
+                    <th scope="row"><%= link_to category.name, category_path(category) %></th>
+                    <td><%= link_to "Details", category_path(category), :class => 'btn btn-secondary' %></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>
+
+<% if @categories.blank? %>
+  <h4>There are no categories yet.</h4>
+<% end %>

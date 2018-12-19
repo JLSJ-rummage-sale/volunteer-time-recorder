@@ -66,9 +66,15 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td><%= @category_name  %></td>
-            </tr>
+            <% if (@time_record.category) %>
+              <tr>
+                  <td><%= link_to(@time_record.category.name, category_path(@time_record.category)) %></td>
+              </tr>
+            <% else %>
+              <tr>
+                  <td>[None]</td>
+              </tr>
+            <% end %>
         </tbody>
     </table>
 </div>

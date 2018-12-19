@@ -1,5 +1,6 @@
 class Volunteer < ApplicationRecord
 
+    # Relationships:
     has_many :time_records, :dependent => :delete_all
     has_many :planned_shifts, :dependent => :delete_all
     has_one :member_type
