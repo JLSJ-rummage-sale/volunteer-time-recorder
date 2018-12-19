@@ -5,7 +5,7 @@ class Quota < ApplicationRecord
 
   # Required fields:
   validates :name, presence: true
-  validates :hours, presence: true
+  validates :hours, presence: true # TODO: add range validations
 
   # Other methods:
 

@@ -24,7 +24,13 @@ module VolunteersHelper
 
     def quota_completion_percent(volunteer, quota)
       hours_worked = quota_hours_completed(volunteer, quota);
-      percent = (hours_worked / quota.hours) * 100;
+
+      if (quota.hours <= 0)
+        percent = 100.0;
+      else
+        percent = (hours_worked / quota.hours) * 100;
+      end
+
       return percent.round(1);
     end
 
