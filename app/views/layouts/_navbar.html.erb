@@ -23,6 +23,9 @@
         <li class="nav-item" id="nav-member-types">
         <%= link_to "Member Types", member_types_path, {:class => "nav-link"} %>
         </li>
+        <li class="nav-item" id="nav-spreadsheets">
+        <%= link_to "Upload", spreadsheets_path, {:class => "nav-link"} %>
+        </li>
     </ul>
     <!-- <ul class="navbar-nav navbar-right">
         <li class="nav-item active">
@@ -48,6 +51,7 @@
       dictionary.set("time_record", "nav-time-records");
       dictionary.set("planned_shift", "nav-shifts");
       dictionary.set("member_type", "nav-member-types");
+      dictionary.set("spreadsheet", "nav-spreadsheets");
 
       for (var key of dictionary.keys()) {
         if ($("#page-section").hasClass(key)) {

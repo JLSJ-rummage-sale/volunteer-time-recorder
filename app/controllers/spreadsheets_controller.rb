@@ -90,4 +90,9 @@ class SpreadsheetsController < ApplicationController
     end # end CSV.foreach
   end
 
+
+  def set_page_section
+    @page_section = "spreadsheet"
+  end
+
 end
