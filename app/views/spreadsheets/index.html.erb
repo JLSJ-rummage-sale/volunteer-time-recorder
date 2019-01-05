@@ -1,13 +1,35 @@
-<h1>Spreadsheets#index</h1>
-<p>Find me in app/views/spreadsheets/index.html.erb</p>
+<% @page_title = "Import Records" %>
 
-<% @page_title = "Import Volunteers" %>
+<h1>Import Records</h1>
 
-<h1>Import Volunteers</h1>
 
-<h3>Import a CSV File</h3>
+<p>Export a spreadsheet (Excel or Google Spreadsheets) to CSV format.</p>
+<p>Select the CSV file to import:</p>
+
+<br>
+
+<div>
   <%= form_tag import_spreadsheets_path, multipart: true do %>
-    <%= file_field_tag :uploaded_file %>
-    <%= submit_tag "Import CSV" %>
+
+    <%= file_field_tag :uploaded_file, {:class => 'file-upload'} %>
+
+    <!--
+    <div class="input-group">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+      </div>
+      <div class="custom-file">
+        <%#= file_field_tag :uploaded_file, {:class => 'file-upload', :id => 'inputGroupFile01'} %>
+        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+      </div>
+    </div>
+    -->
+
+    <br>
+    <br>
+
+    <%= submit_tag "Import CSV", {:class => 'btn btn-success btn-block'} %>
+
   <% end %>
+
 </div>
