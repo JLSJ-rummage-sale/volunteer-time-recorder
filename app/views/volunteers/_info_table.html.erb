@@ -36,7 +36,13 @@
         </thead>
         <tbody>
             <tr>
-                <td><%= link_to(@member_type.name, member_type_path(@member_type)) %></td>
+                <td>
+                  <% if (@member_type) %>
+                    <%= link_to(@member_type.name, member_type_path(@member_type)) %>
+                  <% else %>
+                    No Membership Type has been selected for this user.
+                  <% end %>
+                </td>
             </tr>
         </tbody>
     </table>
@@ -102,44 +108,49 @@
     </table>
 </div>
 
-<% @member_type.quotas.each do |quota| %>
-  <div>
-      <table class="table table-sm">
-          <tbody>
-              <tr class="table-active">
-                  <th scope="row">Quota:</th>
-                  <td><%= link_to(quota.name, quota_path(quota)) %></td>
-              </tr>
-              <tr>
-                  <th scope="row">Hours Completed:</th>
-                  <td><%= link_to(number_with_precision(quota_hours_completed(@volunteer, quota), precision: 2,  strip_insignificant_zeros: true) + " hours completed", time_records_path(:volunteer_id => @volunteer.id)) %></td>
-              </tr>
-              <tr>
-                  <th scope="row">Member Quota:</th>
-                  <td><%= link_to(quota.hours.to_s + " hours needed", member_type_path(@member_type)) %></td>
-              </tr>
-              <tr>
-                  <th scope="row">Progress:</th>
-                  <td>
-                      <% progress_percent = quota_completion_percent(@volunteer, quota) %>
-                      <% if progress_percent < 100 %>
-                          <div class="progress">
-                              <div class="progress-bar" role="progressbar" style="<%= "width: " + progress_percent.to_s + "%;" %>" aria-valuenow=<%= progress_percent %> aria-valuemin="0" aria-valuemax="100"><%= progress_percent %>%</div>
-                          </div>
-                      <% else %>
-                          <div class="progress">
-                              <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow=100 aria-valuemin="0" aria-valuemax="100">COMPLETE</div>
-                          </div>
-                      <% end %>
-                  </td>
-              </tr>
-          </tbody>
-      </table>
-      <% if (@member_type.quotas.size > 1) %>
-        <hr/>
-      <% end %>
-  </div>
+<% if (@member_type) %>
+
+  <% @member_type.quotas.each do |quota|  %>
+    <div>
+        <table class="table table-sm">
+            <tbody>
+                <tr class="table-active">
+                    <th scope="row">Quota:</th>
+                    <td><%= link_to(quota.name, quota_path(quota)) %></td>
+                </tr>
+                <tr>
+                    <th scope="row">Hours Completed:</th>
+                    <td><%= link_to(number_with_precision(quota_hours_completed(@volunteer, quota), precision: 2,  strip_insignificant_zeros: true) + " hours completed", time_records_path(:volunteer_id => @volunteer.id)) %></td>
+                </tr>
+                <tr>
+                    <th scope="row">Member Quota:</th>
+                    <td><%= link_to(quota.hours.to_s + " hours needed", member_type_path(@member_type)) %></td>
+                </tr>
+                <tr>
+                    <th scope="row">Progress:</th>
+                    <td>
+                        <% progress_percent = quota_completion_percent(@volunteer, quota) %>
+                        <% if progress_percent < 100 %>
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="<%= "width: " + progress_percent.to_s + "%;" %>" aria-valuenow=<%= progress_percent %> aria-valuemin="0" aria-valuemax="100"><%= progress_percent %>%</div>
+                            </div>
+                        <% else %>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow=100 aria-valuemin="0" aria-valuemax="100">COMPLETE</div>
+                            </div>
+                        <% end %>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <% if (@member_type.quotas.size > 1) %>
+          <hr/>
+        <% end %>
+    </div>
+  <% end %>
+
 <% end %>
+
 
 
 <div>

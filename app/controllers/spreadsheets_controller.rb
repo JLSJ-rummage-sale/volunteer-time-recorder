@@ -70,13 +70,42 @@ class SpreadsheetsController < ApplicationController
 
     puts "Parsing file..."
 
+    error_rows = []
+    volunteers_created = []
+
     CSV.foreach(file.path, headers: true) do |row|
 
-      puts "row = #{row}"
+      row_fields = row.to_hash
 
-      puts "row.to_hash = #{row.to_hash}"
+      puts "row_fields = #{row_fields}"
 
-      puts "row.to_hash['Email'] = #{row.to_hash['Email']}"
+      last_name = row_fields["Last Name"]
+      first_name = row_fields["First Name"]
+      email = row_fields["Email"]
+
+      existing_volunteer = Volunteer.find_by_email_address(email)
+
+      puts "existing_volunteer = #{existing_volunteer.to_s}"
+
+      if (existing_volunteer)
+        puts "Volunteer already exists: #{first_name} #{last_name}, #{email}"
+      else
+        puts "Will CREATE Volunteer: #{first_name} #{last_name}, #{email}"
+
+        new_volunteer = Volunteer.new(first_name: first_name, last_name: last_name, email_address: email)
+
+        if (new_volunteer.save)
+          volunteers_created << new_volunteer
+        else
+          error_rows << row_fields
+        end
+      end
+
+
+      puts "volunteers_created = #{volunteers_created}"
+
+      puts "error_rows = #{error_rows}"
+
       # product_hash = row.to_hash # exclude the price field
       # product = Product.where(id: product_hash["id"])
       #
