@@ -39,7 +39,7 @@ class SpreadsheetsController < ApplicationController
 
     puts "NOW IN SPREADSHEETS/IMPORT..."
 
-    @file_name = "[Unset name]"
+    @file_name = "[No file selected]"
 
     puts "params[:uploaded_file] = #{params[:uploaded_file].to_s}"
 
@@ -54,11 +54,12 @@ class SpreadsheetsController < ApplicationController
 
       @file_name = file_uploaded.original_filename
 
+      flash[:notice] = "File uploaded successfully. File Name: #{@file_name}";
     else
+      flash[:alert] = "File failed to uploaded. File: #{@file_name}";
       puts "ISSUE: No params[:file]"
     end
 
-    flash[:notice] = "File uploaded successfully. File Name: #{@file_name}";
     redirect_to spreadsheets_path
   end
 
@@ -70,8 +71,9 @@ class SpreadsheetsController < ApplicationController
 
     puts "Parsing file..."
 
-    error_rows = []
-    volunteers_created = []
+    @error_rows = []
+    @volunteers_created = []
+    @planned_shifts_created = []
 
     CSV.foreach(file.path, headers: true) do |row|
 
@@ -79,32 +81,33 @@ class SpreadsheetsController < ApplicationController
 
       puts "row_fields = #{row_fields}"
 
-      last_name = row_fields["Last Name"]
-      first_name = row_fields["First Name"]
-      email = row_fields["Email"]
+      event = Event.first # TODO: Change: Let user pick event...
 
-      existing_volunteer = Volunteer.find_by_email_address(email)
+      volunteer = create_volunteer_from_csv(row_fields)
 
-      puts "existing_volunteer = #{existing_volunteer.to_s}"
+      puts "VOLUNTEER ADDED = #{volunteer}"
 
-      if (existing_volunteer)
-        puts "Volunteer already exists: #{first_name} #{last_name}, #{email}"
-      else
-        puts "Will CREATE Volunteer: #{first_name} #{last_name}, #{email}"
+      if (volunteer)
+        puts "ADDING PLANNED SHIFT FOR VOLUNTEER..."
+        planned_shift = create_planned_shift_from_csv(row_fields, volunteer, event)
 
-        new_volunteer = Volunteer.new(first_name: first_name, last_name: last_name, email_address: email)
+        if (planned_shift)
+          puts "SAVING PLANNED SHIFT FOR VOLUNTEER..."
+          volunteer.planned_shifts << planned_shift
 
-        if (new_volunteer.save)
-          volunteers_created << new_volunteer
-        else
-          error_rows << row_fields
+          if (volunteer.save)
+            puts "able to add planned shift for #{volunteer.email_address}"
+          else
+            puts "ERROR: NOT able to add planned shift for #{volunteer.email_address}"
+          end
         end
       end
 
 
-      puts "volunteers_created = #{volunteers_created}"
+      puts "volunteers_created = #{@volunteers_created}"
+      puts "planned_shifts_created = #{@planned_shifts_created}"
 
-      puts "error_rows = #{error_rows}"
+      puts "error_rows = #{@error_rows}"
 
       # product_hash = row.to_hash # exclude the price field
       # product = Product.where(id: product_hash["id"])
@@ -122,6 +125,101 @@ class SpreadsheetsController < ApplicationController
 
   def set_page_section
     @page_section = "spreadsheet"
+  end
+
+
+  def create_volunteer_from_csv(row_fields)
+    last_name = row_fields["Last Name"]
+    first_name = row_fields["First Name"]
+    email = row_fields["Email"]
+
+    existing_volunteer = Volunteer.find_by_email_address(email)
+
+    puts "existing_volunteer = #{existing_volunteer.to_s}"
+
+    if (existing_volunteer)
+      puts "Volunteer already exists: #{first_name} #{last_name}, #{email}"
+
+      return existing_volunteer
+    else
+      puts "Will CREATE Volunteer: #{first_name} #{last_name}, #{email}"
+
+      new_volunteer = Volunteer.new(first_name: first_name, last_name: last_name, email_address: email)
+
+      if (new_volunteer.save)
+        @volunteers_created << new_volunteer
+
+        return new_volunteer
+      else
+        @error_rows << row_fields
+
+        return nil
+      end
+    end
+  end # create_volunteer_from_csv end
+
+
+  def create_planned_shift_from_csv(row_fields, volunteer, event)
+    date = row_fields["Date"]
+    puts "row_fields['Date'] = #{row_fields['Date']}"
+    start_time = row_fields["Start Time"]
+    end_time = row_fields["End Time"]
+
+    # Date format: "03/12/2018": Date.strptime("03/12/2018", '%m/%d/%Y')
+    shift_date = Date.strptime(date.to_s, '%m/%d/%Y')
+    puts "shift_date = #{shift_date}"
+
+    shift_start_time = parse_hour(start_time)
+    shift_end_time = parse_hour(end_time)
+
+    shift_start_date_time = get_date_time(shift_date, shift_start_time)
+    shift_end_date_time = get_date_time(shift_date, shift_end_time)
+
+    # Convert to Time object:
+    shift_start_date_time = Time.zone.parse(shift_start_date_time.to_s)
+    shift_end_date_time = Time.zone.parse(shift_end_date_time.to_s)
+
+
+    new_planned_shift = PlannedShift.new #(start_time: shift_start_date_time, end_time: shift_end_date_time)
+    new_planned_shift.start_time = shift_start_date_time
+    new_planned_shift.end_time = shift_end_date_time
+
+    # puts "/before-save/- - - - > new_planned_shift.start_time = #{new_planned_shift.start_time}; class = #{new_planned_shift.start_time.class.name}"
+
+    # Must set associated volunteer and event to save successfully:
+    new_planned_shift.volunteer = volunteer
+    new_planned_shift.event = event
+
+    if (new_planned_shift.save)
+      @planned_shifts_created << new_planned_shift
+
+      # puts "/after-save/- - - - > new_planned_shift.start_time = #{new_planned_shift.start_time}"
+
+      return new_planned_shift
+    else
+      @error_rows << row_fields
+
+      return nil
+    end
+  end # create_planned_shift_from_csv end
+
+
+  def get_date_time(date, time)
+    #puts "----> in get_date_time: date = #{date}; class = #{date.class.name}"
+    t_local = Time.zone.local(date.year, date.month, date.day, time.hour, time.min)
+
+    # puts "--------> in get_date_time: t_local = #{t_local}; class = #{t_local.class.name}"
+    # puts "--------> in get_date_time: t_local.zone = #{t_local.zone}"
+
+    return t_local
+  end
+
+
+  def parse_hour(time)
+    # Time formats: "5pm" or "5:00 PM":
+    hour = Time.parse(time) # Returns the current date with the specified hour.
+
+    return hour
   end
 
 end
