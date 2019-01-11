@@ -106,17 +106,6 @@ class SpreadsheetsController < ApplicationController
       puts "planned_shifts_created = #{@planned_shifts_created}"
 
       puts "error_rows = #{@error_rows}"
-
-      # product_hash = row.to_hash # exclude the price field
-      # product = Product.where(id: product_hash["id"])
-      #
-      # if product.count == 1
-      #   product.first.update_attributes(product_hash)
-      # else
-      #   Product.create!(product_hash)
-      # end # end if !product.nil?
-
-
     end # end CSV.foreach
   end
 
