@@ -21,7 +21,10 @@ class VolunteersController < ApplicationController
 
         respond_to do |format|
           format.html
-          format.csv { send_data @volunteers.as_csv }
+          format.csv do
+            all_volunteers = Volunteer.sorted
+            send_data all_volunteers.as_csv
+          end
         end
     end
 

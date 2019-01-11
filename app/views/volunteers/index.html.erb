@@ -73,3 +73,7 @@
 <%# <%= will_paginate @volunteers, renderer: BootstrapPagination::Rails %>
 
 <%= paginate @volunteers %>
+
+<p>
+  <%= link_to "Download as CSV", "volunteers.csv", :format => :csv, :class => 'btn btn-secondary btn-block' %>
+</p>
