@@ -1,7 +1,5 @@
 class SpreadsheetsController < ApplicationController
 
-  require 'csv'
-
   def index
       # Get all event records from the database to display:
       # @events = Event.all;
