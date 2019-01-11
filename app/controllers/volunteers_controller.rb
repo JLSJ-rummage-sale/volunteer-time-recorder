@@ -18,6 +18,11 @@ class VolunteersController < ApplicationController
         # else
         #     @volunteers = Volunteer.sorted.page(params[:page]).per(10); #paginate(:page => params[:page], :per_page => 10);
         # end
+
+        respond_to do |format|
+          format.html
+          format.csv { send_data @volunteers.as_csv }
+        end
     end
 
     def show
