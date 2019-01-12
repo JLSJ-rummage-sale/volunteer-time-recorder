@@ -19,6 +19,15 @@ class PlannedShiftsController < ApplicationController
           puts("NOT Filtering by anything.");
           @planned_shifts = PlannedShift.sorted;
       end
+
+
+      respond_to do |format|
+        format.html
+        format.csv do
+          all_shifts = PlannedShift.sorted
+          send_data all_shifts.as_csv
+        end
+      end
   end
 
   def show
