@@ -3,7 +3,10 @@
 <h5><span class="fas fa-calendar-week"></span> Event Record</h5>
 
 <p>
-    <%= link_to "View All Events", events_path, :class => 'btn btn-light' %>
+    <%#= link_to "View All Events", events_path, :class => 'btn btn-light' %>
+    <%= link_to(events_path, :class => 'btn btn-light') do %>
+        <span class="fas fa-angle-left"></span> View All Events
+    <% end %>
 </p>
 
 <div class="card">

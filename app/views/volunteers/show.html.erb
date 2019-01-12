@@ -3,7 +3,10 @@
 <h5><span class="fas fa-user"></span> Volunteer Record</h5>
 
 <p>
-    <%= link_to "View All Volunteers", volunteers_path, :class => 'btn btn-light' %>
+    <%#= link_to "View All Volunteers", volunteers_path, :class => 'btn btn-light' %>
+    <%= link_to(volunteers_path, :class => 'btn btn-light') do %>
+        <span class="fas fa-angle-left"></span> View All Volunteers
+    <% end %>
 </p>
 
 <div class="card">

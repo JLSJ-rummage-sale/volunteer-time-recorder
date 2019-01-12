@@ -3,7 +3,10 @@
 <h5><span class="fas fa-bars"></span> Category Record</h5>
 
 <p>
-    <%= link_to "View All Categories", categories_path, :class => 'btn btn-light' %>
+    <%#= link_to "View All Categories", categories_path, :class => 'btn btn-light' %>
+    <%= link_to(categories_path, :class => 'btn btn-light') do %>
+        <span class="fas fa-angle-left"></span> View All Categories
+    <% end %>
 </p>
 
 <div class="card">
