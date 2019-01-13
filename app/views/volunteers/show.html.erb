@@ -30,13 +30,45 @@
 
 <br>
 
-<p>
-  <%= link_to "Add Time Record", new_time_record_path(:volunteer_id => @volunteer.id), :class => 'btn btn-success btn-block' %>
-</p>
-<p>
-  <%= link_to "View all Planned Shifts for this Volunteer", planned_shifts_path(:volunteer_id => @volunteer.id), :class => 'btn btn-info btn-block' %>
-</p>
+<div class="card">
+  <div style="padding: 8px" class="card-header">
+    <h4>Planned Shifts for <%= @volunteer.first_name %></h4>
+  </div>
+  <div style="padding: 2px" class="card-body">
+    <%= render(:partial => 'planned_shifts_info_table') %>
+  </div>
+  <div style="padding: 8px" class="card-footer">
+    <div>
+      <p>
+        <%= link_to "Add Shift", new_planned_shift_path(:volunteer_id => @volunteer.id), :class => 'btn btn-success btn-block' %>
+        <%#= render_add_record_button("Add Shift", new_planned_shift_path(:volunteer_id => @volunteer.id)) %>
+      </p>
+      <p>
+        <%= link_to "View all Planned Shifts for this Volunteer", planned_shifts_path(:volunteer_id => @volunteer.id), :class => 'btn btn-info btn-block' %>
+      </p>
+    </div>
+  </div>
+</div>
 
-<p>
-  <%= link_to "View all Time Records for this Volunteer", time_records_path(:volunteer_id => @volunteer.id), :class => 'btn btn-info btn-block' %>
-</p>
+<br>
+
+<div class="card">
+  <div style="padding: 8px" class="card-header">
+    <h4>Hours Completed for <%= @volunteer.first_name %></h4>
+  </div>
+  <div style="padding: 2px" class="card-body">
+    <%= render(:partial => 'time_records_info_table') %>
+  </div>
+  <div style="padding: 8px" class="card-footer">
+    <div>
+      <p>
+        <%= link_to "Add Time Record", new_time_record_path(:volunteer_id => @volunteer.id), :class => 'btn btn-success btn-block' %>
+      </p>
+      <p>
+        <%= link_to "View all Time Records for this Volunteer", time_records_path(:volunteer_id => @volunteer.id), :class => 'btn btn-info btn-block' %>
+      </p>
+    </div>
+  </div>
+</div>
+
+<br>
