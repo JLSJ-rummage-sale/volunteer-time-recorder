@@ -24,7 +24,8 @@
 <div>
   <% if(params[:search].present?) %>
     <p>
-        Searching with: '<strong><%= params[:search].to_s %></strong>'
+        Searching with: '<strong><%= params[:search].to_s %></strong>' <br>
+        <%= link_to "View All Volunteers", volunteers_path %>
     </p>
   <% end %>
 
