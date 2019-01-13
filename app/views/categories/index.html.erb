@@ -3,7 +3,7 @@
 <h2>Categories</h2>
 
 <p>
-    <%= link_to "Add Category", new_category_path(@category), :class => 'btn btn-success' %>
+    <%= render_add_record_button("Add Category", new_category_path) %>
 </p>
 
 <div class="table-responsive">

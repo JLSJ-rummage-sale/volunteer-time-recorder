@@ -14,11 +14,11 @@
 
 <p>
     <% if(@parent_event) %>
-        <%= link_to "Add Planned Shift", new_planned_shift_path(@planned_shift, :event_id => @parent_event.id), :class => 'btn btn-success' %>
+        <%= render_add_record_button("Add Planned Shift", new_planned_shift_path(@planned_shift, :event_id => @parent_event.id)) %>
     <% elsif(@parent_volunteer) %>
-        <%= link_to "Add Planned Shift", new_planned_shift_path(@planned_shift, :volunteer_id => @parent_volunteer.id), :class => 'btn btn-success' %>
+        <%= render_add_record_button("Add Planned Shift", new_planned_shift_path(@planned_shift, :volunteer_id => @parent_volunteer.id)) %>
     <% else %>
-        <%= link_to "Add Planned Shift", new_planned_shift_path(@planned_shift), :class => 'btn btn-success' %>
+        <%= render_add_record_button("Add Planned Shift", new_planned_shift_path) %>
     <% end %>
 </p>
 

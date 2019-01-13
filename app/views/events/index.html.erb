@@ -3,10 +3,7 @@
 <h2>Events</h2>
 
 <p>
-    <%#= link_to "Add Event", new_event_path(@event), :class => 'btn btn-success' %>
-    <%= link_to(new_event_path(@event), :class => 'btn btn-success') do %>
-        <span class="fas fa-plus"></span> Add Event
-    <% end %>
+    <%= render_add_record_button("Add Event", new_event_path) %>
 </p>
 
 <div class="table-responsive">

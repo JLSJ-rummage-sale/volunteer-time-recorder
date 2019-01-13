@@ -3,9 +3,7 @@
 <h2>Volunteers</h2>
 
 <p>
-    <%= link_to(new_volunteer_path(@volunteer), :class => 'btn btn-success') do %>
-        <span class="fas fa-user-plus"></span> Add Volunteer
-    <% end %>
+    <%= render_add_record_button("Add Volunteer", new_volunteer_path(@volunteer), "fas fa-user-plus") %>
 </p>
 
 <form class="form-inline">
