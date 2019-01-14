@@ -19,6 +19,7 @@ class PlannedShift < ApplicationRecord
 
   scope :sorted, lambda { order("start_time DESC") }
   scope :chronologically, lambda { order("start_time ASC") }
+  scope :by_category, lambda { |category_id| where("category_id = ?", category_id) if category_id.present? }
 
   # Other methods:
 

@@ -12,6 +12,12 @@
     <% end %>
 </h4>
 
+<h5>
+  <% if(@category_filter) %>
+      By Category: <%= link_to(@category_filter.name, category_path(@category_filter)) %>
+  <% end %>
+</h5>
+
 <p>
     <% if(@parent_event) %>
         <%= render_add_record_button("Add Time Record", new_time_record_path(@time_record, :event_id => @parent_event.id)) %>
@@ -58,6 +64,8 @@
         No Time Records for Event: <%= event_title(@parent_event) %>
     <% elsif(@parent_volunteer) %>
         No Time Records for Volunteer: <%= full_name(@parent_volunteer) %>
+    <% elsif(@category_filter) %>
+        No Planned Shifts for Category: <%= link_to(@category_filter.name, category_path(@category_filter)) %>
     <% else %>
         There are no Time Records yet.
     <% end %>

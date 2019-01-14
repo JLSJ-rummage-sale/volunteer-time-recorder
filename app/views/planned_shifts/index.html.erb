@@ -12,6 +12,12 @@
     <% end %>
 </h4>
 
+<h5>
+  <% if(@category_filter) %>
+      By Category: <%= link_to(@category_filter.name, category_path(@category_filter)) %>
+  <% end %>
+</h5>
+
 <p>
     <% if(@parent_event) %>
         <%= render_add_record_button("Add Planned Shift", new_planned_shift_path(@planned_shift, :event_id => @parent_event.id)) %>
@@ -27,8 +33,8 @@
     <table class="table table-striped table-bordered table-hover table-sm">
         <thead class="thead-dark">
             <tr>
-            <th scope="col">Shift Name</th>
             <th scope="col">Volunteer</th>
+            <th scope="col">Category</th>
             <th scope="col">Time</th>
             <th scope="col">Day</th>
             <th scope="col">Actual Time</th>
@@ -36,10 +42,11 @@
         </thead>
         <tbody>
             <% @planned_shifts.each do |shift| %>
-                <% shift_name = (shift.name) ? shift.name : "[Shift]" %>
+                <!-- <%# shift_name = (shift.name) ? shift.name : "[Shift]" %> -->
                 <tr>
-                    <td><%= link_to shift_name, planned_shift_path(shift) %></td>
+                    <!-- <td><%#= link_to shift_name, planned_shift_path(shift) %></td> -->
                     <td><%= link_to shift.volunteer.full_name, planned_shift_path(shift) %></td>
+                    <td><%= link_to shift.category_name, planned_shift_path(shift) %></td>
                     <td><%= shift.start_time.strftime("%I:%M %p") %> - <%= shift.end_time.strftime("%I:%M %p") %></td>
                     <td><%= shift.start_time.strftime("%a, %b %d") %></td>
                     <td>
@@ -57,6 +64,8 @@
         No Planned Shifts for Event: <%= event_title(@parent_event) %>
     <% elsif(@parent_volunteer) %>
         No Planned Shifts for Volunteer: <%= full_name(@parent_volunteer) %>
+    <% elsif(@category_filter) %>
+        No Planned Shifts for Category: <%= link_to(@category_filter.name, category_path(@category_filter)) %>
     <% else %>
         There are no Planned Shifts yet.
     <% end %>

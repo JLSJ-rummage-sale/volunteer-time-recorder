@@ -6,6 +6,11 @@ class PlannedShiftsController < ApplicationController
   # CRUD Actions:
 
   def index
+
+      if (params[:category_id])
+        @category_filter = Category.find_by_id(params[:category_id]); # Will return an object or return nil.;
+      end
+
       # Get all planned_shift records from the database to display:
       # Check if a parent event was passed in (from "find_event" method below):
       if (@parent_volunteer) # Check if variable exists and is not nil.
@@ -17,7 +22,7 @@ class PlannedShiftsController < ApplicationController
           @planned_shifts = @parent_event.planned_shifts.sorted;
       else
           puts("NOT Filtering by anything.");
-          @planned_shifts = PlannedShift.sorted;
+          @planned_shifts = PlannedShift.sorted.by_category(params[:category_id]);
       end
 
 
