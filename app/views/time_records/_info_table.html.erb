@@ -26,12 +26,12 @@
             <tr>
                 <th scope="row">Start:</th>
                 <td><%= @time_record.start_time.strftime("%I:%M %p") %></td>
-                <td><%= @time_record.start_time.strftime("%a, %b %d") %></td>
+                <td><%= @time_record.start_time.strftime("%a, %b %d, %Y") %></td>
             </tr>
             <tr>
                 <th scope="row">End:</th>
                 <td><%= @time_record.end_time.strftime("%I:%M %p") %></td>
-                <td><%= @time_record.end_time.strftime("%a, %b %d") %></td>
+                <td><%= @time_record.end_time.strftime("%a, %b %d, %Y") %></td>
             </tr>
         </tbody>
     </table>
