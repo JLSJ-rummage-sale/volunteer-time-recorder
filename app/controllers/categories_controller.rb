@@ -86,4 +86,10 @@ class CategoriesController < ApplicationController
   def category_params
       params.require(:category).permit(:name);
   end
+
+  def set_page_section
+    @page_section = "category"
+  end
+
+
 end
