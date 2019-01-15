@@ -1,85 +1,119 @@
 class SpreadsheetsController < ApplicationController
 
   def index
-      # Get all event records from the database to display:
-      # @events = Event.all;
+      # Get all spreadsheet records from the database to display:
+      @spreadsheets = Spreadsheet.all;
   end
 
   def show
-      # Get the event object that was selected:
-      # @event = Event.find(params[:id]);
+      # Get the spreadsheet object that was selected:
+      @spreadsheet = Spreadsheet.find(params[:id]);
+
+      @event = Event.find(@spreadsheet.event_id);
   end
 
   # Called when rendering the New Event page:
   def new
       # Create a new event instance that will be used in the form:
-      # @event = Event.new;
+      @spreadsheet = Spreadsheet.new;
   end
 
   # Called when the New Event form is submitted:
   def create
-      # Create a new event instance that will be used in the form:
-      # @event = Event.new(event_params);
-      #
-      # if(@event.save)
-      #     # Present a 1-time flash message to the user after redirect:
-      #     flash[:notice] = "Event created successfully.";
-      #
-      #     # If saved to DB successfully, go to show page:
-      #     redirect_to @event;
-      # else
-      #     # If validations prevented save, reload form (with error message):
-      #     render 'new';
-      # end
+      #Create a new spreadsheet instance that will be used in the form:
+      @spreadsheet = Spreadsheet.new();
+      @spreadsheet.event_id = spreadsheet_params[:event_id]
+
+      file_to_import = spreadsheet_params[:uploaded_file]
+      puts "file_to_import = #{file_to_import.to_s}"
+
+      @file_name = "[No file selected]"
+
+      if (file_to_import)
+        @file_name = file_to_import.original_filename
+        @spreadsheet.file_name = @file_name
+
+        event = Event.find(@spreadsheet.event_id)
+
+        parse_file(file_to_import, event)
+
+        @spreadsheet.num_rows = @num_rows
+
+        if (@error_rows.count > 0)
+          @spreadsheet.status = "errors"
+        else
+          @spreadsheet.status = "success"
+        end
+
+        if(@spreadsheet.save)
+            # Present a 1-time flash message to the user after redirect:
+            flash[:notice] = "File uploaded successfully. File Name: #{@file_name}";
+
+            # If saved to DB successfully, go to show page:
+            redirect_to @spreadsheet;
+        else
+            # If validations prevented save, reload form (with error message):
+            render 'new';
+        end
+      else
+        flash[:alert] = "File failed to uploaded. File: #{@file_name}";
+
+        render 'new';
+      end
+
   end
 
-  def import
-
-    puts "NOW IN SPREADSHEETS/IMPORT..."
-
-    @file_name = "[No file selected]"
-
-    puts "params[:uploaded_file] = #{params[:uploaded_file].to_s}"
-
-    if (params[:uploaded_file])
-      file_uploaded = params[:uploaded_file]
-
-      puts "file_uploaded.class.name = #{file_uploaded.class.name}"
-
-      puts "file_uploaded.path = #{file_uploaded.path}"
-
-      parse_file(file_uploaded)
-
-      @file_name = file_uploaded.original_filename
-
-      flash[:notice] = "File uploaded successfully. File Name: #{@file_name}";
-    else
-      flash[:alert] = "File failed to uploaded. File: #{@file_name}";
-      puts "ISSUE: No params[:file]"
-    end
-
-    redirect_to spreadsheets_path
-  end
+  # def import_file(file_uploaded)
+  #
+  #   puts "NOW IN SPREADSHEETS/IMPORT..."
+  #
+  #   @file_name = "[No file selected]"
+  #
+  #   if (file_uploaded)
+  #     puts "file_uploaded.class.name = #{file_uploaded.class.name}"
+  #
+  #     puts "file_uploaded.path = #{file_uploaded.path}"
+  #
+  #     parse_file(file_uploaded)
+  #
+  #     @file_name = file_uploaded.original_filename
+  #
+  #     flash[:notice] = "File uploaded successfully. File Name: #{@file_name}";
+  #   else
+  #     flash[:alert] = "File failed to uploaded. File: #{@file_name}";
+  #     puts "ISSUE: No params[:file]"
+  #   end
+  #
+  #   redirect_to spreadsheets_path
+  # end
 
 
 
   private
 
-  def parse_file(file)
+  # Defines the acceptable fields for Volunteer:
+  def spreadsheet_params
+      params.require(:spreadsheet).permit(:event_id, :uploaded_file);
+  end
+
+
+
+  def parse_file(file, event)
 
     puts "Parsing file..."
 
+    @num_rows = 0
     @error_rows = []
     @volunteers_created = []
     @planned_shifts_created = []
 
     CSV.foreach(file.path, headers: true) do |row|
 
+      @num_rows += 1 # Increment row count.
+
       row_fields = row.to_hash
 
       puts "row_fields = #{row_fields}"
-
-      event = Event.first # TODO: Change: Let user pick event...
 
       volunteer = create_volunteer_from_csv(row_fields)
 

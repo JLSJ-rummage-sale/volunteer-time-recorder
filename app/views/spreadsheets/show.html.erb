@@ -1,0 +1,22 @@
+<% @page_title = "View Spreadsheet" %>
+
+<h5><span class="fas fa-table"></span> Spreadsheet</h5>
+
+<p>
+    <%#= link_to "View All Spreadsheets", spreadsheets_path, :class => 'btn btn-light' %>
+    <%= link_to(spreadsheets_path, :class => 'btn btn-light') do %>
+        <span class="fas fa-angle-left"></span> View All Spreadsheets
+    <% end %>
+</p>
+
+<div class="card">
+  <div style="padding: 8px" class="card-header">
+    <h4><%= @spreadsheet.file_name %></h4>
+  </div>
+  <div style="padding: 2px" class="card-body">
+    <%= render(:partial => 'info_table') %>
+  </div>
+  <div style="padding: 8px" class="card-footer">
+    <%= link_to("Delete", delete_spreadsheet_path(@spreadsheet), :class => 'btn btn-danger btn-block') %>
+  </div>
+</div>

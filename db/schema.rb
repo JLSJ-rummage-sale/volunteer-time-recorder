@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181202042635) do
+ActiveRecord::Schema.define(version: 20190115013822) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -62,6 +62,16 @@ ActiveRecord::Schema.define(version: 20181202042635) do
     t.integer "member_type_id"
     t.index ["category_id"], name: "index_quotas_on_category_id"
     t.index ["member_type_id"], name: "index_quotas_on_member_type_id"
+  end
+
+  create_table "spreadsheets", force: :cascade do |t|
+    t.string "file_name"
+    t.integer "num_rows"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "event_id"
+    t.index ["event_id"], name: "index_spreadsheets_on_event_id"
   end
 
   create_table "time_records", force: :cascade do |t|

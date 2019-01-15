@@ -1,2 +1,29 @@
-<h1>Spreadsheets#new</h1>
-<p>Find me in app/views/spreadsheets/new.html.erb</p>
+<% @page_title = "Import Records" %>
+
+<h1>Import Records</h1>
+
+
+<p>Export a spreadsheet (Excel or Google Sheets) to CSV format.</p>
+<ul>
+  <li>
+    For <strong>Google Sheets</strong> spreadsheet: <br>
+    File -> Download as -> Comma-separated values (.csv, current sheet)
+  </li>
+
+  <li>
+    For <strong>Excel</strong> spreadsheet: <br>
+    File -> Save As -> in "Save as type:", select "CSV (Comma delimited) (*.csv)"
+  </li>
+</ul>
+
+<hr>
+
+
+<%= form_for :spreadsheet, url: spreadsheets_path do |form| %>
+
+    <%= render(:partial => 'form', :locals => {:form => form}) %>
+
+    <p>
+        <%= form.submit("Import CSV", {:class => 'btn btn-success btn-block'}) %>
+    </p>
+<% end %>
