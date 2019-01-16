@@ -76,6 +76,11 @@ class SpreadsheetsController < ApplicationController
 
   end
 
+
+  def download
+    @page_section = "download"
+  end
+
   # def import_file(file_uploaded)
   #
   #   puts "NOW IN SPREADSHEETS/IMPORT..."

@@ -1,0 +1,18 @@
+<% @page_title = "Download" %>
+
+<h2>Download</h2>
+
+<p>
+  Download records as CSV file:
+</p>
+
+
+<%= link_to("/volunteers.csv", :class => 'btn btn-info btn-block') do %>
+    <span class="fas fa-download"></span> <span class="fas fa-user"></span>  Download Volunteer records
+<% end %>
+
+<br>
+
+<%= link_to("/planned_shifts.csv", :class => 'btn btn-info btn-block') do %>
+    <span class="fas fa-download"></span> <span class="fas fa-calendar-day"></span>  Download Planned Shift records
+<% end %>
