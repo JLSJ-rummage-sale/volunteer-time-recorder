@@ -6,6 +6,11 @@ class PlannedShiftsController < ApplicationController
   # CRUD Actions:
 
   def index
+
+      if (params[:category_id])
+        @category_filter = Category.find_by_id(params[:category_id]); # Will return an object or return nil.;
+      end
+
       # Get all planned_shift records from the database to display:
       # Check if a parent event was passed in (from "find_event" method below):
       if (@parent_volunteer) # Check if variable exists and is not nil.
@@ -17,7 +22,16 @@ class PlannedShiftsController < ApplicationController
           @planned_shifts = @parent_event.planned_shifts.sorted;
       else
           puts("NOT Filtering by anything.");
-          @planned_shifts = PlannedShift.sorted;
+          @planned_shifts = PlannedShift.sorted.by_category(params[:category_id]);
+      end
+
+
+      respond_to do |format|
+        format.html
+        format.csv do
+          all_shifts = PlannedShift.sorted
+          send_data all_shifts.as_csv
+        end
       end
   end
 
@@ -67,6 +81,8 @@ class PlannedShiftsController < ApplicationController
 
       @time_record = @planned_shift.associcated_time_record
       puts ("Assoiciated Time Record Found = #{@planned_shift.associcated_time_record}")
+
+      @spreadsheet = get_spreadsheet_creator_if_exists(@planned_shift)
 
   end
 
@@ -311,6 +327,20 @@ class PlannedShiftsController < ApplicationController
       else
           puts("didn't find volunteer.")
       end
+  end
+
+
+  def get_spreadsheet_creator_if_exists(planned_shift)
+    planned_shift_import_record = PlannedShiftsUploaded.find_by_planned_shift_id(planned_shift.id)
+
+    puts "lookup planned_shift_import_record = #{planned_shift_import_record}"
+
+    if (planned_shift_import_record)
+      puts "found planned_shift_import_record.spreadsheet = #{planned_shift_import_record.spreadsheet}"
+      return planned_shift_import_record.spreadsheet
+    else
+      return nil
+    end
   end
 
 

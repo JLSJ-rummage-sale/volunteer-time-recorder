@@ -1,0 +1,46 @@
+<div>
+    <table class="table table-sm">
+        <thead class="thead-light">
+            <tr>
+            <th scope="col">Spreadsheet Info</th>
+            <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">File name:</th>
+                <td><%= @spreadsheet.file_name %></td>
+            </tr>
+            <tr>
+                <th scope="row">Event:</th>
+                <td><%= link_to(@event.event_title, event_path(@event)) %></td>
+            </tr>
+            <tr>
+                <th scope="row">Uploaded at:</th>
+                <td><%= @spreadsheet.created_at.strftime("%I:%M %p, %a, %b %d, %Y") %></td>
+            </tr>
+            <tr>
+                <th scope="row">Number of rows:</th>
+                <td><%= @spreadsheet.num_rows %></td>
+            </tr>
+            <tr>
+                <th scope="row">Upload status:</th>
+                <% if (@spreadsheet.status == "success") %>
+                  <td class="success-type">
+                <% else %>
+                  <td class="error-type">
+                <% end %>
+                  <%= @spreadsheet.status.to_s.capitalize %>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Volunteer records uploaded:</th>
+                <td><%= @volunteers_uploaded.count || 0 %></td>
+            </tr>
+            <tr>
+                <th scope="row">Planned Shift records uploaded:</th>
+                <td><%= @planned_shifts_uploaded.count || 0 %></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

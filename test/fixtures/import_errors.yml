@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  row_number: 1
+  error_message: MyString
+  row_data: MyString
+  spreadsheet: one
+
+two:
+  row_number: 1
+  error_message: MyString
+  row_data: MyString
+  spreadsheet: two

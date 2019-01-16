@@ -9,19 +9,28 @@
     <div class="collapse navbar-collapse" id="navbarsExample02">
     <ul class="navbar-nav mr-auto">
         <li class="nav-item" id="nav-volunteers">
-        <%= link_to "Volunteers", volunteers_path, {:class => "nav-link"} %>
+          <%= link_to "Volunteers", volunteers_path, {:class => "nav-link"} %>
         </li>
         <li class="nav-item" id="nav-events">
-        <%= link_to "Events", events_path, {:class => "nav-link"} %>
+          <%= link_to "Events", events_path, {:class => "nav-link"} %>
         </li>
         <li class="nav-item" id="nav-time-records">
-        <%= link_to "Time Records", time_records_path, {:class => "nav-link"} %>
+          <%= link_to "Time Records", time_records_path, {:class => "nav-link"} %>
         </li>
         <li class="nav-item" id="nav-shifts">
-        <%= link_to "Shifts", planned_shifts_path, {:class => "nav-link"} %>
+          <%= link_to "Shifts", planned_shifts_path, {:class => "nav-link"} %>
         </li>
         <li class="nav-item" id="nav-member-types">
-        <%= link_to "Member Types", member_types_path, {:class => "nav-link"} %>
+          <%= link_to "Member Types", member_types_path, {:class => "nav-link"} %>
+        </li>
+        <li class="nav-item" id="nav-categories">
+          <%= link_to "Categories", categories_path, {:class => "nav-link"} %>
+        </li>
+        <li class="nav-item" id="nav-spreadsheets">
+          <%= link_to "Upload", spreadsheets_path, {:class => "nav-link"} %>
+        </li>
+        <li class="nav-item" id="nav-download">
+          <%= link_to "Download", "spreadsheets/download", {:class => "nav-link"} %>
         </li>
     </ul>
     <!-- <ul class="navbar-nav navbar-right">
@@ -48,6 +57,9 @@
       dictionary.set("time_record", "nav-time-records");
       dictionary.set("planned_shift", "nav-shifts");
       dictionary.set("member_type", "nav-member-types");
+      dictionary.set("category", "nav-categories");
+      dictionary.set("spreadsheet", "nav-spreadsheets");
+      dictionary.set("download", "nav-download");
 
       for (var key of dictionary.keys()) {
         if ($("#page-section").hasClass(key)) {

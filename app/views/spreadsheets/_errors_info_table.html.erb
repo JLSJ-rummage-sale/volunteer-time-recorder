@@ -1,0 +1,30 @@
+<div>
+    <table class="table table-sm">
+        <thead class="thead-light">
+            <tr>
+            <th scope="col"></th>
+            <th scope="col">Errors found: <%= @import_errors.count %></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @import_errors.each do |import_error| %>
+              <tr class="table-active">
+                <th scope="row">Error ID:</th>
+                <td>ERR<%= import_error.id %></td>
+              </tr>
+              <tr>
+                <th scope="row">Error Message:</th>
+                <td><%= import_error.error_message %></td>
+              </tr>
+              <tr>
+                <th scope="row">On Row:</th>
+                <td><%= import_error.row_number %></td>
+              </tr>
+              <tr>
+                <th scope="row">Row/Column:</th>
+                <td><%= import_error.row_data %></td>
+              </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>

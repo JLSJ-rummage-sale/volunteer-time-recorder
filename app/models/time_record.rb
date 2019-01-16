@@ -17,6 +17,7 @@ class TimeRecord < ApplicationRecord
   # Scopes:
 
   scope :sorted, lambda { order("start_time DESC") }
+  scope :by_category, lambda { |category_id| where("category_id = ?", category_id) if category_id.present?}
 
   # Other methods:
 

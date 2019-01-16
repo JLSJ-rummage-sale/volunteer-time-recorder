@@ -1,0 +1,45 @@
+<% @page_title = "Spreadsheets" %>
+
+<h2>Spreadsheets</h2>
+
+<p>
+  Import Volunteer and Planned Shift records from a spreadsheet (CSV file).
+</p>
+
+<p>
+    <%= render_add_record_button("Upload", new_spreadsheet_path, "fas fa-upload") %>
+</p>
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">
+        <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">File Name</th>
+              <th scope="col">Number of rows</th>
+              <th scope="col">Status</th>
+              <th scope="col">Details</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @spreadsheets.reverse.each do |spreadsheet| %>
+                <tr>
+                    <th scope="row"><%= link_to spreadsheet.id.to_s, spreadsheet_path(spreadsheet) %></th>
+                    <th scope="row"><%= link_to spreadsheet.file_name, spreadsheet_path(spreadsheet) %></th>
+                    <th scope="row"><%= link_to spreadsheet.num_rows, spreadsheet_path(spreadsheet) %></th>
+                    <% if (spreadsheet.status == "success") %>
+                      <th scope="row" class="success-type">
+                    <% else %>
+                      <th scope="row" class="error-type">
+                    <% end %>
+                        <%= spreadsheet.status.to_s.capitalize %> </th>
+                    <td><%= link_to "Details", spreadsheet_path(spreadsheet), :class => 'btn btn-secondary' %></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>
+
+<% if @spreadsheets.blank? %>
+  <h4>No spreadsheets have been uploaded yet.</h4>
+<% end %>

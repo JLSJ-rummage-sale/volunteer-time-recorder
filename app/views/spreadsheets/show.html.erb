@@ -1,0 +1,64 @@
+<% @page_title = "View Spreadsheet" %>
+
+<h5><span class="fas fa-table"></span> Spreadsheet</h5>
+
+<p>
+    <%#= link_to "View All Spreadsheets", spreadsheets_path, :class => 'btn btn-light' %>
+    <%= link_to(spreadsheets_path, :class => 'btn btn-light') do %>
+        <span class="fas fa-angle-left"></span> View All Spreadsheets
+    <% end %>
+</p>
+
+<div class="card">
+  <div style="padding: 8px" class="card-header">
+    <h4>Spreadsheet #<%= @spreadsheet.id.to_s %></h4>
+  </div>
+  <div style="padding: 2px" class="card-body">
+    <%= render(:partial => 'info_table') %>
+  </div>
+  <div style="padding: 8px" class="card-footer">
+    <%= link_to("Delete", delete_spreadsheet_path(@spreadsheet), :class => 'btn btn-danger btn-block') %>
+  </div>
+</div>
+
+<% if (@import_errors && @import_errors.size > 0) %>
+
+  <br>
+
+  <div class="card border-danger">
+    <div style="padding: 8px" class="card-header text-danger">
+      <h5>Errors:</h5>
+    </div>
+    <div style="padding: 2px" class="card-body">
+      <%= render(:partial => 'errors_info_table') %>
+    </div>
+  </div>
+<% end %>
+
+<% if (@volunteers_uploaded && @volunteers_uploaded.size > 0) %>
+
+  <br>
+
+  <div class="card border-success">
+    <div style="padding: 8px" class="card-header">
+      <h5>Volunteer Records Uploaded</h5>
+    </div>
+    <div style="padding: 2px" class="card-body">
+      <%= render(:partial => 'volunteers_created_info_table') %>
+    </div>
+  </div>
+<% end %>
+
+<% if (@planned_shifts_uploaded && @planned_shifts_uploaded.size > 0) %>
+
+  <br>
+
+  <div class="card border-success">
+    <div style="padding: 8px" class="card-header">
+      <h5>Shift Records Uploaded</h5>
+    </div>
+    <div style="padding: 2px" class="card-body">
+      <%= render(:partial => 'planned_shifts_created_info_table') %>
+    </div>
+  </div>
+<% end %>

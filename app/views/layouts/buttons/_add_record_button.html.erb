@@ -1,0 +1,5 @@
+<%# Local variables: 'path', 'btn_name', 'icon' (optional)%>
+<% icon ||= "fas fa-plus" %>
+<%= link_to(path, :class => 'btn btn-success') do %>
+    <span class="<%= icon %>"></span> <%= btn_name %>
+<% end %>

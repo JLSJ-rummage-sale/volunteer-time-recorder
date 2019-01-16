@@ -28,11 +28,40 @@
    background-color: #eee;
  }
 
+ .filter-submit-btn {
+   margin-left: 5px;
+ }
 
+ .filter-volunteers {
+   margin-top: 1rem;
+ }
+
+ .page-result-filters {
+   margin: 0.75rem 0;
+   background-color: whitesmoke;
+   border-radius: 5px;
+   padding: 5px;
+ }
+
+ .page-result-filters > * {
+   margin: 0;
+ }
+
+ .page-result-count {
+   margin: 1rem 0;
+ }
+
+ .container {
+  max-width: 900px;
+ }
+
+.success-type {
+  color: green;
+}
+
+.error-type {
+  color: red;
+}
 
  // Custom bootstrap variables must be set or imported *before* bootstrap.
 @import "bootstrap";
-
-.container {
- max-width: 900px;
-}

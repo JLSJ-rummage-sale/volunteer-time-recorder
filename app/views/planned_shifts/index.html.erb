@@ -2,6 +2,11 @@
 
 <h2>Planned Shifts</h2>
 
+<p>
+  Planned Shifts represent a scheduled time to complete by volunteers.<br>
+  When a Planned Shift is Checked-Out, a new Time Record is automatically created.
+</p>
+
 <h4>
     <% if(@parent_event) %>
         Planned Shifts for Event: <%= link_to event_title(@parent_event), event_path(@parent_event) %>
@@ -12,13 +17,19 @@
     <% end %>
 </h4>
 
+<h5>
+  <% if(@category_filter) %>
+      By Category: <%= link_to(@category_filter.name, category_path(@category_filter)) %>
+  <% end %>
+</h5>
+
 <p>
     <% if(@parent_event) %>
-        <%= link_to "Add Planned Shift", new_planned_shift_path(@planned_shift, :event_id => @parent_event.id), :class => 'btn btn-success' %>
+        <%= render_add_record_button("Add Planned Shift", new_planned_shift_path(@planned_shift, :event_id => @parent_event.id)) %>
     <% elsif(@parent_volunteer) %>
-        <%= link_to "Add Planned Shift", new_planned_shift_path(@planned_shift, :volunteer_id => @parent_volunteer.id), :class => 'btn btn-success' %>
+        <%= render_add_record_button("Add Planned Shift", new_planned_shift_path(@planned_shift, :volunteer_id => @parent_volunteer.id)) %>
     <% else %>
-        <%= link_to "Add Planned Shift", new_planned_shift_path(@planned_shift), :class => 'btn btn-success' %>
+        <%= render_add_record_button("Add Planned Shift", new_planned_shift_path) %>
     <% end %>
 </p>
 
@@ -27,8 +38,8 @@
     <table class="table table-striped table-bordered table-hover table-sm">
         <thead class="thead-dark">
             <tr>
-            <th scope="col">Shift Name</th>
             <th scope="col">Volunteer</th>
+            <th scope="col">Category</th>
             <th scope="col">Time</th>
             <th scope="col">Day</th>
             <th scope="col">Actual Time</th>
@@ -36,9 +47,11 @@
         </thead>
         <tbody>
             <% @planned_shifts.each do |shift| %>
+                <!-- <%# shift_name = (shift.name) ? shift.name : "[Shift]" %> -->
                 <tr>
-                    <td><%= link_to shift.name, planned_shift_path(shift) %></td>
+                    <!-- <td><%#= link_to shift_name, planned_shift_path(shift) %></td> -->
                     <td><%= link_to shift.volunteer.full_name, planned_shift_path(shift) %></td>
+                    <td><%= link_to shift.category_name, planned_shift_path(shift) %></td>
                     <td><%= shift.start_time.strftime("%I:%M %p") %> - <%= shift.end_time.strftime("%I:%M %p") %></td>
                     <td><%= shift.start_time.strftime("%a, %b %d") %></td>
                     <td>
@@ -56,8 +69,17 @@
         No Planned Shifts for Event: <%= event_title(@parent_event) %>
     <% elsif(@parent_volunteer) %>
         No Planned Shifts for Volunteer: <%= full_name(@parent_volunteer) %>
+    <% elsif(@category_filter) %>
+        No Planned Shifts for Category: <%= link_to(@category_filter.name, category_path(@category_filter)) %>
     <% else %>
         There are no Planned Shifts yet.
     <% end %>
   </h4>
 <% end %>
+
+<p>
+  <%#= link_to "Download as CSV", "planned_shifts.csv", :format => :csv, :class => 'btn btn-secondary btn-block' %>
+  <%= link_to("planned_shifts.csv", :class => 'btn btn-secondary btn-block') do %>
+      <span class="fas fa-download"></span> Download all Planned Shift records as CSV file
+  <% end %>
+</p>

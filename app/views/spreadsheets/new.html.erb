@@ -1,0 +1,66 @@
+<% @page_title = "Import Records" %>
+
+<h1>Import Records</h1>
+
+
+<p>Export a spreadsheet (Excel or Google Sheets) to CSV format.</p>
+<ul>
+  <li>
+    For <strong>Google Sheets</strong> spreadsheet: <br>
+    File -> Download as -> Comma-separated values (.csv, current sheet)
+  </li>
+
+  <li>
+    For <strong>Excel</strong> spreadsheet: <br>
+    File -> Save As -> in "Save as type:", select "CSV (Comma delimited) (*.csv)"
+  </li>
+</ul>
+
+<hr>
+
+<p><strong>Note:</strong> Column names are used to read the spreadsheet, so column names must match exactly (case-sensitive).</p>
+<p>Acceptable column names in the spreadsheet:</p>
+<ul>
+  <ul>
+    For importing <strong>Volunteer</strong> records:
+    <li>
+      "<strong>Email</strong>"
+    </li>
+    <li>
+      "<strong>First Name</strong>" (Optional)
+    </li>
+    <li>
+      "<strong>Last Name</strong>" (Optional)
+    </li>
+  </ul>
+
+  <br>
+
+  <ul>
+    For importing <strong>Planned Shift</strong> records:
+    <li>
+      "<strong>Date</strong>" (format example: "03/12/2018")
+    </li>
+    <li>
+      "<strong>Start Time</strong>" (format example: "9am" or "9:00 AM")
+    </li>
+    <li>
+      "<strong>End Time</strong>" (format example: "5pm" or "5:00 PM")
+    </li>
+    <li>
+      Note that "<strong>Email</strong>" column must also be present (to link to volunteer)
+    </li>
+  </ul>
+</ul>
+
+<hr>
+
+
+<%= form_for :spreadsheet, url: spreadsheets_path do |form| %>
+
+    <%= render(:partial => 'form', :locals => {:form => form}) %>
+
+    <p>
+        <%= form.submit("Import CSV", {:class => 'btn btn-success btn-block'}) %>
+    </p>
+<% end %>

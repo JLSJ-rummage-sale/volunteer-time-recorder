@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  spreadsheet: one
+  volunteer: one
+
+two:
+  spreadsheet: two
+  volunteer: two

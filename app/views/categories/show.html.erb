@@ -1,9 +1,12 @@
 <% @page_title = "View Category" %>
 
-<h5>Category Record</h5>
+<h5><span class="fas fa-bars"></span> Category Record</h5>
 
 <p>
-    <%= link_to "View All Categories", categories_path, :class => 'btn btn-light' %>
+    <%#= link_to "View All Categories", categories_path, :class => 'btn btn-light' %>
+    <%= link_to(categories_path, :class => 'btn btn-light') do %>
+        <span class="fas fa-angle-left"></span> View All Categories
+    <% end %>
 </p>
 
 <div class="card">
@@ -22,5 +25,18 @@
         <%= link_to("Delete", delete_category_path(@category), :class => 'btn btn-danger btn-block') %>
       </div>
     </div>
+  </div>
+</div>
+
+<br>
+
+<div class="card">
+  <div style="padding: 8px" class="card-header">
+    <h4>Hours per Category</h4>
+  </div>
+  <div style="padding: 2px" class="card-body">
+    <%= render(:partial => 'hours_info_table') %>
+  </div>
+  <div style="padding: 8px" class="card-footer">
   </div>
 </div>

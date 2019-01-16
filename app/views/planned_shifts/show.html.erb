@@ -1,14 +1,17 @@
 <% @page_title = "View Planned Shift" %>
 
-<h5>Planned Shift</h5>
+<h5><span class="fas fa-calendar-day"></span> Planned Shift</h5>
 
 <p>
-    <%= link_to "View All Planned Shifts", planned_shifts_path, :class => 'btn btn-light' %>
+    <%#= link_to "View All Planned Shifts", planned_shifts_path, :class => 'btn btn-light' %>
+    <%= link_to(planned_shifts_path, :class => 'btn btn-light') do %>
+        <span class="fas fa-angle-left"></span> View All Planned Shifts
+    <% end %>
 </p>
 
 <div class="card">
   <div style="padding: 8px" class="card-header">
-    <h2><%= @planned_shift.name %></h2>
+    <h2><%= @planned_shift.shift_name %></h2>
   </div>
   <div style="padding: 2px" class="card-body">
     <%= render(:partial => 'info_table') %>
@@ -24,3 +27,13 @@
     </div>
   </div>
 </div>
+
+<% if (@spreadsheet) %>
+  <br>
+
+  <div class="page-result-filters">
+    <h6>
+      This Planned Shift was created via <%= link_to ("Spreadsheet #" + @spreadsheet.id.to_s), spreadsheet_path(@spreadsheet) %>
+    </h6>
+  </div>
+<% end %>

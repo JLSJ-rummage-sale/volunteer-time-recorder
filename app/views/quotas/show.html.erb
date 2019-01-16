@@ -1,9 +1,12 @@
 <% @page_title = "View Quota" %>
 
-<h5>Quota Record</h5>
+<h5><span class="fas fa-clock"></span> Quota Record</h5>
 
 <p>
-    <%= link_to "View All Quotas", quotas_path, :class => 'btn btn-light' %>
+    <%#= link_to "View All Quotas", quotas_path, :class => 'btn btn-light' %>
+    <%= link_to(quotas_path, :class => 'btn btn-light') do %>
+        <span class="fas fa-angle-left"></span> View All Quotas
+    <% end %>
 </p>
 
 <div class="card">

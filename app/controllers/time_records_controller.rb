@@ -9,6 +9,11 @@ class TimeRecordsController < ApplicationController
     # CRUD Actions:
 
     def index
+
+        if (params[:category_id])
+          @category_filter = Category.find_by_id(params[:category_id]); # Will return an object or return nil.;
+        end
+
         # Get all time_record records from the database to display:
         # Check if a parent event was passed in (from "find_event" method below):
         if (@parent_volunteer) # Check if variable exists and is not nil.
@@ -18,11 +23,11 @@ class TimeRecordsController < ApplicationController
             puts("Filtering by event passed in.");
             @time_records = @parent_event.time_records.sorted;
         elsif (@parent_planned_shift) # Check if variable exists and is not nil.
-            puts("Filtering by event passed in.");
+            puts("Filtering by planned shift passed in.");
             @time_records = @parent_planned_shift.time_records.sorted;
         else
             puts("NOT Filtering by event passed in.");
-            @time_records = TimeRecord.sorted;
+            @time_records = TimeRecord.sorted.by_category(params[:category_id]);
         end
     end
 

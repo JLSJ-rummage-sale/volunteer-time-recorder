@@ -1,9 +1,12 @@
 <% @page_title = "View Member Type" %>
 
-<h5>Member Type Record</h5>
+<h5><span class="fas fa-user-tie"></span> Member Type Record</h5>
 
 <p>
-    <%= link_to "View All Member Types", member_types_path, :class => 'btn btn-light' %>
+    <%#= link_to "View All Member Types", member_types_path, :class => 'btn btn-light' %>
+    <%= link_to(member_types_path, :class => 'btn btn-light') do %>
+        <span class="fas fa-angle-left"></span> View All Member Types
+    <% end %>
 </p>
 
 <div class="card">

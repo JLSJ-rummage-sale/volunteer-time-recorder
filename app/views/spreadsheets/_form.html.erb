@@ -1,0 +1,21 @@
+<%# Display any form errors at the top of the form: %>
+<% if @spreadsheet.errors.any? %>
+    <% @spreadsheet.errors.full_messages.each do |error_message| %>
+        <div class="alert alert-danger"><%= error_message %></div>
+    <% end %>
+<% end %>
+
+<%# Display the form fields: %>
+
+<p>
+    <%=form.label :event_id %><br>
+    <% if (Event.first) # Check if there are any Event records: %>
+      <%= form.collection_select(:event_id, Event.all, :id, :event_title) %>
+    <% end %>
+    <%= link_to "Add Event", new_event_path, :class => 'btn btn-light btn-sm' %>
+</p>
+
+<p>
+    <%= form.label :notes, "CSV file to upload" %><br>
+    <%= form.file_field(:uploaded_file, {:class => 'file-upload'}) %>
+</p>

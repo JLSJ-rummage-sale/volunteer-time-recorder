@@ -41,4 +41,48 @@ class Volunteer < ApplicationRecord
                 " }";
     end
 
+    # Export to CSV:
+    def self.as_csv
+      CSV.generate do |csv|
+
+        # puts "column_names = #{column_names}"
+
+        # Create row names that are more readable:
+        custom_column_names = []
+
+        column_names.each do |column_name|
+          column_name = column_name.gsub("_", " ") # Replaces all underscores with spaces.
+          column_name = column_name.titleize # Capitalizes each word.
+          custom_column_names << column_name
+        end
+
+        custom_column_names << "Member Type"
+
+        csv << custom_column_names #column_names
+        all.each do |item|
+          # puts "item = #{item}; class = #{item.class.name}"
+          # puts "item.attributes = #{item.attributes}; class = #{item.attributes.class.name}"
+          # puts "item.attributes.values_at(*column_names) = #{item.attributes.values_at(*column_names)}; class = #{item.attributes.values_at(*column_names).class.name}"
+
+          row = item.attributes.values_at(*column_names)
+          member_type = MemberType.find_by_id(item.member_type_id);
+
+          member_type_name = (member_type) ? member_type.name : "No Member Type"
+          row << member_type_name.to_s
+          puts "row = #{row}"
+          csv << row
+        end
+      end
+    end
+
+    # Export to CSV __ORIGINAL__:
+    # def self.as_csv
+    #   CSV.generate do |csv|
+    #     csv << column_names
+    #     all.each do |item|
+    #       csv << item.attributes.values_at(*column_names)
+    #     end
+    #   end
+    # end
+
 end

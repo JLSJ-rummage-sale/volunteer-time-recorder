@@ -1,0 +1,37 @@
+<div>
+    <table class="table table-sm">
+        <thead class="thead-light">
+            <tr>
+            <th scope="col">Hours Planned</th>
+            <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><%= @category.total_hours_planned %> hours planned</td>
+            </tr>
+            <tr>
+              <td><%= link_to("View All Planned Shifts with this Category", planned_shifts_path(:category_id => @category.id), :class => 'btn btn-info btn-block')%></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div>
+    <table class="table table-sm">
+        <thead class="thead-light">
+            <tr>
+            <th scope="col">Hours Completed</th>
+            <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><%= @category.total_hours_completed %> hours completed</td>
+            </tr>
+            <tr>
+              <td><%= link_to("View All Time Records with this Category", time_records_path(:category_id => @category.id), :class => 'btn btn-info btn-block')%></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

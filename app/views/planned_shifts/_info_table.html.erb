@@ -17,12 +17,12 @@
             <tr>
                 <th scope="row">Shift Start Time:</th>
                 <td><%= @planned_shift.start_time.strftime("%I:%M %p") %></td>
-                <td><%= @planned_shift.start_time.strftime("%a, %b %d") %></td>
+                <td><%= @planned_shift.start_time.strftime("%a, %b %d, %Y") %></td>
             </tr>
             <tr>
                 <th scope="row">Shift End Time:</th>
                 <td><%= @planned_shift.end_time.strftime("%I:%M %p") %></td>
-                <td><%= @planned_shift.end_time.strftime("%a, %b %d") %></td>
+                <td><%= @planned_shift.end_time.strftime("%a, %b %d, %Y") %></td>
             </tr>
         </tbody>
     </table>

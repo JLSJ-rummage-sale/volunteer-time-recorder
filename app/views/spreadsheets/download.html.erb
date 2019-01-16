@@ -1,0 +1,53 @@
+<% @page_title = "Download" %>
+
+<h2>Download</h2>
+
+<p>
+  Download records as CSV file:
+</p>
+
+
+<%= link_to("/volunteers.csv", :class => 'btn btn-info btn-block') do %>
+    <span class="fas fa-download"></span> <span class="fas fa-user"></span>  Download Volunteer records
+<% end %>
+
+<br>
+
+<%= link_to("/planned_shifts.csv", :class => 'btn btn-info btn-block') do %>
+    <span class="fas fa-download"></span> <span class="fas fa-calendar-day"></span>  Download Planned Shift records
+<% end %>
+
+<br>
+<hr>
+
+<div>
+  <strong>How to Import a CSV file to Google Sheets or Excel:</strong>
+  <br>
+  <br>
+
+  For Google Sheets:
+
+  <ul>
+    <li>Create a new Google Sheet</li>
+    <li>File -> "Import..."</li>
+    <li>Go to "Upload" tab and browse for the CSV file downloaded on your computer</li>
+    <li>Choose "Insert new sheet(s)" under Import location</li>
+    <li>Choose "Insert new sheet(s)" under Import location</li>
+    <li>Choose "Detect automatically" or "Comma" under Separator type</li>
+    <li>Click "Import Data"</li>
+  </ul>
+
+  <br>
+
+  For Excel:
+
+  <ul>
+    <li>Create a new Excel file</li>
+    <li>File -> Open</li>
+    <li>Browse for the CSV file downloaded on your computer</li>
+    <li>Click Open</li>
+    <li>Excel should automatically open the file</li>
+    <li>You may want to save the file as an Excel workbook</li>
+  </ul>
+
+</div>

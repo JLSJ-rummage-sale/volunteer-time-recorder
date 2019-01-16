@@ -3,21 +3,41 @@ class VolunteersController < ApplicationController
     def index
         # Get all volunteer records from the database to display:
 
-        if params[:member_type]
+        @volunteer_total_count = Volunteer.count
+
+        if (params[:member_type])
           @member_type_filter = MemberType.find_by_id(params[:member_type]);
+
+          @selected_member_type_id = @member_type_filter.id
         end
 
-        if params[:search]
+        if (params[:search])
           @search_filter = params[:search].to_s.downcase;
         end
 
         # Check if a 'search' parameter was passed in:
-        @volunteers = Volunteer.search(@search_filter).of_member_type(params[:member_type]).sorted.page(params[:page]).per(10);
+        #@volunteers = Volunteer.search(@search_filter).of_member_type(params[:member_type]).sorted.page(params[:page]).per(10);
         # if params[:search]
         #     @volunteers = Volunteer.search(params[:search]).sorted.page(params[:page]).per(10); #paginate(:page => params[:page], :per_page => 10);
         # else
         #     @volunteers = Volunteer.sorted.page(params[:page]).per(10); #paginate(:page => params[:page], :per_page => 10);
         # end
+
+        all_volunteers = Volunteer.search(@search_filter).of_member_type(params[:member_type]).sorted
+
+        @volunteer_result_count = all_volunteers.count;
+
+        @volunteers = all_volunteers.page(params[:page]).per(10);
+
+        @member_types = MemberType.all
+
+        respond_to do |format|
+          format.html
+          format.csv do
+            all_volunteers = Volunteer.sorted
+            send_data all_volunteers.as_csv
+          end
+        end
     end
 
     def show
@@ -29,6 +49,8 @@ class VolunteersController < ApplicationController
 
         # Get all associated PlannedShifts:
         @planned_shifts = @volunteer.planned_shifts.chronologically
+
+        @spreadsheet = get_spreadsheet_creator_if_exists(@volunteer)
     end
 
     # Called when rendering the New Volunteer page:
@@ -106,7 +128,7 @@ class VolunteersController < ApplicationController
         # Present a 1-time flash message to the user after redirect:
         flash[:notice] = "Volunteer '#{@volunteer.first_name} #{@volunteer.last_name}' deleted successfully.";
 
-        redirect_to(volunteers_path);
+        redirect_to(spreadsheets_path);
     end
 
     private
@@ -115,6 +137,19 @@ class VolunteersController < ApplicationController
     def volunteer_params
         params.require(:volunteer).permit(:first_name,
             :last_name,:email_address, :phone, :notes, :member_type_id);
+    end
+
+    def get_spreadsheet_creator_if_exists(volunteer)
+      volunteer_import_record = VolunteersUploaded.find_by_volunteer_id(volunteer.id)
+
+      puts "lookup volunteer_import_record = #{volunteer_import_record}"
+
+      if (volunteer_import_record)
+        puts "found volunteer_import_record.spreadsheet = #{volunteer_import_record.spreadsheet}"
+        return volunteer_import_record.spreadsheet
+      else
+        return nil
+      end
     end
 
 

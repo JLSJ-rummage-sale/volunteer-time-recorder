@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181202042635) do
+ActiveRecord::Schema.define(version: 20190116191913) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -25,6 +25,16 @@ ActiveRecord::Schema.define(version: 20181202042635) do
     t.string "website"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "import_errors", force: :cascade do |t|
+    t.integer "row_number"
+    t.string "error_message"
+    t.string "row_data"
+    t.integer "spreadsheet_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["spreadsheet_id"], name: "index_import_errors_on_spreadsheet_id"
   end
 
   create_table "member_types", force: :cascade do |t|
@@ -53,6 +63,15 @@ ActiveRecord::Schema.define(version: 20181202042635) do
     t.index ["volunteer_id"], name: "index_planned_shifts_on_volunteer_id"
   end
 
+  create_table "planned_shifts_uploadeds", force: :cascade do |t|
+    t.integer "spreadsheet_id"
+    t.integer "planned_shift_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["planned_shift_id"], name: "index_planned_shifts_uploadeds_on_planned_shift_id"
+    t.index ["spreadsheet_id"], name: "index_planned_shifts_uploadeds_on_spreadsheet_id"
+  end
+
   create_table "quotas", force: :cascade do |t|
     t.string "name"
     t.integer "hours"
@@ -62,6 +81,16 @@ ActiveRecord::Schema.define(version: 20181202042635) do
     t.integer "member_type_id"
     t.index ["category_id"], name: "index_quotas_on_category_id"
     t.index ["member_type_id"], name: "index_quotas_on_member_type_id"
+  end
+
+  create_table "spreadsheets", force: :cascade do |t|
+    t.string "file_name"
+    t.integer "num_rows"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "event_id"
+    t.index ["event_id"], name: "index_spreadsheets_on_event_id"
   end
 
   create_table "time_records", force: :cascade do |t|
@@ -89,6 +118,15 @@ ActiveRecord::Schema.define(version: 20181202042635) do
     t.string "phone"
     t.integer "member_type_id"
     t.index ["member_type_id"], name: "index_volunteers_on_member_type_id"
+  end
+
+  create_table "volunteers_uploadeds", force: :cascade do |t|
+    t.integer "spreadsheet_id"
+    t.integer "volunteer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["spreadsheet_id"], name: "index_volunteers_uploadeds_on_spreadsheet_id"
+    t.index ["volunteer_id"], name: "index_volunteers_uploadeds_on_volunteer_id"
   end
 
 end

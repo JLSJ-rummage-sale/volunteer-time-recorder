@@ -3,9 +3,7 @@
 <h2>Volunteers</h2>
 
 <p>
-    <%= link_to(new_volunteer_path(@volunteer), :class => 'btn btn-success') do %>
-        <span class="glyphicon glyphicon-plus"></span>Add Volunteer
-    <% end %>
+    <%= render_add_record_button("Add Volunteer", new_volunteer_path(@volunteer), "fas fa-user-plus") %>
 </p>
 
 <form class="form-inline">
@@ -19,20 +17,49 @@
     </div>
 </form>
 
-<br>
+<form class="form-inline">
+      <div class="input-group filter-volunteers">
+        <%= form_tag(volunteers_path, :method => "get", id: "filter-by-member-type-form") do %>
+            <%= collection_select(nil, :member_type, @member_types, :id, :name, {:selected => @selected_member_type_id, :prompt => 'Filter by Member Type', :class => 'form-control'}) %>
+            <div class="filter-submit-btn">
+              <%= submit_tag("Filter", :name => nil, :class => 'btn btn-secondary') %>
+            </div>
+        <% end %>
+    </div>
+</form>
 
 <div>
   <% if(params[:search].present?) %>
-    <p>
-        Searching with: '<strong><%= params[:search].to_s %></strong>'
-    </p>
+    <div class="page-result-filters">
+      <h5>
+          Searching with: '<strong><%= params[:search].to_s %></strong>'
+      </h5>
+      <h6>
+        <%= link_to "View All Volunteers", volunteers_path %>
+      </h6>
+    </div>
   <% end %>
 
   <% if(params[:member_type].present?) %>
-    <p>
-      Volunteers with Member Type: <%= link_to @member_type_filter.name, member_type_path(@member_type_filter) %>
-    </p>
+    <div class="page-result-filters">
+      <h5>
+        Volunteers with Member Type: <%= link_to @member_type_filter.name, member_type_path(@member_type_filter) %>
+      </h5>
+        <%= link_to "View All Volunteers", volunteers_path %>
+      <h6>
+      </h6>
+    </div>
   <% end %>
+</div>
+
+<div class="page-result-count">
+  <h6>
+    <% if (@volunteer_result_count != @volunteer_total_count) %>
+      <%= @volunteer_result_count %> Volunteers (of <%= @volunteer_total_count %> Total Volunteers)
+    <% else %>
+      <%= @volunteer_total_count %> Total Volunteers
+    <% end %>
+  </h6>
 </div>
 
 <%= paginate @volunteers %>
@@ -73,3 +100,10 @@
 <%# <%= will_paginate @volunteers, renderer: BootstrapPagination::Rails %>
 
 <%= paginate @volunteers %>
+
+<p>
+  <%#= link_to "Download as CSV", "volunteers.csv", :format => :csv, :class => 'btn btn-secondary btn-block' %>
+  <%= link_to("volunteers.csv", :class => 'btn btn-secondary btn-block') do %>
+      <span class="fas fa-download"></span> Download all Volunteer records as CSV file
+  <% end %>
+</p>
