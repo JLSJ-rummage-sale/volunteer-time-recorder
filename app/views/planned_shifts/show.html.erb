@@ -27,3 +27,13 @@
     </div>
   </div>
 </div>
+
+<% if (@spreadsheet) %>
+  <br>
+
+  <div class="page-result-filters">
+    <h6>
+      This Planned Shift was created via <%= link_to ("Spreadsheet #" + @spreadsheet.id.to_s), spreadsheet_path(@spreadsheet) %>
+    </h6>
+  </div>
+<% end %>

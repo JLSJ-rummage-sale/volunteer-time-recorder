@@ -2,6 +2,11 @@
 
 <h2>Time Records</h2>
 
+<p>
+  Time Records represent actual time completed by volunteers.<br>
+  When a Planned Shift is Checked-Out, a new Time Record is automatically created.
+</p>
+
 <h4>
     <% if(@parent_event) %>
         Time Records for Event: <%= link_to event_title(@parent_event), event_path(@parent_event) %>

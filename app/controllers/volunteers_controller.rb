@@ -49,6 +49,8 @@ class VolunteersController < ApplicationController
 
         # Get all associated PlannedShifts:
         @planned_shifts = @volunteer.planned_shifts.chronologically
+
+        @spreadsheet = get_spreadsheet_creator_if_exists(@volunteer)
     end
 
     # Called when rendering the New Volunteer page:
@@ -135,6 +137,19 @@ class VolunteersController < ApplicationController
     def volunteer_params
         params.require(:volunteer).permit(:first_name,
             :last_name,:email_address, :phone, :notes, :member_type_id);
+    end
+
+    def get_spreadsheet_creator_if_exists(volunteer)
+      volunteer_import_record = VolunteersUploaded.find_by_volunteer_id(volunteer.id)
+
+      puts "lookup volunteer_import_record = #{volunteer_import_record}"
+
+      if (volunteer_import_record)
+        puts "found volunteer_import_record.spreadsheet = #{volunteer_import_record.spreadsheet}"
+        return volunteer_import_record.spreadsheet
+      else
+        return nil
+      end
     end
 
 

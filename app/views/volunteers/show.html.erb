@@ -40,8 +40,11 @@
   <div style="padding: 8px" class="card-footer">
     <div>
       <p>
-        <%= link_to "Add Shift", new_planned_shift_path(:volunteer_id => @volunteer.id), :class => 'btn btn-success btn-block' %>
+        <%#= link_to "Add Shift", new_planned_shift_path(:volunteer_id => @volunteer.id), :class => 'btn btn-success btn-block' %>
         <%#= render_add_record_button("Add Shift", new_planned_shift_path(:volunteer_id => @volunteer.id)) %>
+        <%= link_to(new_planned_shift_path(:volunteer_id => @volunteer.id), :class => 'btn btn-success btn-block') do %>
+            <span class="fas fa-plus"></span> <span class="fas fa-calendar-day"></span> Add Shift
+        <% end %>
       </p>
       <p>
         <%= link_to "View all Planned Shifts for this Volunteer", planned_shifts_path(:volunteer_id => @volunteer.id), :class => 'btn btn-info btn-block' %>
@@ -54,7 +57,7 @@
 
 <div class="card">
   <div style="padding: 8px" class="card-header">
-    <h4>Hours Completed for <%= @volunteer.first_name %></h4>
+    <h4>Hours Completed by <%= @volunteer.first_name %></h4>
   </div>
   <div style="padding: 2px" class="card-body">
     <%= render(:partial => 'time_records_info_table') %>
@@ -62,7 +65,10 @@
   <div style="padding: 8px" class="card-footer">
     <div>
       <p>
-        <%= link_to "Add Time Record", new_time_record_path(:volunteer_id => @volunteer.id), :class => 'btn btn-success btn-block' %>
+        <%#= link_to "Add Time Record", new_time_record_path(:volunteer_id => @volunteer.id), :class => 'btn btn-success btn-block' %>
+        <%= link_to(new_time_record_path(:volunteer_id => @volunteer.id), :class => 'btn btn-success btn-block') do %>
+            <span class="fas fa-plus"></span> <span class="fas fa-calendar-check"></span> Add Time Record
+        <% end %>
       </p>
       <p>
         <%= link_to "View all Time Records for this Volunteer", time_records_path(:volunteer_id => @volunteer.id), :class => 'btn btn-info btn-block' %>
@@ -72,3 +78,11 @@
 </div>
 
 <br>
+
+<% if (@spreadsheet) %>
+  <div class="page-result-filters">
+    <h6>
+      This volunteer was created via <%= link_to ("Spreadsheet #" + @spreadsheet.id.to_s), spreadsheet_path(@spreadsheet) %>
+    </h6>
+  </div>
+<% end %>

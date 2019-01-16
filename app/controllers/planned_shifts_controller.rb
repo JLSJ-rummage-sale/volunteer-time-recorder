@@ -82,6 +82,8 @@ class PlannedShiftsController < ApplicationController
       @time_record = @planned_shift.associcated_time_record
       puts ("Assoiciated Time Record Found = #{@planned_shift.associcated_time_record}")
 
+      @spreadsheet = get_spreadsheet_creator_if_exists(@planned_shift)
+
   end
 
   # Called when rendering the New PlannedShift page:
@@ -325,6 +327,20 @@ class PlannedShiftsController < ApplicationController
       else
           puts("didn't find volunteer.")
       end
+  end
+
+
+  def get_spreadsheet_creator_if_exists(planned_shift)
+    planned_shift_import_record = PlannedShiftsUploaded.find_by_planned_shift_id(planned_shift.id)
+
+    puts "lookup planned_shift_import_record = #{planned_shift_import_record}"
+
+    if (planned_shift_import_record)
+      puts "found planned_shift_import_record.spreadsheet = #{planned_shift_import_record.spreadsheet}"
+      return planned_shift_import_record.spreadsheet
+    else
+      return nil
+    end
   end
 
 
