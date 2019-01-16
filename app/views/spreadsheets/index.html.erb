@@ -23,7 +23,12 @@
                     <th scope="row"><%= link_to spreadsheet.id.to_s, spreadsheet_path(spreadsheet) %></th>
                     <th scope="row"><%= link_to spreadsheet.file_name, spreadsheet_path(spreadsheet) %></th>
                     <th scope="row"><%= link_to spreadsheet.num_rows, spreadsheet_path(spreadsheet) %></th>
-                    <th scope="row"><%= link_to spreadsheet.status, spreadsheet_path(spreadsheet) %></th>
+                    <% if (spreadsheet.status == "success") %>
+                      <th scope="row" class="success-type">
+                    <% else %>
+                      <th scope="row" class="error-type">
+                    <% end %>
+                        <%= spreadsheet.status.to_s.capitalize %> </th>
                     <td><%= link_to "Details", spreadsheet_path(spreadsheet), :class => 'btn btn-secondary' %></td>
                 </tr>
             <% end %>

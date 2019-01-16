@@ -204,7 +204,7 @@ class SpreadsheetsController < ApplicationController
 
       # There must be an email field:
       if (!row_fields["Email"])
-        @import_errors << new_import_error(row_fields, "There must be a column named 'Email' in the spreadsheet uploaded.")
+        @import_errors << new_import_error(row_fields, "There must be a column named 'Email' in the spreadsheet uploaded.", "column")
 
         puts "ERROR: There must be an email field"
 
@@ -220,7 +220,7 @@ class SpreadsheetsController < ApplicationController
 
         # There must be fields for date, start_time, and end_time:
         if (!row_fields["Date"] || !row_fields["Start Time"] || !row_fields["End Time"])
-          @import_errors << new_import_error(row_fields, "There must be columns named 'Date', 'Start Time', and 'End Time' in the spreadsheet uploaded.")
+          @import_errors << new_import_error(row_fields, "There must be columns named 'Date', 'Start Time', and 'End Time' in the spreadsheet uploaded.", "column")
 
           puts "ERROR: There must be fields for date, start_time, and end_time"
 
@@ -255,10 +255,15 @@ class SpreadsheetsController < ApplicationController
     @page_section = "spreadsheet"
   end
 
-  def new_import_error(row_fields, error_message)
+  def new_import_error(row_fields, error_message, type="row")
     import_error = ImportError.new()
 
-    import_error.row_data = row_fields
+    if (type == "row")
+      import_error.row_data = row_fields.values.to_s
+    else
+      import_error.row_data = row_fields.keys.to_s
+    end
+
     import_error.row_number = @num_rows
     import_error.error_message = error_message
 

@@ -25,7 +25,13 @@
             </tr>
             <tr>
                 <th scope="row">Upload status:</th>
-                <td><%= @spreadsheet.status.to_s.capitalize %></td>
+                <% if (@spreadsheet.status == "success") %>
+                  <td class="success-type">
+                <% else %>
+                  <td class="error-type">
+                <% end %>
+                  <%= @spreadsheet.status.to_s.capitalize %>
+                </td>
             </tr>
             <tr>
                 <th scope="row">Volunteer records uploaded:</th>
