@@ -21,6 +21,20 @@
   </div>
 </div>
 
+<% if (@import_errors && @import_errors.size > 0) %>
+
+  <br>
+
+  <div class="card">
+    <div style="padding: 8px" class="card-header">
+      <h5>Errors:</h5>
+    </div>
+    <div style="padding: 2px" class="card-body">
+      <%= render(:partial => 'errors_info_table') %>
+    </div>
+  </div>
+<% end %>
+
 <% if (@volunteers_uploaded && @volunteers_uploaded.size > 0) %>
 
   <br>

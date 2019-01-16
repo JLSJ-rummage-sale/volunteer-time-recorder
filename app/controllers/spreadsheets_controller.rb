@@ -14,6 +14,8 @@ class SpreadsheetsController < ApplicationController
       @volunteers_uploaded = @spreadsheet.volunteers #VolunteersUploaded.for_spreadsheet(@spreadsheet.id)
       #puts "@volunteers_uploaded.size = #{@volunteers_uploaded.size}"
       @planned_shifts_uploaded = @spreadsheet.planned_shifts #PlannedShiftsUploaded.for_spreadsheet(@spreadsheet.id)
+
+      @import_errors = @spreadsheet.import_errors
   end
 
   # Called when rendering the New Event page:
@@ -43,7 +45,7 @@ class SpreadsheetsController < ApplicationController
 
         @spreadsheet.num_rows = @num_rows
 
-        if (@error_rows.count > 0)
+        if (@import_errors.count > 0)
           @spreadsheet.status = "errors"
         else
           @spreadsheet.status = "success"
@@ -52,8 +54,13 @@ class SpreadsheetsController < ApplicationController
         if(@spreadsheet.save)
             save_uploaded_volunteers(@spreadsheet.id, @volunteers_created)
             save_uploaded_planned_shifts(@spreadsheet.id, @planned_shifts_created)
+            save_import_errors(@spreadsheet.id, @import_errors)
 
             flash[:notice] = "File uploaded successfully. File Name: #{@file_name}";
+
+            if (@import_errors.count > 0)
+              flash[:alert] = "Errors found in file uploaded. Check error messages below.";
+            end
 
             # If saved to DB successfully, go to show page:
             redirect_to @spreadsheet;
@@ -146,13 +153,44 @@ class SpreadsheetsController < ApplicationController
 
   end
 
+  def save_import_errors(spreadsheet_id, import_errors)
+    import_errors.each do |import_error|
+      import_error.spreadsheet_id = spreadsheet_id
+
+      if (import_error.save)
+        puts "successfully saved import_error = #{import_error}"
+      else
+        puts "failed to save import_error = #{import_error}"
+        if (import_error.errors.any?)
+            import_error.errors.full_messages.each do |error_message|
+                puts error_message.to_s
+            end
+        end
+      end
+    end
+
+  end
+
+
+  def concat_errors(errors)
+    all_errors_text =  ""
+
+    if (errors.any?)
+        errors.full_messages.each do |error_message|
+            all_errors_text += error_message.to_s + " \n"
+        end
+    end
+
+    return all_errors_text
+  end
+
 
   def parse_file(file, event)
 
     puts "Parsing file..."
 
     @num_rows = 0
-    @error_rows = []
+    @import_errors = []
     @volunteers_created = []
     @planned_shifts_created = []
 
@@ -164,12 +202,31 @@ class SpreadsheetsController < ApplicationController
 
       puts "row_fields = #{row_fields}"
 
+      # There must be an email field:
+      if (!row_fields["Email"])
+        @import_errors << new_import_error(row_fields, "There must be a column named 'Email' in the spreadsheet uploaded.")
+
+        puts "ERROR: There must be an email field"
+
+        return nil
+      end
+
       volunteer = create_volunteer_from_csv(row_fields)
 
-      puts "VOLUNTEER ADDED = #{volunteer}"
+      puts "VOLUNTEER = #{volunteer}"
 
       if (volunteer)
         puts "ADDING PLANNED SHIFT FOR VOLUNTEER..."
+
+        # There must be fields for date, start_time, and end_time:
+        if (!row_fields["Date"] || !row_fields["Start Time"] || !row_fields["End Time"])
+          @import_errors << new_import_error(row_fields, "There must be columns named 'Date', 'Start Time', and 'End Time' in the spreadsheet uploaded.")
+
+          puts "ERROR: There must be fields for date, start_time, and end_time"
+
+          return
+        end
+
         planned_shift = create_planned_shift_from_csv(row_fields, volunteer, event)
 
         if (planned_shift && planned_shift.save)
@@ -189,13 +246,23 @@ class SpreadsheetsController < ApplicationController
 
       puts "planned_shifts_created = #{@planned_shifts_created}"
 
-      puts "error_rows = #{@error_rows}"
+      puts "import_errors = #{@import_errors}"
     end # end CSV.foreach
   end
 
 
   def set_page_section
     @page_section = "spreadsheet"
+  end
+
+  def new_import_error(row_fields, error_message)
+    import_error = ImportError.new()
+
+    import_error.row_data = row_fields
+    import_error.row_number = @num_rows
+    import_error.error_message = error_message
+
+    return import_error
   end
 
 
@@ -222,7 +289,9 @@ class SpreadsheetsController < ApplicationController
 
         return new_volunteer
       else
-        @error_rows << row_fields
+        @import_errors << new_import_error(row_fields, "Failed to save volunteer: \n" + concat_errors(new_volunteer.errors))
+
+        puts "ERROR: failed to save new_volunteer"
 
         return nil
       end
@@ -268,7 +337,9 @@ class SpreadsheetsController < ApplicationController
 
       return new_planned_shift
     else
-      @error_rows << row_fields
+      @import_errors << new_import_error(row_fields, "Failed to save shift: \n" + concat_errors(new_planned_shift.errors))
+
+      puts "ERROR: failed to save new_planned_shift"
 
       return nil
     end

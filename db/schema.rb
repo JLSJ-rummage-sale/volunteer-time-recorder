@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190115234652) do
+ActiveRecord::Schema.define(version: 20190116191913) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -25,6 +25,16 @@ ActiveRecord::Schema.define(version: 20190115234652) do
     t.string "website"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "import_errors", force: :cascade do |t|
+    t.integer "row_number"
+    t.string "error_message"
+    t.string "row_data"
+    t.integer "spreadsheet_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["spreadsheet_id"], name: "index_import_errors_on_spreadsheet_id"
   end
 
   create_table "member_types", force: :cascade do |t|

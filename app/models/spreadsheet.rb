@@ -9,4 +9,6 @@ class Spreadsheet < ApplicationRecord
   has_many :planned_shifts_uploaded
   has_many :planned_shifts, through: :planned_shifts_uploaded
 
+  has_many :import_errors
+
 end
