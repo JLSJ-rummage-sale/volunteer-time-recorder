@@ -1,0 +1,17 @@
+<% @page_title = "Delete Spreadsheet" %>
+
+<div class="spreadsheets delete">
+    <h1>Delete Spreadsheet record?</h1>
+
+    <%= form_for(@spreadsheet, :method => 'delete') do |form| %>
+
+        <p>Are you sure you want to permanently delete the record of this Spreadsheet from the database?</p>
+
+        <p class="reference-name">Spreadsheet #<%= @spreadsheet.id.to_s %></p>
+
+        <div class="form-buttons">
+            <%= form.submit("Delete Time Record", {:class => 'btn btn-danger'}) %>
+        </div>
+
+    <% end %>
+</div>

@@ -76,35 +76,25 @@ class SpreadsheetsController < ApplicationController
 
   end
 
+  def delete
+      @spreadsheet = Spreadsheet.find(params[:id]);
+  end
+
+  def destroy
+      @spreadsheet = Spreadsheet.find(params[:id]);
+
+      @spreadsheet.destroy;
+
+      # Present a 1-time flash message to the user after redirect:
+      flash[:notice] = "Spreadsheet ##{@spreadsheet.id.to_s} deleted successfully.";
+
+      redirect_to(volunteers_path);
+  end
+
 
   def download
     @page_section = "download"
   end
-
-  # def import_file(file_uploaded)
-  #
-  #   puts "NOW IN SPREADSHEETS/IMPORT..."
-  #
-  #   @file_name = "[No file selected]"
-  #
-  #   if (file_uploaded)
-  #     puts "file_uploaded.class.name = #{file_uploaded.class.name}"
-  #
-  #     puts "file_uploaded.path = #{file_uploaded.path}"
-  #
-  #     parse_file(file_uploaded)
-  #
-  #     @file_name = file_uploaded.original_filename
-  #
-  #     flash[:notice] = "File uploaded successfully. File Name: #{@file_name}";
-  #   else
-  #     flash[:alert] = "File failed to uploaded. File: #{@file_name}";
-  #     puts "ISSUE: No params[:file]"
-  #   end
-  #
-  #   redirect_to spreadsheets_path
-  # end
-
 
 
   private

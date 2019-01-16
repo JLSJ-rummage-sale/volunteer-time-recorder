@@ -128,7 +128,7 @@ class VolunteersController < ApplicationController
         # Present a 1-time flash message to the user after redirect:
         flash[:notice] = "Volunteer '#{@volunteer.first_name} #{@volunteer.last_name}' deleted successfully.";
 
-        redirect_to(volunteers_path);
+        redirect_to(spreadsheets_path);
     end
 
     private
