@@ -1,0 +1,18 @@
+<div>
+    <table class="table table-sm">
+        <thead class="thead-light">
+            <tr>
+            <th scope="col">Volunteers Added: <%= @volunteers_uploaded.count %></th>
+            <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @volunteers_uploaded.each do |volunteers_uploaded| %>
+              <tr>
+                <th scope="row">Volunteer:</th>
+                <td><%= link_to(volunteers_uploaded.full_name, volunteer_path(volunteers_uploaded)) %></td>
+              </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>

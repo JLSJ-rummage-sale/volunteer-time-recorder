@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190115013822) do
+ActiveRecord::Schema.define(version: 20190115234652) do
 
   create_table "categories", force: :cascade do |t|
     t.string "name"
@@ -51,6 +51,15 @@ ActiveRecord::Schema.define(version: 20190115013822) do
     t.index ["event_id"], name: "index_planned_shifts_on_event_id"
     t.index ["time_record_id"], name: "index_planned_shifts_on_time_record_id"
     t.index ["volunteer_id"], name: "index_planned_shifts_on_volunteer_id"
+  end
+
+  create_table "planned_shifts_uploadeds", force: :cascade do |t|
+    t.integer "spreadsheet_id"
+    t.integer "planned_shift_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["planned_shift_id"], name: "index_planned_shifts_uploadeds_on_planned_shift_id"
+    t.index ["spreadsheet_id"], name: "index_planned_shifts_uploadeds_on_spreadsheet_id"
   end
 
   create_table "quotas", force: :cascade do |t|
@@ -99,6 +108,15 @@ ActiveRecord::Schema.define(version: 20190115013822) do
     t.string "phone"
     t.integer "member_type_id"
     t.index ["member_type_id"], name: "index_volunteers_on_member_type_id"
+  end
+
+  create_table "volunteers_uploadeds", force: :cascade do |t|
+    t.integer "spreadsheet_id"
+    t.integer "volunteer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["spreadsheet_id"], name: "index_volunteers_uploadeds_on_spreadsheet_id"
+    t.index ["volunteer_id"], name: "index_volunteers_uploadeds_on_volunteer_id"
   end
 
 end

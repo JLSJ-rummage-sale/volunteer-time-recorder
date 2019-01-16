@@ -11,7 +11,7 @@
 
 <div class="card">
   <div style="padding: 8px" class="card-header">
-    <h4><%= @spreadsheet.file_name %></h4>
+    <h4>Spreadsheet #<%= @spreadsheet.id.to_s %></h4>
   </div>
   <div style="padding: 2px" class="card-body">
     <%= render(:partial => 'info_table') %>
@@ -20,3 +20,31 @@
     <%= link_to("Delete", delete_spreadsheet_path(@spreadsheet), :class => 'btn btn-danger btn-block') %>
   </div>
 </div>
+
+<% if (@volunteers_uploaded && @volunteers_uploaded.size > 0) %>
+
+  <br>
+
+  <div class="card">
+    <div style="padding: 8px" class="card-header">
+      <h5>Volunteer Records Uploaded</h5>
+    </div>
+    <div style="padding: 2px" class="card-body">
+      <%= render(:partial => 'volunteers_created_info_table') %>
+    </div>
+  </div>
+<% end %>
+
+<% if (@planned_shifts_uploaded && @planned_shifts_uploaded.size > 0) %>
+
+  <br>
+
+  <div class="card">
+    <div style="padding: 8px" class="card-header">
+      <h5>Shift Records Uploaded</h5>
+    </div>
+    <div style="padding: 2px" class="card-body">
+      <%= render(:partial => 'planned_shifts_created_info_table') %>
+    </div>
+  </div>
+<% end %>

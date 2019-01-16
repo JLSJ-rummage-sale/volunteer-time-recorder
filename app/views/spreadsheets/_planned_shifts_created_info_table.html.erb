@@ -1,0 +1,36 @@
+<div>
+    <table class="table table-sm">
+        <thead class="thead-light">
+            <tr>
+              <th scope="col">Planned Shifts Added: <%= @planned_shifts_uploaded.count %></th>
+              <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @planned_shifts_uploaded.each do |planned_shift_uploaded| %>
+              <tr class="table-active">
+                  <th scope="row">Planned Shift:</th>
+                  <td><%= link_to(planned_shift_uploaded.shift_name, planned_shift_path(planned_shift_uploaded)) %></td>
+              </tr>
+              <tr>
+                  <th scope="row">For Volunteer:</th>
+                  <td><%= link_to(planned_shift_uploaded.volunteer.full_name, volunteer_path(planned_shift_uploaded.volunteer)) %></td>
+                  <td></td>
+              </tr>
+              <tr>
+                  <th scope="row">Hours:</th>
+                  <td><%= planned_shift_uploaded.total_planned_time_text %> planned</td>
+                  <td></td>
+              </tr>
+              <tr>
+                  <th scope="row">Shift Start Time:</th>
+                  <td><%= planned_shift_uploaded.start_time.strftime("%I:%M %p, %a, %b %d, %Y") %></td>
+              </tr>
+              <tr>
+                  <th scope="row">Shift End Time:</th>
+                  <td><%= planned_shift_uploaded.end_time.strftime("%I:%M %p, %a, %b %d, %Y") %></td>
+              </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>

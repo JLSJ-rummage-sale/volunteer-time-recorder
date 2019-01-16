@@ -10,6 +10,10 @@ class SpreadsheetsController < ApplicationController
       @spreadsheet = Spreadsheet.find(params[:id]);
 
       @event = Event.find(@spreadsheet.event_id);
+
+      @volunteers_uploaded = @spreadsheet.volunteers #VolunteersUploaded.for_spreadsheet(@spreadsheet.id)
+      #puts "@volunteers_uploaded.size = #{@volunteers_uploaded.size}"
+      @planned_shifts_uploaded = @spreadsheet.planned_shifts #PlannedShiftsUploaded.for_spreadsheet(@spreadsheet.id)
   end
 
   # Called when rendering the New Event page:
@@ -46,7 +50,9 @@ class SpreadsheetsController < ApplicationController
         end
 
         if(@spreadsheet.save)
-            # Present a 1-time flash message to the user after redirect:
+            save_uploaded_volunteers(@spreadsheet.id, @volunteers_created)
+            save_uploaded_planned_shifts(@spreadsheet.id, @planned_shifts_created)
+
             flash[:notice] = "File uploaded successfully. File Name: #{@file_name}";
 
             # If saved to DB successfully, go to show page:
@@ -96,6 +102,49 @@ class SpreadsheetsController < ApplicationController
       params.require(:spreadsheet).permit(:event_id, :uploaded_file);
   end
 
+  def save_uploaded_volunteers(spreadsheet_id, volunteers_created)
+
+    volunteers_created.each do |new_volunteer|
+      puts "attempting to add new_volunteer.id = #{new_volunteer.id} to VolunteersUploaded..."
+      volunteer_uploaded_record = VolunteersUploaded.new()
+      volunteer_uploaded_record.spreadsheet_id = spreadsheet_id
+      volunteer_uploaded_record.volunteer_id = new_volunteer.id
+
+      if (volunteer_uploaded_record.save)
+        puts "successfully saved volunteer_uploaded_record = #{volunteer_uploaded_record}"
+      else
+        puts "failed to save volunteer_uploaded_record = #{volunteer_uploaded_record}"
+        if (volunteer_uploaded_record.errors.any?)
+            volunteer_uploaded_record.errors.full_messages.each do |error_message|
+                puts error_message.to_s
+            end
+        end
+      end
+    end
+
+  end
+
+  def save_uploaded_planned_shifts(spreadsheet_id, planned_shifts_created)
+
+    planned_shifts_created.each do |new_planned_shift|
+      planned_shift_uploaded_record = PlannedShiftsUploaded.new()
+      planned_shift_uploaded_record.spreadsheet_id = spreadsheet_id
+      planned_shift_uploaded_record.planned_shift_id = new_planned_shift.id
+
+      puts "...for new_planned_shift.id = #{new_planned_shift.id}"
+      if (planned_shift_uploaded_record.save)
+        puts "successfully saved planned_shift_uploaded_record = #{planned_shift_uploaded_record}"
+      else
+        puts "failed to save planned_shift_uploaded_record = #{planned_shift_uploaded_record}"
+        if (planned_shift_uploaded_record.errors.any?)
+            planned_shift_uploaded_record.errors.full_messages.each do |error_message|
+                puts error_message.to_s
+            end
+        end
+      end
+    end
+
+  end
 
 
   def parse_file(file, event)
@@ -123,7 +172,7 @@ class SpreadsheetsController < ApplicationController
         puts "ADDING PLANNED SHIFT FOR VOLUNTEER..."
         planned_shift = create_planned_shift_from_csv(row_fields, volunteer, event)
 
-        if (planned_shift)
+        if (planned_shift && planned_shift.save)
           puts "SAVING PLANNED SHIFT FOR VOLUNTEER..."
           volunteer.planned_shifts << planned_shift
 
@@ -137,6 +186,7 @@ class SpreadsheetsController < ApplicationController
 
 
       puts "volunteers_created = #{@volunteers_created}"
+
       puts "planned_shifts_created = #{@planned_shifts_created}"
 
       puts "error_rows = #{@error_rows}"

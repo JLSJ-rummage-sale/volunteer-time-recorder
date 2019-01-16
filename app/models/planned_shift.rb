@@ -119,7 +119,13 @@ class PlannedShift < ApplicationRecord
     end
   end
 
-
+  def shift_name
+    if (self.name)
+      return self.name
+    else
+      return "[Shift]"
+    end
+  end
 
 
   # Export to CSV:
@@ -127,6 +133,7 @@ class PlannedShift < ApplicationRecord
     CSV.generate do |csv|
       # Create row names that are more readable:
       custom_column_names = ["Planned Shift Id",
+                             "Shift Name",
                              "Volunteer Id",
                              "Volunteer First Name",
                              "Volunteer Last Name",
@@ -138,6 +145,7 @@ class PlannedShift < ApplicationRecord
                              "Check-In Time",
                              "Check-Out Time",
                              "Category",
+                             "Notes",
                              "Created At",
                              "Updated At"]
 
@@ -145,6 +153,7 @@ class PlannedShift < ApplicationRecord
 
       all.each do |shift|
         row_hash = {"Planned Shift Id" => shift.id.to_s,
+          "Shift Name" => shift.shift_name,
           "Volunteer Id" => shift.volunteer.id,
           "Volunteer First Name" => shift.volunteer.first_name,
           "Volunteer Last Name" => shift.volunteer.last_name,
@@ -156,6 +165,7 @@ class PlannedShift < ApplicationRecord
           "Check-In Time" => shift.time_text(shift.sign_in_time),
           "Check-Out Time" => shift.time_text(shift.sign_out_time),
           "Category" => shift.category_name,
+          "Notes" => shift.notes,
           "Created At" => shift.created_at,
           "Updated At" => shift.updated_at}
 

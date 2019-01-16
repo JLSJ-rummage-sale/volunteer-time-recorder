@@ -27,6 +27,14 @@
                 <th scope="row">Upload status:</th>
                 <td><%= @spreadsheet.status.to_s.capitalize %></td>
             </tr>
+            <tr>
+                <th scope="row">Volunteer records uploaded:</th>
+                <td><%= @volunteers_uploaded.count || 0 %></td>
+            </tr>
+            <tr>
+                <th scope="row">Planned Shift records uploaded:</th>
+                <td><%= @planned_shifts_uploaded.count || 0 %></td>
+            </tr>
         </tbody>
     </table>
 </div>

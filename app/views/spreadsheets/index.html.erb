@@ -10,15 +10,17 @@
     <table class="table table-striped table-bordered table-hover">
         <thead class="thead-dark">
             <tr>
-            <th scope="col">Spreadsheet Name</th>
-            <th scope="col">Number of rows</th>
-            <th scope="col">Status</th>
-            <th scope="col">Details</th>
+              <th scope="col">#</th>
+              <th scope="col">File Name</th>
+              <th scope="col">Number of rows</th>
+              <th scope="col">Status</th>
+              <th scope="col">Details</th>
             </tr>
         </thead>
         <tbody>
-            <% @spreadsheets.each do |spreadsheet| %>
+            <% @spreadsheets.reverse.each do |spreadsheet| %>
                 <tr>
+                    <th scope="row"><%= link_to spreadsheet.id.to_s, spreadsheet_path(spreadsheet) %></th>
                     <th scope="row"><%= link_to spreadsheet.file_name, spreadsheet_path(spreadsheet) %></th>
                     <th scope="row"><%= link_to spreadsheet.num_rows, spreadsheet_path(spreadsheet) %></th>
                     <th scope="row"><%= link_to spreadsheet.status, spreadsheet_path(spreadsheet) %></th>
