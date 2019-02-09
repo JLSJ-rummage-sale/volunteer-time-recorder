@@ -18,7 +18,7 @@
                   <td><%= link_to(shift.name, planned_shift_path(shift)) %></td>
                 <% end %>
                 <td><%= shift.start_time.strftime("%I:%M %p") %> - <%= shift.end_time.strftime("%I:%M %p") %></td>
-                <td><%= shift.start_time.strftime("%a, %b %d") %></td>
+                <td><%= shift.start_time.strftime("%a, %b %d, %Y") %></td>
                 <td>
                   <%= render(:partial => 'planned_shifts/check_in_or_out_button', :locals => {:shift => shift}) %>
                 </td>
