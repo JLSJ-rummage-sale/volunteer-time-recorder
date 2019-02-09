@@ -127,6 +127,12 @@ class PlannedShift < ApplicationRecord
     end
   end
 
+  def remove_spreadsheet_connection
+    upload_records = PlannedShiftsUploaded.where(planned_shift_id: self.id);
+    upload_records.each do |record|
+      record.destroy;
+    end
+  end
 
   # Export to CSV:
   def self.as_csv

@@ -123,12 +123,14 @@ class VolunteersController < ApplicationController
     def destroy
         @volunteer = Volunteer.find(params[:id]);
 
+        @volunteer.remove_spreadsheet_connection
+
         @volunteer.destroy;
 
         # Present a 1-time flash message to the user after redirect:
         flash[:notice] = "Volunteer '#{@volunteer.first_name} #{@volunteer.last_name}' deleted successfully.";
 
-        redirect_to(spreadsheets_path);
+        redirect_to(volunteers_path);
     end
 
     private

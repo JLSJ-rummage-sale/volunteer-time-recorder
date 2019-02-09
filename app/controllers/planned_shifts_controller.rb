@@ -193,6 +193,8 @@ class PlannedShiftsController < ApplicationController
   def destroy
       @planned_shift = PlannedShift.find(params[:id]);
 
+      @planned_shift.remove_spreadsheet_connection
+
       @planned_shift.destroy;
 
       # Present a 1-time flash message to the user after redirect:

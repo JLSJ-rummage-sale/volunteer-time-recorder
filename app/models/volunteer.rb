@@ -41,6 +41,18 @@ class Volunteer < ApplicationRecord
                 " }";
     end
 
+    def remove_spreadsheet_connection
+      upload_records = VolunteersUploaded.where(volunteer_id: self.id);
+      upload_records.each do |record|
+        record.destroy;
+      end
+
+      # Also need to manually remove spreadsheet connection for planned shifts:
+      self.planned_shifts.each do |shift|
+        shift.remove_spreadsheet_connection
+      end
+    end
+
     # Export to CSV:
     def self.as_csv
       CSV.generate do |csv|
