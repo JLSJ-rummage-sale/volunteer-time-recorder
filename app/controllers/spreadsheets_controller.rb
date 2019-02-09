@@ -88,7 +88,7 @@ class SpreadsheetsController < ApplicationController
       # Present a 1-time flash message to the user after redirect:
       flash[:notice] = "Spreadsheet ##{@spreadsheet.id.to_s} deleted successfully.";
 
-      redirect_to(volunteers_path);
+      redirect_to(spreadsheets_path);
   end
 
 
